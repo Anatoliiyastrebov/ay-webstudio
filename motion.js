@@ -51,7 +51,7 @@
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
         tl.from('.hero-eyebrow', { y: 24, autoAlpha: 0, duration: 0.7 })
-            .from('.hero-headline', { y: 56, autoAlpha: 0, duration: 1.05 }, '-=0.45')
+            .from('.hero-name-line, .hero-role-line', { y: 40, autoAlpha: 0, duration: 0.85, stagger: 0.1 }, '-=0.45')
             .from('.hero-subtitle', { y: 32, autoAlpha: 0, duration: 0.85 }, '-=0.55')
             .from('.hero-buttons .btn', { y: 20, autoAlpha: 0, duration: 0.65, stagger: 0.1 }, '-=0.5')
             .from('.hero-photo-wrapper', { x: 40, autoAlpha: 0, scale: 0.96, duration: 1.1, ease: 'power2.out' }, '-=0.9');

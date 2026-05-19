@@ -390,6 +390,15 @@ body {
     .hero-title {
         text-align: left !important;
     }
+
+    .hero-headline {
+        align-items: flex-start !important;
+    }
+
+    .hero-name-line,
+    .hero-role-line {
+        text-align: left !important;
+    }
     
     .hero-subtitle {
         text-align: left !important;
@@ -547,7 +556,7 @@ body {
     box-sizing: border-box;
     min-width: 0;
     flex-shrink: 0;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -556,7 +565,6 @@ body {
     padding: 0;
     margin: 0;
     position: relative;
-    contain: layout style;
     text-align: center;
 }
 
@@ -578,13 +586,9 @@ body {
     font-weight: var(--font-weight-extrabold);
     line-height: 1.1;
     margin-bottom: var(--spacing-md);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
     max-width: 100%;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
     width: 100%;
     box-sizing: border-box;
     contain: layout style;

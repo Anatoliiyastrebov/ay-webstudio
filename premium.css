@@ -106,16 +106,96 @@ body::before {
     margin-bottom: 1rem;
 }
 
-.hero-headline,
-.hero-title .hero-headline {
-    font-size: clamp(2.35rem, 5.5vw, 4.25rem);
-    font-weight: 800;
+/* Hero title: line 1 = first name, line 2 = last name, line 3 = role */
+.hero-title {
+    overflow: visible;
+    text-overflow: unset;
+}
+
+.hero-headline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    text-align: center;
+    gap: 0.02em;
+}
+
+.hero-name-line,
+.hero-role-line {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    hyphens: none;
     line-height: 1.05;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.03em;
+    font-weight: 800;
     background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 55%, #7dd3fc 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: clamp(1.75rem, 9.5vw, 4rem);
+}
+
+.hero-name-line--last {
+    margin-bottom: 0.12em;
+}
+
+.hero-role-line {
+    font-size: clamp(1.05rem, 4.2vw, 1.65rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-top: 0.2em;
+    background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    word-break: normal;
+    overflow-wrap: break-word;
+    max-width: 18em;
+}
+
+[data-theme="light"] .hero-name-line {
+    background: linear-gradient(135deg, #0f172a 0%, #334155 70%, #0ea5e9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-theme="light"] .hero-role-line {
+    background: linear-gradient(135deg, #475569 0%, #64748b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@media (min-width: 1025px) {
+    .hero-headline {
+        align-items: flex-start;
+    }
+
+    .hero-name-line,
+    .hero-role-line {
+        text-align: left;
+    }
+
+    .hero-role-line {
+        max-width: 14em;
+    }
+}
+
+@media (max-width: 380px) {
+    .hero-name-line {
+        font-size: clamp(1.5rem, 11vw, 2.25rem);
+    }
+
+    .hero-role-line {
+        font-size: clamp(0.95rem, 4.5vw, 1.2rem);
+    }
 }
 
 .hero-subtitle {

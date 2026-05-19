@@ -21,11 +21,14 @@ const translations = {
             themeToggle: 'Design umschalten',
             menu: 'Menü',
             logoHome: 'Zum Seitenanfang',
-            photoAlt: 'Anatolii Yastrebov – Frontend-Entwickler'
+            photoAlt: 'Anatolii Yastrebov – Frontend-Entwickler',
+            personName: 'Anatolii Yastrebov'
         },
         hero: {
             eyebrow: 'Frontend-Entwickler · NRW · Deutschland',
-            headline: 'Anatolii Yastrebov — Frontend-Entwickler.',
+            firstName: 'Anatolii',
+            lastName: 'Yastrebov',
+            roleLine: 'Frontend-Entwickler.',
             subtitle: 'Persönliches Portfolio: ausgewählte Projekte, eingesetzte Technologien und ein bisschen über mich. HTML, CSS, JavaScript, moderne Web-Entwicklung.',
             ctaPrimary: 'Projekte ansehen',
             ctaSecondary: 'Schreib mir'
@@ -69,7 +72,7 @@ const translations = {
         },
         about: {
             title: 'Über mich',
-            p1: '<strong>Anatolii Yastrebov</strong> — Frontend-Entwickler aus Nordrhein-Westfalen. Diese Seite ist mein persönliches Portfolio – kein Angebot, sondern eine Sammlung von Projekten und Lernschritten.',
+            p1: '<strong>Anatolii\u00A0Yastrebov</strong> — Frontend-Entwickler aus Nordrhein-Westfalen. Diese Seite ist mein persönliches Portfolio – kein Angebot, sondern eine Sammlung von Projekten und Lernschritten.',
             p2: 'Ich beschäftige mich mit moderner Web-Entwicklung: sauberes HTML, durchdachtes CSS, JavaScript für sinnvolle Interaktionen. Mir wichtig: lesbarer Code, Performance und Zugänglichkeit.',
             p3: 'Außerhalb des Codes lese ich, lerne weiter und experimentiere mit kleinen Side-Projects. Wenn dich etwas hier interessiert oder du einfach Hallo sagen willst – schreib mir gerne.',
             point1: '📍 Standort: NRW · Deutschland',
@@ -138,11 +141,14 @@ const translations = {
             themeToggle: 'Toggle theme',
             menu: 'Menu',
             logoHome: 'Back to top',
-            photoAlt: 'Anatolii Yastrebov – frontend developer'
+            photoAlt: 'Anatolii Yastrebov – frontend developer',
+            personName: 'Anatolii Yastrebov'
         },
         hero: {
             eyebrow: 'Frontend developer · NRW · Germany',
-            headline: 'Anatolii Yastrebov — frontend developer.',
+            firstName: 'Anatolii',
+            lastName: 'Yastrebov',
+            roleLine: 'frontend developer.',
             subtitle: 'Personal portfolio: selected projects, technologies I use and a few words about me. HTML, CSS, JavaScript, modern web development.',
             ctaPrimary: 'See projects',
             ctaSecondary: 'Get in touch'
@@ -174,7 +180,7 @@ const translations = {
         },
         about: {
             title: 'About me',
-            p1: '<strong>Anatolii Yastrebov</strong> — frontend developer from North Rhine-Westphalia, Germany. This page is my personal portfolio – not an offer, just a collection of projects and learning steps.',
+            p1: '<strong>Anatolii\u00A0Yastrebov</strong> — frontend developer from North Rhine-Westphalia, Germany. This page is my personal portfolio – not an offer, just a collection of projects and learning steps.',
             p2: 'I focus on modern web development: clean HTML, considered CSS, JavaScript for meaningful interactions. What matters to me: readable code, performance and accessibility.',
             p3: 'Outside of code I read, keep learning and tinker with small side-projects. If something here interests you or you just want to say hi – feel free to drop me a line.',
             point1: '📍 Location: NRW · Germany',
@@ -228,7 +234,7 @@ const translations = {
 
     ru: {
         meta: {
-            title: 'Anatolii Yastrebov – портфолио фронтенд-разработчика',
+            title: 'Анатолий Ястребов – портфолио фронтенд-разработчика',
             description: 'Личное портфолио Анатолия Ястребова — фронтенд-разработчика из NRW, Германия. HTML, CSS, JavaScript, современная веб-разработка.'
         },
         nav: { projects: 'Проекты', skills: 'Навыки', about: 'Обо мне', blog: 'Заметки', contact: 'Контакт' },
@@ -236,11 +242,14 @@ const translations = {
             themeToggle: 'Сменить тему',
             menu: 'Меню',
             logoHome: 'Наверх',
-            photoAlt: 'Анатолий Ястребов — фронтенд-разработчик'
+            photoAlt: 'Анатолий Ястребов — фронтенд-разработчик',
+            personName: 'Анатолий Ястребов'
         },
         hero: {
             eyebrow: 'Фронтенд-разработчик · NRW · Германия',
-            headline: 'Anatolii Yastrebov — фронтенд-разработчик.',
+            firstName: 'Анатолий',
+            lastName: 'Ястребов',
+            roleLine: 'фронтенд-разработчик.',
             subtitle: 'Личное портфолио: избранные проекты, технологии и немного о себе. HTML, CSS, JavaScript, современная веб-разработка.',
             ctaPrimary: 'Посмотреть проекты',
             ctaSecondary: 'Написать мне'
@@ -272,7 +281,7 @@ const translations = {
         },
         about: {
             title: 'Обо мне',
-            p1: '<strong>Anatolii Yastrebov</strong> — фронтенд-разработчик из земли Северный Рейн-Вестфалия. Эта страница — моё личное портфолио, не коммерческое предложение, а подборка проектов и шагов в обучении.',
+            p1: '<strong>Анатолий\u00A0Ястребов</strong> — фронтенд-разработчик из земли Северный Рейн-Вестфалия. Эта страница — моё личное портфолио, не коммерческое предложение, а подборка проектов и шагов в обучении.',
             p2: 'Занимаюсь современной веб-разработкой: чистый HTML, продуманный CSS, JavaScript для осмысленных взаимодействий. Что важно для меня: читаемый код, производительность и доступность.',
             p3: 'Вне кода читаю, продолжаю учиться и пилю небольшие пет-проекты. Если что-то здесь зацепило или просто хочется поздороваться — напиши.',
             point1: '📍 Локация: NRW · Германия',
@@ -283,7 +292,7 @@ const translations = {
         blog: {
             title: 'Заметки о веб-разработке',
             subtitle: 'Мысли о веб-разработке и заметки из процесса обучения.',
-            pageTitle: 'Заметки · веб-разработка — Anatolii Yastrebov',
+            pageTitle: 'Заметки · веб-разработка — Анатолий Ястребов',
             pageDescription: 'Личные заметки о веб-разработке: цены на сайты, конструктор vs свой код, сайты локального бизнеса.',
             projectsTitle: 'Мои live-проекты',
             projectsSubtitle: 'Все десять демо-сайтов со скриншотами, стеком и деталями реализации — учебные концепты, не реальные компании.',
@@ -314,12 +323,12 @@ const translations = {
                 consentError: 'Подтвердите согласие на обработку данных.'
             }
         },
-        footer: { name: 'Anatolii Yastrebov', role: 'Фронтенд-разработчик · NRW', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
+        footer: { name: 'Анатолий Ястребов', role: 'Фронтенд-разработчик · NRW', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
         project: {
             back: '← К списку проектов',
             notFoundTitle: '—',
             notFoundText: 'Проект не найден.',
-            metaTitle: 'Проект · Anatolii Yastrebov',
+            metaTitle: 'Проект · Анатолий Ястребов',
             metaDescription: 'Портфолио-проект подробно: реализация, технологии и планируемые доработки.'
         }
     }
@@ -361,6 +370,12 @@ function applyLegalLabels() {
 }
 
 window.getSiteLanguage = () => currentLanguage;
+
+window.getPersonName = (lang) => {
+    const l = lang || currentLanguage;
+    const name = getTranslation('ui.personName', translations[l] || translations.de);
+    return name || 'Anatolii Yastrebov';
+};
 
 function applyTranslations(lang) {
     const dict = translations[lang];

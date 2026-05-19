@@ -144,7 +144,13 @@
 
         const metaTitle = dict.project && dict.project.metaTitle;
         const metaDesc = dict.project && dict.project.metaDescription;
-        if (title) document.title = `${title} · Anatolii Yastrebov`;
+        if (title) {
+            const person =
+                (dict.ui && dict.ui.personName) ||
+                (window.translations && window.translations.de && window.translations.de.ui.personName) ||
+                'Anatolii Yastrebov';
+            document.title = `${title} · ${person}`;
+        }
         const metaDescEl = document.querySelector('meta[name="description"]');
         if (metaDescEl && metaDesc) metaDescEl.setAttribute('content', metaDesc);
 

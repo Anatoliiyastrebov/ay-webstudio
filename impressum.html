@@ -2,15 +2,16 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#6366f1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#0b0d10">
     <script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;var c=document.documentElement.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}});})();</script>
-    <title>Impressum · Anatolii Yastrebov – Frontend Developer Portfolio</title>
+
+    <title>Impressum · Anatolii Yastrebov</title>
     <meta name="description" content="Impressum gemäß § 5 TMG — Anatolii Yastrebov, Frontend Developer Portfolio.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anatolii-yastrebov.top/impressum.html">
-    <meta property="og:title" content="Impressum · Anatolii Yastrebov – Frontend Developer Portfolio">
+    <meta property="og:title" content="Impressum · Anatolii Yastrebov">
     <meta property="og:description" content="Impressum gemäß § 5 TMG — Anatolii Yastrebov, Frontend Developer Portfolio.">
     <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
     <meta property="og:locale" content="de_DE">
@@ -18,9 +19,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Impressum · Anatolii Yastrebov">
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="premium.css">
 </head>
 <body data-legal-page="impressum">
     <div class="animated-bg">
@@ -32,45 +37,54 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="index.html#home" class="logo-link">
+                <a href="index.html#home" class="logo-link" data-i18n-attr="aria-label" data-i18n="ui.logoHome" aria-label="Zum Seitenanfang">
                     <span class="logo-text">AY</span>
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html#home" class="nav-link" id="legal-home-link">Zurück zur Startseite</a></li>
+                <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Kompetenzen</a></li>
+                <li><a href="index.html#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
+                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Notizen</a></li>
+                <li><a href="index.html#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="ru" type="button">RU</button>
+                <button class="lang-btn" data-lang="en" type="button">EN</button>
+                <button class="lang-btn active" data-lang="de" type="button">DE</button>
             </div>
-            <button class="theme-toggle" type="button" aria-label="Theme umschalten" title="Theme umschalten">
+            <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
                 <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
+            <div class="hamburger" data-i18n-attr="aria-label" data-i18n="ui.menu" aria-label="Menü" role="button" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </nav>
-    <section class="legal-page">
+
+    <main class="legal-page">
         <div class="container">
             <div class="legal-content" id="legal-content"></div>
         </div>
-    </section>
+    </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span id="footer-name">Anatolii Yastrebov</span>. <span id="footer-rights">Alle Rechte vorbehalten.</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend-Entwickler · NRW</span></p>
                 </div>
                 <div class="footer-legal-links">
-                    <a href="impressum.html" class="footer-link" id="footer-impressum">Impressum</a>
-                    <span> | </span>
-                    <a href="datenschutz.html" class="footer-link" id="footer-datenschutz">Datenschutzerklärung</a>
+                    <a href="impressum.html" class="footer-link" data-i18n="footer.impressum">Impressum</a>
+                    <span aria-hidden="true"> | </span>
+                    <a href="datenschutz.html" class="footer-link" data-i18n="footer.datenschutz">Datenschutzerklärung</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script src="legal.js"></script>
 </body>
 </html>

@@ -404,12 +404,14 @@ function applyTranslations(lang) {
         if (value) el.placeholder = value;
     });
 
-    const titleVal = getTranslation('meta.title', dict);
-    if (titleVal) document.title = titleVal;
+    if (!document.body.dataset.legalPage) {
+        const titleVal = getTranslation('meta.title', dict);
+        if (titleVal) document.title = titleVal;
 
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const descVal = getTranslation('meta.description', dict);
-    if (metaDesc && descVal) metaDesc.setAttribute('content', descVal);
+        const metaDesc = document.querySelector('meta[name="description"]');
+        const descVal = getTranslation('meta.description', dict);
+        if (metaDesc && descVal) metaDesc.setAttribute('content', descVal);
+    }
 
     document.querySelectorAll('.lang-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);

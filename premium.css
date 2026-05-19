@@ -749,6 +749,80 @@ textarea:focus-visible {
     color: var(--text-primary);
 }
 
+/* Legal pages (Impressum / Datenschutz) */
+.legal-page {
+    padding-top: clamp(7rem, 14vw, 9rem);
+}
+
+.legal-content {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(24px) saturate(160%);
+}
+
+.legal-content h1 {
+    background: linear-gradient(
+        135deg,
+        var(--text-primary) 0%,
+        var(--primary) 52%,
+        var(--primary-dark) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+}
+
+.legal-content h2 {
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.legal-content a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(125, 211, 252, 0.35);
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.legal-content a:hover {
+    color: var(--primary-light);
+    border-bottom-color: var(--primary);
+}
+
+.legal-footer a {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.legal-footer a:hover {
+    color: var(--primary-light);
+}
+
+[data-theme="light"] .legal-content {
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(24, 24, 27, 0.1);
+    box-shadow: 0 1px 3px rgba(24, 24, 27, 0.04), 0 8px 28px rgba(24, 24, 27, 0.06);
+}
+
+[data-theme="light"] .legal-content h1 {
+    background: linear-gradient(135deg, #0f172a 0%, #0284c7 55%, #0369a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .legal-content a {
+    color: #0369a1;
+    border-bottom-color: rgba(3, 105, 161, 0.35);
+}
+
+[data-theme="light"] .legal-content a:hover {
+    color: #0284c7;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

@@ -329,54 +329,36 @@ function getLegalLanguage() {
     return 'de';
 }
 
-function updateActiveLanguageButton(language) {
-    document.querySelectorAll('.lang-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === language);
-    });
-}
-
 function renderLegalPage(language) {
     const pageId = document.body.dataset.legalPage;
+    if (!pageId) return;
+
     const selectedLanguage = legalTranslations[language] ? language : 'de';
     const pageData = legalTranslations[selectedLanguage].pages[pageId];
     if (!pageData) return;
 
-    const ui = legalTranslations[selectedLanguage].ui;
     const legalContent = document.getElementById('legal-content');
     if (legalContent) {
         legalContent.innerHTML = pageData.content;
     }
 
-    const homeLink = document.getElementById('legal-home-link');
-    if (homeLink) {
-        homeLink.textContent = ui.home;
-    }
-
-    const footerName = document.getElementById('footer-name');
-    const footerRights = document.getElementById('footer-rights');
-    const footerImpressum = document.getElementById('footer-impressum');
-    const footerDatenschutz = document.getElementById('footer-datenschutz');
-
-    if (footerName) footerName.textContent = ui.footerName;
-    if (footerRights) footerRights.textContent = ui.footerRights;
-    if (footerImpressum) footerImpressum.textContent = ui.impressum;
-    if (footerDatenschutz) footerDatenschutz.textContent = ui.datenschutz;
-
-    document.documentElement.lang = selectedLanguage;
-    document.title = `${pageData.title} - ${ui.footerName}`;
-    updateActiveLanguageButton(selectedLanguage);
+    const personName = typeof window.getPersonName === 'function'
+        ? window.getPersonName(selectedLanguage)
+        : 'Anatolii Yastrebov';
+    document.title = `${pageData.title} · ${personName}`;
 }
 
-function initLegalLanguageSwitcher() {
-    let currentLanguage = getLegalLanguage();
-    renderLegalPage(currentLanguage);
+function initLegalPage() {
+    if (!document.body.dataset.legalPage) return;
 
-    document.querySelectorAll('.lang-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            currentLanguage = btn.getAttribute('data-lang') || 'de';
-            localStorage.setItem('language', currentLanguage);
-            renderLegalPage(currentLanguage);
-        });
+    const lang = typeof window.getSiteLanguage === 'function'
+        ? window.getSiteLanguage()
+        : getLegalLanguage();
+    renderLegalPage(lang);
+
+    window.addEventListener('languagechange', (e) => {
+        const nextLang = e.detail?.lang || getLegalLanguage();
+        renderLegalPage(nextLang);
     });
 
     const yearElement = document.getElementById('current-year');
@@ -386,7 +368,7 @@ function initLegalLanguageSwitcher() {
 }
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLegalLanguageSwitcher);
+    document.addEventListener('DOMContentLoaded', initLegalPage);
 } else {
-    initLegalLanguageSwitcher();
+    initLegalPage();
 }

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /server/
+Sitemap: https://anatolii-yastrebov.top/sitemap.xml

@@ -2,22 +2,22 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#6366f1">
     <script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;var c=document.documentElement.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}});})();</script>
 
-    <title data-i18n="project.metaTitle">Projekt · Anatolii Yastrebov</title>
-    <meta name="description" data-i18n-attr="content" data-i18n="project.metaDescription" content="Portfolio-Projekt im Detail: Umsetzung, Technologien und geplante Erweiterungen.">
+    <title data-i18n="blog.pageTitle">Notizen · Web-Entwicklung — Anatolii Yastrebov</title>
+    <meta name="description" data-i18n-attr="content" data-i18n="blog.pageDescription" content="Persönliche Notizen zur Web-Entwicklung: Preisrahmen von Websites, Baukasten vs. eigener Code, kleine lokale Websites.">
 
     <meta property="og:type" content="article">
-    <meta property="og:url" content="https://anatolii-yastrebov.top/project.html">
-    <meta property="og:title" content="Projekt · Anatolii Yastrebov">
-    <meta property="og:description" content="Portfolio-Projekt im Detail: Aufgabe, Umsetzung und eingesetzte Technologien.">
+    <meta property="og:url" content="https://anatolii-yastrebov.top/blog.html">
+    <meta property="og:title" content="Blog · Notizen zur Web-Entwicklung — Anatolii Yastrebov">
+    <meta property="og:description" content="Persönliche Notizen zur Web-Entwicklung: Preisrahmen, Baukasten vs. eigener Code, kleine lokale Websites.">
     <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
     <meta property="og:locale" content="de_DE">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Projekt · Anatolii Yastrebov">
+    <meta name="twitter:title" content="Blog · Notizen zur Web-Entwicklung — Anatolii Yastrebov">
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
@@ -40,9 +40,9 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
-                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Kompetenzen</a></li>
                 <li><a href="index.html#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
-                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="blog.html" class="nav-link active" data-i18n="nav.blog">Notizen</a></li>
                 <li><a href="index.html#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
@@ -54,22 +54,30 @@
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
                 <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <div class="hamburger"><span></span><span></span><span></span></div>
+            <div class="hamburger" data-i18n-attr="aria-label" data-i18n="ui.menu" aria-label="Menü"><span></span><span></span><span></span></div>
         </div>
     </nav>
 
-    <main class="project-page">
+    <section class="blog-page">
         <div class="container">
-            <a href="index.html#projekte" class="back-link" data-i18n="project.back">← Zurück zur Übersicht</a>
-            <div id="project-content" class="project-detail"></div>
+            <h1 class="section-title" data-i18n="blog.title">Blog &amp; Notizen</h1>
+            <p class="blog-page-intro" data-i18n="blog.subtitle">Persönliche Notizen rund um Web-Entwicklung. Beobachtungen aus dem Lernprozess, keine Verkaufstexte.</p>
+
+            <section id="meine-projekte" class="blog-projects-section">
+                <h2 class="section-title section-title-left" data-i18n="blog.projectsTitle">Meine Live-Projekte</h2>
+                <p class="section-description blog-projects-intro" data-i18n="blog.projectsSubtitle">Alle zehn Demo-Websites mit Screenshot, Technologie-Stack und Umsetzungsdetails — konzeptionelle Portfolio-Arbeit, keine echten Unternehmen.</p>
+                <div class="cases-grid portfolio-grid" id="blog-projects-container"></div>
+            </section>
+
+            <div id="blog-articles" class="blog-articles"></div>
         </div>
-    </main>
+    </section>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Webentwickler · NRW</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend-Entwickler · NRW</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="impressum.html" class="footer-link" data-i18n="footer.impressum">Impressum</a>
@@ -82,9 +90,19 @@
 
     <script src="portfolio-projects.js"></script>
     <script src="portfolio-i18n.js"></script>
+    <script src="blog-content.js"></script>
     <script src="script.js"></script>
-    <script src="project.js"></script>
     <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        document.querySelector('.hamburger').addEventListener('click', () => {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            document.querySelector('.hamburger').classList.toggle('active');
+        });
+        document.querySelectorAll('.lang-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (typeof setLanguage === 'function') setLanguage(btn.getAttribute('data-lang'));
+            });
+        });
         if (typeof applyTranslations === 'function') {
             applyTranslations(localStorage.getItem('language') || 'de');
         }

@@ -1,5 +1,24 @@
 {
   "name": "portfolio",
   "version": "1.0.0",
-  "description": "Modern portfolio website - static frontend"
+  "description": "Modern portfolio website - static frontend",
+  "main": "legal.js",
+  "scripts": {
+    "capture-previews": "node scripts/capture-previews.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anatoliiyastrebov/partfol.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anatoliiyastrebov/partfol/issues"
+  },
+  "homepage": "https://github.com/Anatoliiyastrebov/partfol#readme",
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
 }

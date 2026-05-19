@@ -2,21 +2,16 @@ services:
   - type: web
     name: portfolio-backend
     env: node
+    # TODO: upgrade to starter to avoid cold-start
     plan: free
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 10000
-      - key: SMTP_HOST
+      - key: SENDGRID_API_KEY
         sync: false
-      - key: SMTP_PORT
-        sync: false
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
+      - key: EMAIL_FROM
         sync: false
       - key: EMAIL_TO
         sync: false

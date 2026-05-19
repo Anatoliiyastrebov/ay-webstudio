@@ -1,238 +1,189 @@
-// Wait for script.js to load and then initialize
-let checkCount = 0;
-const maxChecks = 20; // Maximum 1 second wait
-const projectPageI18n = {
-    ru: {
-        loadErrorTitle: 'Ошибка загрузки',
-        loadErrorText: 'Не удалось загрузить данные проектов. Пожалуйста, обновите страницу.',
-        backToProjects: 'Вернуться к проектам',
-        projectNotSpecifiedTitle: 'Проект не указан',
-        projectNotSpecifiedText: 'Не указан ID проекта в URL.',
-        projectNotFoundTitle: 'Проект не найден',
-        projectNotFoundText: (id) => `Проект с ID "${id}" не существует.`
-    },
-    en: {
-        loadErrorTitle: 'Loading Error',
-        loadErrorText: 'Could not load project data. Please refresh the page.',
-        backToProjects: 'Back to Projects',
-        projectNotSpecifiedTitle: 'Project Not Specified',
-        projectNotSpecifiedText: 'No project ID was provided in the URL.',
-        projectNotFoundTitle: 'Project Not Found',
-        projectNotFoundText: (id) => `Project with ID "${id}" does not exist.`
-    },
-    de: {
-        loadErrorTitle: 'Ladefehler',
-        loadErrorText: 'Projektdaten konnten nicht geladen werden. Bitte aktualisieren Sie die Seite.',
-        backToProjects: 'Zurück zu den Projekten',
-        projectNotSpecifiedTitle: 'Projekt nicht angegeben',
-        projectNotSpecifiedText: 'In der URL wurde keine Projekt-ID angegeben.',
-        projectNotFoundTitle: 'Projekt nicht gefunden',
-        projectNotFoundText: (id) => `Projekt mit der ID "${id}" existiert nicht.`
-    }
-};
+// Case detail page (uses window.portfolioProjects + window.translations from script.js)
 
-function getProjectPageText(lang, key, ...args) {
-    const selectedLang = projectPageI18n[lang] ? lang : 'ru';
-    const value = projectPageI18n[selectedLang][key];
-    if (typeof value === 'function') {
-        return value(...args);
-    }
-    return value || projectPageI18n.ru[key];
-}
-
-function waitForScripts() {
-    checkCount++;
-    
-    if (window.projectsData && window.translations) {
-        initProjectPage();
-    } else if (checkCount < maxChecks) {
-        // Wait a bit more if scripts haven't loaded yet
-        setTimeout(waitForScripts, 50);
-    } else {
-        // Timeout - show error
-        const language = localStorage.getItem('language') || 'ru';
-        document.getElementById('project-content').innerHTML = `
-            <div class="project-not-found">
-                <h1>${getProjectPageText(language, 'loadErrorTitle')}</h1>
-                <p>${getProjectPageText(language, 'loadErrorText')}</p>
-                <a href="index.html#projects" class="btn btn-primary">${getProjectPageText(language, 'backToProjects')}</a>
-            </div>
-        `;
-    }
-}
-
-// Start checking when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', waitForScripts);
-} else {
-    // DOM is already ready
-    waitForScripts();
-}
-
-function initProjectPage() {
-    // Access global variables from script.js
-    const projectsData = window.projectsData || [];
-    const translations = window.translations || {};
-    
-    if (projectsData.length === 0) {
-        document.getElementById('project-content').innerHTML = `
-            <div class="project-not-found">
-                <h1>${getProjectPageText(currentLanguage, 'loadErrorTitle')}</h1>
-                <p>${getProjectPageText(currentLanguage, 'loadErrorText')}</p>
-                <a href="index.html#projects" class="btn btn-primary">${getProjectPageText(currentLanguage, 'backToProjects')}</a>
-            </div>
-        `;
-        return;
-    }
-    
-    // Get current language from localStorage or default to 'ru'
-    let currentLanguage = localStorage.getItem('language') || 'ru';
-    
-    // Get project ID from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('id');
-    
-    if (!projectId) {
-        document.getElementById('project-content').innerHTML = `
-            <div class="project-not-found">
-                <h1>${getProjectPageText(currentLanguage, 'projectNotSpecifiedTitle')}</h1>
-                <p>${getProjectPageText(currentLanguage, 'projectNotSpecifiedText')}</p>
-                <a href="index.html#projects" class="btn btn-primary">${getProjectPageText(currentLanguage, 'backToProjects')}</a>
-            </div>
-        `;
-        return;
-    }
-    
-    // Find project by ID
-    const project = projectsData.find(p => p.id === projectId);
-    
-    if (!project) {
-        document.getElementById('project-content').innerHTML = `
-            <div class="project-not-found">
-                <h1>${getProjectPageText(currentLanguage, 'projectNotFoundTitle')}</h1>
-                <p>${getProjectPageText(currentLanguage, 'projectNotFoundText', projectId)}</p>
-                <a href="index.html#projects" class="btn btn-primary">${getProjectPageText(currentLanguage, 'backToProjects')}</a>
-            </div>
-        `;
-    } else {
-        // Render project details
-        renderProject(project, currentLanguage, translations);
-        setupLanguageSwitcher(project, currentLanguage, translations);
-    }
-}
-
-function renderProject(project, currentLanguage, translations) {
-    const projectTitle = typeof project.title === 'object' 
-        ? project.title[currentLanguage] || project.title.ru 
-        : project.title;
-    
-    const projectDescription = typeof project.description === 'object' 
-        ? project.description[currentLanguage] || project.description.ru 
-        : project.description;
-    
-    const liveText = getTranslationHelper('projects.live', translations[currentLanguage]) || 'Live-версия';
-    const githubText = getTranslationHelper('projects.github', translations[currentLanguage]) || 'GitHub';
-    const techTitle = getTranslationHelper('projects.techTitle', translations[currentLanguage]) || 'Используемые технологии:';
-    
-    // Image handling
-    const hasImage = project.image && project.image.trim() !== '';
-    let imageStyle = `background: linear-gradient(135deg, var(--primary), var(--accent));`;
-    
-    if (hasImage) {
-        if (project.image.startsWith('data:') || project.image.startsWith('http')) {
-            imageStyle = `background-image: url('${project.image}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
+(function () {
+    function ready(fn) {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fn);
         } else {
-            const imagePath = project.image.startsWith('/') ? project.image : '/' + project.image;
-            imageStyle = `background-image: url('${imagePath}'); background-size: cover; background-position: center; background-repeat: no-repeat;`;
+            fn();
         }
     }
-    
-    const liveButton = project.liveUrl 
-        ? `<a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary project-detail-btn">${liveText}</a>`
-        : '';
-    
-    const githubButton = project.githubUrl
-        ? `<a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary project-detail-btn">${githubText}</a>`
-        : '';
-    
-    const buttons = liveButton || githubButton 
-        ? `<div class="project-detail-buttons">${liveButton}${githubButton}</div>`
-        : '';
-    
-    const content = `
-        <div class="project-detail-header">
-            <h1 class="project-detail-title">${projectTitle}</h1>
-            ${buttons}
-        </div>
-        
-        <div class="project-detail-image ${hasImage ? 'has-image' : ''}" style="${imageStyle}">
-            ${hasImage ? '<div class="project-image-overlay"></div>' : ''}
-        </div>
-        
-        <div class="project-detail-description">
-            ${projectDescription.replace(/\n/g, '<br>')}
-        </div>
-        
-        <div class="project-detail-tech">
-            <h2 class="project-detail-tech-title">${techTitle}</h2>
-            <div class="project-tags">
-                ${project.techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('project-content').innerHTML = content;
-}
 
-function getTranslationHelper(key, obj) {
-    const keys = key.split('.');
-    let value = obj;
-    for (const k of keys) {
-        if (value && typeof value === 'object' && k in value) {
-            value = value[k];
-        } else {
-            return null;
+    function getLang() {
+        if (typeof window.getSiteLanguage === 'function') {
+            return window.getSiteLanguage();
         }
+        const stored = localStorage.getItem('language');
+        return ['de', 'en', 'ru'].includes(stored) ? stored : 'de';
     }
-    return value;
-}
 
-function setupLanguageSwitcher(project, currentLanguage, translations) {
-    const langButtons = document.querySelectorAll('.lang-btn');
-    
-    langButtons.forEach(btn => {
+    function getCases() {
+        return Array.isArray(window.portfolioProjects)
+            ? window.portfolioProjects
+            : Array.isArray(window.casesData)
+              ? window.casesData
+              : [];
+    }
+
+    function t(lang) {
+        return (window.translations && window.translations[lang]) || (window.translations && window.translations.de) || {};
+    }
+
+    function pickLocalized(item, lang, key) {
+        if (!item[key]) return '';
+        if (typeof item[key] === 'string') return item[key];
+        return item[key][lang] || item[key].de || '';
+    }
+
+    function pickLocalizedList(field, lang) {
+        if (!field) return [];
+        if (Array.isArray(field)) return field;
+        return field[lang] || field.de || [];
+    }
+
+    function listBlock(label, items) {
+        if (!items || !items.length) return '';
+        return `
+            <section class="case-detail-block">
+                <div class="case-label">${label}</div>
+                <ul class="portfolio-list case-detail-text">${items.map((i) => `<li>${i}</li>`).join('')}</ul>
+            </section>
+        `;
+    }
+
+    function notFound(lang) {
+        const dict = t(lang);
+        const project = dict.project || {};
+        const back = project.back || '← Back';
+        const title = project.notFoundTitle || '—';
+        const text = project.notFoundText || 'Case not found.';
+        document.getElementById('project-content').innerHTML = `
+            <div class="project-not-found">
+                <h1>${title}</h1>
+                <p>${text}</p>
+                <a href="index.html#projekte" class="btn btn-primary">${back}</a>
+            </div>
+        `;
+    }
+
+    function render(caseItem, lang) {
+        const dict = t(lang);
+        const cases = dict.cases || {};
+        const isPortfolio = Boolean(caseItem.summary);
+
+        const title = isPortfolio
+            ? pickLocalized(caseItem, lang, 'title')
+            : pickLocalized(caseItem, lang, 'client');
+        const category = isPortfolio
+            ? pickLocalized(caseItem, lang, 'category')
+            : pickLocalized(caseItem, lang, 'industry');
+
+        const summary = isPortfolio ? pickLocalized(caseItem, lang, 'summary') : pickLocalized(caseItem, lang, 'problem');
+        const implemented = isPortfolio
+            ? pickLocalizedList(caseItem.implemented, lang)
+            : [pickLocalized(caseItem, lang, 'solution')];
+        const planned = isPortfolio
+            ? pickLocalizedList(caseItem.planned, lang)
+            : [pickLocalized(caseItem, lang, 'result')];
+
+        const lSummary = cases.labelSummary || cases.labelProblem || 'Overview';
+        const lImplemented = cases.labelImplemented || cases.labelSolution || 'Implemented';
+        const lPlanned = cases.labelPlanned || cases.labelResult || 'Planned';
+        const lStack = cases.labelStack || 'Stack';
+        const lStyles = cases.labelStyles || 'Styling';
+        const viewLive = cases.viewLive || 'Open live demo ↗';
+
+        const preview = caseItem.preview
+            ? `<a class="project-detail-preview" href="${caseItem.liveUrl}" target="_blank" rel="noopener noreferrer">
+                <img src="${caseItem.preview}" alt="${title}" width="1280" height="800" loading="lazy" decoding="async">
+               </a>`
+            : '';
+
+        const liveBtn = caseItem.liveUrl
+            ? `<a class="btn btn-primary" href="${caseItem.liveUrl}" target="_blank" rel="noopener noreferrer">${viewLive}</a>`
+            : '';
+        const ghBtn = caseItem.githubUrl
+            ? `<a class="btn btn-secondary" href="${caseItem.githubUrl}" target="_blank" rel="noopener noreferrer">GitHub</a>`
+            : '';
+        const buttons = liveBtn || ghBtn
+            ? `<div class="project-detail-buttons">${liveBtn}${ghBtn}</div>`
+            : '';
+
+        const styles = pickLocalizedList(caseItem.styles, lang);
+        const techStack = pickLocalizedList(caseItem.techStack, lang);
+        const stylesBlock = styles.length
+            ? `<section class="case-detail-block">
+                <div class="case-stack-label">${lStyles}</div>
+                <div class="case-stack case-stack-styles">${styles.map((s) => `<span class="case-stack-tag case-stack-tag-style">${s}</span>`).join('')}</div>
+               </section>`
+            : '';
+
+        document.getElementById('project-content').innerHTML = `
+            ${preview}
+            <header class="project-detail-header">
+                <div class="case-industry" style="margin-bottom: 8px;">${category}</div>
+                <h1 class="project-detail-title">${title}</h1>
+                ${buttons}
+            </header>
+
+            <section class="case-detail-block">
+                <div class="case-label">${lSummary}</div>
+                <p class="case-detail-text">${summary}</p>
+            </section>
+
+            ${listBlock(lImplemented, implemented)}
+            ${listBlock(lPlanned, planned)}
+
+            <section class="case-detail-block">
+                <div class="case-stack-label">${lStack}</div>
+                <div class="case-stack">${techStack.map((s) => `<span class="case-stack-tag">${s}</span>`).join('')}</div>
+            </section>
+
+            ${stylesBlock}
+        `;
+
+        const metaTitle = dict.project && dict.project.metaTitle;
+        const metaDesc = dict.project && dict.project.metaDescription;
+        if (title) document.title = `${title} · Anatolii Yastrebov`;
+        const metaDescEl = document.querySelector('meta[name="description"]');
+        if (metaDescEl && metaDesc) metaDescEl.setAttribute('content', metaDesc);
+    }
+
+    function init() {
+        const id = new URLSearchParams(window.location.search).get('id');
+        const lang = getLang();
+        const cases = getCases();
+        if (!id) {
+            notFound(lang);
+            return;
+        }
+        const item = cases.find((c) => c.id === id);
+        if (!item) {
+            notFound(lang);
+            return;
+        }
+        render(item, lang);
+    }
+
+    function waitForCases(attempts) {
+        if (window.portfolioProjects && window.translations) {
+            init();
+            return;
+        }
+        if (attempts <= 0) {
+            init();
+            return;
+        }
+        setTimeout(() => waitForCases(attempts - 1), 50);
+    }
+
+    ready(() => waitForCases(40));
+
+    document.querySelectorAll('.lang-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
-            const lang = btn.getAttribute('data-lang');
-            currentLanguage = lang;
-            localStorage.setItem('language', lang);
-            
-            langButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            renderProject(project, currentLanguage, translations);
-            updateProjectStaticLanguage(currentLanguage, translations);
+            setTimeout(init, 50);
         });
     });
-    
-    // Set active language button
-    langButtons.forEach(btn => {
-        if (btn.getAttribute('data-lang') === currentLanguage) {
-            btn.classList.add('active');
-        }
-    });
-    
-    updateProjectStaticLanguage(currentLanguage, translations);
-}
 
-function updateProjectStaticLanguage(currentLanguage, translations) {
-    if (!translations || !translations[currentLanguage]) return;
-    
-    // Update navigation and other elements
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const translation = getTranslationHelper(key, translations[currentLanguage]);
-        if (translation) {
-            element.textContent = translation;
-        }
-    });
-}
+    window.addEventListener('languagechange', () => init());
+})();

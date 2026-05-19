@@ -2,53 +2,52 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import sgMail from '@sendgrid/mail';
+import rateLimit from 'express-rate-limit';
 
-// Загружаем переменные окружения из .env файла
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:8000';
 
 // ============================================
-// MIDDLEWARE
+// CORS — explicit whitelist
 // ============================================
+// The form has no business needing wildcard CORS. We list the
+// production domain (apex + www), localhost dev origins, and an
+// optional FRONTEND_URL override for staging.
+const allowedOrigins = [
+    'https://anatolii-yastrebov.top',
+    'https://www.anatolii-yastrebov.top',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+];
+if (process.env.FRONTEND_URL && !allowedOrigins.includes(process.env.FRONTEND_URL)) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+}
 
-// CORS - разрешаем запросы с фронтенда (Vercel, localhost, и другие домены)
 app.use(cors({
     origin: function (origin, callback) {
-        // Разрешаем запросы без origin (например, из Postman, мобильные приложения)
-        if (!origin) {
-            return callback(null, true);
-        }
-        
-        // Разрешаем localhost для разработки
-        if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
-            return callback(null, true);
-        }
-        
-        // Разрешаем запросы с указанного FRONTEND_URL
-        if (origin === FRONTEND_URL) {
-            return callback(null, true);
-        }
-        
-        // Разрешаем запросы с Vercel доменов (для продакшена)
-        if (origin.includes('vercel.app') || origin.includes('vercel.com')) {
-            return callback(null, true);
-        }
-        
-        // Разрешаем все для гибкости (можно ограничить конкретными доменами)
-        callback(null, true);
+        // No Origin header → same-origin requests, curl, server-to-server, SSR.
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(new Error(`CORS: origin not allowed: ${origin}`));
     },
-    credentials: true,
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    methods: ['POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type'],
+    credentials: false,
+    maxAge: 86400
 }));
 
-// Парсинг JSON тела запроса
-app.use(express.json());
+// JSON body parser with a tight payload limit — guards against
+// absurdly large bodies even before validation runs.
+app.use(express.json({ limit: '20kb' }));
 
-// Логирование только в development режиме
+// Trust proxy header from Render so rate-limit sees the real
+// client IP rather than the internal proxy IP. The "loopback,
+// linklocal, uniquelocal" preset is the recommended default for
+// PaaS in front of an Express app.
+app.set('trust proxy', 1);
+
 if (process.env.NODE_ENV !== 'production') {
     app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
@@ -57,98 +56,69 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // ============================================
-// НАСТРОЙКА SENDGRID
+// SendGrid configuration
 // ============================================
-
-// Проверяем наличие обязательных переменных окружения
 const requiredEnvVars = ['SENDGRID_API_KEY', 'EMAIL_FROM', 'EMAIL_TO'];
-const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-
+const missingVars = requiredEnvVars.filter((name) => !process.env[name]);
 if (missingVars.length > 0) {
-    console.error('❌ ОШИБКА: Отсутствуют обязательные переменные окружения:');
-    missingVars.forEach(varName => console.error(`   - ${varName}`));
+    console.error('❌ Missing required environment variables:');
+    missingVars.forEach((name) => console.error(`   - ${name}`));
     process.exit(1);
 }
-
-// Устанавливаем API ключ SendGrid
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 if (process.env.NODE_ENV !== 'production') {
-    console.log('✅ SendGrid настроен');
-    console.log(`📧 Отправитель: ${process.env.EMAIL_FROM}`);
-    console.log(`📬 Получатель: ${process.env.EMAIL_TO}`);
+    console.log('✅ SendGrid configured');
+    console.log(`📧 From: ${process.env.EMAIL_FROM}`);
+    console.log(`📬 To:   ${process.env.EMAIL_TO}`);
 }
 
 // ============================================
-// ВАЛИДАЦИЯ ДАННЫХ
+// Validation
 // ============================================
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/**
- * Валидирует данные формы обратной связи (оптимизированная версия)
- * @param {Object} data - Данные формы
- * @returns {{valid: boolean, errors: string[]}} - Результат валидации
- */
 function validateContactForm(data) {
     const errors = [];
-    
-    // Быстрая проверка типов
     if (!data || typeof data !== 'object') {
-        return { valid: false, errors: ['Неверный формат данных'] };
+        return { valid: false, errors: ['Invalid payload'] };
     }
 
-    // Проверка имени (оптимизировано)
-    const name = data.name?.trim();
-    if (!name || name.length < 2) {
-        errors.push('Имя должно содержать минимум 2 символа');
-    } else if (name.length > 100) {
-        errors.push('Имя не должно превышать 100 символов');
+    const name = typeof data.name === 'string' ? data.name.trim() : '';
+    if (name.length < 2 || name.length > 100) {
+        errors.push('name: length must be 2–100 characters');
     }
 
-    // Проверка email (оптимизировано)
-    const email = data.email?.trim();
-    if (!email) {
-        errors.push('Email обязателен');
-    } else {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            errors.push('Некорректный формат email адреса');
-        }
+    const email = typeof data.email === 'string' ? data.email.trim() : '';
+    if (!email || email.length > 200 || !EMAIL_RE.test(email)) {
+        errors.push('email: must be a valid address');
     }
 
-    // Проверка сообщения (оптимизировано)
-    const message = data.message?.trim();
-    if (!message || message.length < 5) {
-        errors.push('Сообщение должно содержать минимум 5 символов');
-    } else if (message.length > 2000) {
-        errors.push('Сообщение не должно превышать 2000 символов');
+    const message = typeof data.message === 'string' ? data.message.trim() : '';
+    if (message.length < 10 || message.length > 5000) {
+        errors.push('message: length must be 10–5000 characters');
     }
 
-    return {
-        valid: errors.length === 0,
-        errors
-    };
+    return { valid: errors.length === 0, errors, clean: { name, email, message } };
 }
 
 // ============================================
-// РОУТЫ
+// Rate limiter — 3 requests / 15 minutes per IP on the contact route.
 // ============================================
-
-// Корневой роут
-app.get('/', (req, res) => {
-    res.json({
-        status: 'ok',
-        message: 'Portfolio Backend API',
-        version: '1.0.0',
-        endpoints: {
-            health: '/health',
-            contact: 'POST /api/contact'
-        },
-        timestamp: new Date().toISOString(),
-        uptime: process.uptime()
-    });
+const contactLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 3,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    message: {
+        success: false,
+        message: 'Too many requests. Please try again later.'
+    }
 });
 
-// Проверка здоровья сервера
+// ============================================
+// Routes
+// ============================================
 app.get('/health', (req, res) => {
     res.json({
         status: 'ok',
@@ -157,92 +127,78 @@ app.get('/health', (req, res) => {
     });
 });
 
-// Обработка формы обратной связи (оптимизированная)
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', contactLimiter, async (req, res) => {
     try {
-        // Быстрая валидация данных
+        // Honeypot — bots fill every field, humans never see this one.
+        // Quietly return 200 so the bot thinks it succeeded.
+        if (typeof req.body?.website === 'string' && req.body.website.trim() !== '') {
+            return res.status(200).json({ success: true, message: 'OK' });
+        }
+
         const validation = validateContactForm(req.body);
         if (!validation.valid) {
             return res.status(400).json({
                 success: false,
-                message: 'Ошибка валидации данных',
+                message: 'Validation error',
                 errors: validation.errors
             });
         }
 
-        // Извлекаем и очищаем данные
-        const { name, email, message } = req.body;
-        const cleanName = name.trim();
-        const cleanEmail = email.trim();
-        const cleanMessage = message.trim();
+        const { name, email, message } = validation.clean;
 
-        // Формируем содержимое письма для SendGrid (минимальный текст)
         const msg = {
             to: process.env.EMAIL_TO,
             from: process.env.EMAIL_FROM,
-            subject: `Новое сообщение с сайта от ${cleanName}`,
-            text: `Новое сообщение через форму обратной связи на сайте.\n\nИмя отправителя: ${cleanName}\nEmail отправителя: ${cleanEmail}\n\nСообщение:\n${cleanMessage}\n\n---\nАвтоматическое сообщение с сайта портфолио.`
+            replyTo: email,
+            subject: `Portfolio contact — ${name}`,
+            text: `New message via contact form.\n\nName:  ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\n--\nSent from anatolii-yastrebov.top contact form.`
         };
 
-        // Отправляем email через SendGrid (без ожидания полного ответа)
-        const sendPromise = sgMail.send(msg);
-        
-        // Отвечаем клиенту сразу после начала отправки (не ждем завершения)
-        res.status(200).json({
-            success: true,
-            message: 'Сообщение успешно отправлено'
-        });
-        
-        // Обрабатываем результат отправки асинхронно (не блокируем ответ)
-        sendPromise.then(([response]) => {
-            if (process.env.NODE_ENV !== 'production') {
-                console.log('✅ Email успешно отправлен через SendGrid');
+        try {
+            await sgMail.send(msg);
+        } catch (sendErr) {
+            console.error('❌ SendGrid error:', sendErr?.message || sendErr);
+            if (sendErr?.response?.body?.errors) {
+                sendErr.response.body.errors.forEach((e) => console.error(`   - ${e.message}`));
             }
-        }).catch((error) => {
-            // Логируем ошибку, но клиент уже получил успешный ответ
-            console.error('❌ Ошибка при отправке email через SendGrid:', error.message);
-            if (error.response?.body?.errors) {
-                error.response.body.errors.forEach(err => {
-                    console.error(`   - ${err.message}`);
-                });
-            }
-        });
+            return res.status(502).json({
+                success: false,
+                message: 'Email service temporarily unavailable. Please try again later.'
+            });
+        }
 
+        return res.status(200).json({
+            success: true,
+            message: 'Message sent successfully.'
+        });
     } catch (error) {
-        // Только критические ошибки валидации
-        res.status(500).json({
+        console.error('❌ Unhandled /api/contact error:', error);
+        return res.status(500).json({
             success: false,
-            message: 'Произошла ошибка при отправке сообщения. Попробуйте позже.'
+            message: 'Internal error. Please try again later.'
         });
     }
 });
 
-// Обработка несуществующих роутов
+// 404
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Роут не найден'
-    });
+    res.status(404).json({ success: false, message: 'Not found' });
 });
 
-// Обработка ошибок
+// Final error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-    console.error('❌ Необработанная ошибка:', err);
-    res.status(500).json({
-        success: false,
-        message: 'Внутренняя ошибка сервера'
-    });
+    console.error('❌ Unhandled error:', err);
+    if (err && /CORS/.test(err.message || '')) {
+        return res.status(403).json({ success: false, message: 'Origin not allowed' });
+    }
+    res.status(500).json({ success: false, message: 'Internal server error' });
 });
-
-// ============================================
-// ЗАПУСК СЕРВЕРА
-// ============================================
 
 app.listen(PORT, () => {
-    console.log('\n🚀 Сервер запущен!');
-    console.log(`📡 Порт: ${PORT}`);
-    console.log(`🌐 Health check: http://localhost:${PORT}/health`);
-    console.log(`📧 API endpoint: http://localhost:${PORT}/api/contact`);
-    console.log(`🔗 Frontend URL: ${FRONTEND_URL}`);
+    console.log('\n🚀 Server running');
+    console.log(`📡 Port: ${PORT}`);
+    console.log(`📧 Endpoint: POST /api/contact`);
+    console.log(`🌐 Allowed origins: ${allowedOrigins.join(', ')}`);
     console.log('');
 });

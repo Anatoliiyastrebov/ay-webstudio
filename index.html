@@ -1,72 +1,74 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#6366f1">
-    
-    <!-- Primary Meta Tags -->
-    <title>AY Portfolio</title>
-    <meta name="title" content="AY - Портфолио разработчика">
-    <meta name="description" content="Портфолио разработчика. Создаю впечатляющие веб-приложения с современными анимациями и интерактивными элементами.">
-    
-    <!-- Open Graph / Facebook -->
+    <script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;var c=document.documentElement.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}});})();</script>
+
+    <title data-i18n="meta.title">Anatolii Yastrebov – Frontend Developer Portfolio</title>
+    <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="Personal portfolio of Anatolii Yastrebov – frontend developer based in NRW, Germany. HTML, CSS, JavaScript, modern web development.">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anatolii-yastrebov.top/">
-    <meta property="og:title" content="AY - Портфолио разработчика">
-    <meta property="og:description" content="Портфолио разработчика. Создаю впечатляющие веб-приложения с современными анимациями и интерактивными элементами.">
+    <meta property="og:title" content="Anatolii Yastrebov – Frontend Developer Portfolio">
+    <meta property="og:description" content="Personal portfolio of Anatolii Yastrebov – frontend developer based in NRW, Germany.">
     <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:locale" content="ru_RU">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://anatolii-yastrebov.top/">
-    <meta property="twitter:title" content="AY - Портфолио разработчика">
-    <meta property="twitter:description" content="Портфолио разработчика. Создаю впечатляющие веб-приложения с современными анимациями и интерактивными элементами.">
-    <meta property="twitter:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
-    
-    <!-- Favicon -->
+    <meta property="og:locale" content="de_DE">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Anatolii Yastrebov – Frontend Developer Portfolio">
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Anatolii Yastrebov",
+      "jobTitle": "Frontend Developer",
+      "url": "https://anatolii-yastrebov.top",
+      "email": "kontakt@anatolii-yastrebov.top",
+      "sameAs": []
+    }
+    </script>
 </head>
 <body>
-    <!-- Animated Background -->
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
         <div class="gradient-orb orb-3"></div>
     </div>
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="#home" class="logo-link" aria-label="Back to top">
+                <a href="#home" class="logo-link" data-i18n-attr="aria-label" data-i18n="ui.logoHome" aria-label="Zum Seitenanfang">
                     <span class="logo-text">AY</span>
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link" data-i18n="nav.home">Главная</a></li>
-                <li><a href="#about" class="nav-link" data-i18n="nav.about">О себе</a></li>
-                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Навыки</a></li>
-                <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Проекты</a></li>
-                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Контакты</a></li>
+                <li><a href="#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
+                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
+                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn active" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="ru">RU</button>
                 <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn" data-lang="de">DE</button>
+                <button class="lang-btn active" data-lang="de">DE</button>
             </div>
-            <div class="hamburger">
+            <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <div class="hamburger" data-i18n-attr="aria-label" data-i18n="ui.menu" aria-label="Menü">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -74,226 +76,202 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
+    <!-- HERO -->
+    <section id="home" class="hero hero-sales">
         <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-eyebrow" data-i18n="hero.eyebrow">Frontend Developer · NRW · Deutschland</span>
+                <h1 class="hero-title">
+                    <span class="hero-headline" data-i18n="hero.headline">Anatolii Yastrebov — Frontend Developer.</span>
+                </h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Persönliches Portfolio: ausgewählte Projekte, eingesetzte Technologien und ein bisschen über mich. HTML, CSS, JavaScript, moderne Web-Entwicklung.</p>
+                <div class="hero-buttons">
+                    <a href="#projekte" class="btn btn-primary" data-i18n="hero.ctaPrimary">Projekte ansehen</a>
+                    <a href="#kontakt" class="btn btn-secondary" data-i18n="hero.ctaSecondary">Schreib mir</a>
+                </div>
+            </div>
             <div class="hero-image">
                 <div class="hero-photo-wrapper">
                     <div class="photo-container">
-                        <img src="images/photo.jpg" alt="Фото" class="hero-photo" onerror="this.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';">
-                    </div>
-                    <div class="floating-card" style="display: none;">
-                        <div class="card-content">
-                            <div class="code-snippet">
-                                <div class="code-line"></div>
-                                <div class="code-line"></div>
-                                <div class="code-line"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="line-1" data-i18n="hero.greeting">Привет, я</span><br>
-                    <span class="line-2 hero-name" data-i18n="hero.name">Анатолий Ястребов</span><br>
-                    <span class="line-3 typing-text"></span>
-                </h1>
-                <p class="hero-subtitle fade-in-up" data-i18n="hero.subtitle">Создаю современные веб-приложения и сайты для бизнеса. Специализируюсь на разработке удобных интерфейсов и функциональных решений.</p>
-                <div class="hero-buttons fade-in-up">
-                    <a href="#projects" class="btn btn-primary" data-i18n="hero.projectsBtn">Посмотреть проекты</a>
-                    <a href="#contact" class="btn btn-secondary" data-i18n="hero.contactBtn">Связаться</a>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title" data-i18n="about.title">О себе</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="fade-in" data-i18n="about.text1">Я веб-разработчик с практическим опытом создания сайтов и веб-приложений. Работаю как с фронтендом, так и с бэкендом, что позволяет создавать полноценные решения.</p>
-                    <p class="fade-in" data-i18n="about.text2">Специализируюсь на разработке веб-приложений, сайтов и пользовательских интерфейсов. Делаю акцент на качественный код, удобство использования и результат, который решает задачи клиента.</p>
-                    <p class="fade-in" data-i18n="about.text3">Работаю с различными технологиями и подхожу к каждому проекту индивидуально, учитывая потребности бизнеса и пользователей.</p>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="20">0</div>
-                        <div class="stat-label" data-i18n="about.stats.projects">Проектов</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="10">0</div>
-                        <div class="stat-label" data-i18n="about.stats.clients">Довольных клиентов</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" data-target="3" data-stat-type="experience">0</div>
-                        <div class="stat-label" data-i18n="about.stats.experience" data-stat-label="experience">Лет опыта</div>
+                        <picture>
+                            <source srcset="images/photo.webp" type="image/webp">
+                            <img src="images/photo.jpg" data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov – Frontend-Entwickler"
+                                 class="hero-photo" width="864" height="1184"
+                                 loading="eager" decoding="async">
+                        </picture>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <!-- PROJECTS -->
+    <section id="projekte" class="cases-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="skills.title">Навыки</h2>
-            <div class="skills-categories">
-                <div class="skill-category">
-                    <h3 class="category-title" data-i18n="skills.category.frontend">Frontend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">💻</div>
-                            <h4 data-i18n="skills.frontend.html">HTML / CSS</h4>
-                            <p data-i18n="skills.frontend.htmlDesc">Семантическая разметка, адаптивная вёрстка</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">⚡</div>
-                            <h4 data-i18n="skills.frontend.js">JavaScript</h4>
-                            <p data-i18n="skills.frontend.jsDesc">ES6+, DOM, асинхронность</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">⚛️</div>
-                            <h4 data-i18n="skills.frontend.react">React</h4>
-                            <p data-i18n="skills.frontend.reactDesc">Компоненты, хуки, состояние</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">📱</div>
-                            <h4 data-i18n="skills.frontend.responsive">Responsive Design</h4>
-                            <p data-i18n="skills.frontend.responsiveDesc">Адаптивная вёрстка для всех устройств</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">✓</div>
-                            <h4 data-i18n="skills.frontend.validation">Form Validation</h4>
-                            <p data-i18n="skills.frontend.validationDesc">Валидация форм и данных</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">🎨</div>
-                            <h4 data-i18n="skills.frontend.uxui">UX/UI Design</h4>
-                            <p data-i18n="skills.frontend.uxuiDesc">Проектирование интерфейсов и UX</p>
-                        </div>
-                    </div>
+            <h2 class="section-title" data-i18n="cases.title">Projekte</h2>
+            <p class="section-description" data-i18n="cases.subtitle">Eine Auswahl an Projekten – Aufgabe, Umsetzung und eingesetzte Technologien.</p>
+            <div class="cases-grid portfolio-grid" id="cases-container">
+                <!-- gerendert über JavaScript -->
+            </div>
+            <p class="blog-all-projects-wrap">
+                <a href="blog.html#meine-projekte" class="btn btn-secondary" data-i18n="blog.allProjects">Alle Live-Demos im Blog →</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- SKILLS / STACK -->
+    <section id="skills" class="services-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="skills.title">Skills &amp; Stack</h2>
+            <p class="section-description" data-i18n="skills.subtitle">Technologien, mit denen ich am häufigsten arbeite.</p>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3 class="service-name" data-i18n="skills.frontend.title">Frontend</h3>
+                    <ul class="service-points">
+                        <li data-i18n="skills.frontend.p1">HTML5, CSS3, modernes JavaScript (ES2020+)</li>
+                        <li data-i18n="skills.frontend.p2">Responsive Design, Mobile-First</li>
+                        <li data-i18n="skills.frontend.p3">CSS Grid, Flexbox, Animationen</li>
+                        <li data-i18n="skills.frontend.p4">Accessibility &amp; semantisches HTML</li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3 class="service-name" data-i18n="skills.tools.title">Tools &amp; Workflow</h3>
+                    <ul class="service-points">
+                        <li data-i18n="skills.tools.p1">Git &amp; GitHub</li>
+                        <li data-i18n="skills.tools.p2">Vite / npm-Skripte</li>
+                        <li data-i18n="skills.tools.p3">VS Code, Chrome DevTools</li>
+                        <li data-i18n="skills.tools.p4">Figma zum Lesen von Designs</li>
+                    </ul>
+                </article>
+
+                <article class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3 class="service-name" data-i18n="skills.lang.title">Sprachen</h3>
+                    <ul class="service-points">
+                        <li data-i18n="skills.lang.p1">Deutsch — Arbeitssprache</li>
+                        <li data-i18n="skills.lang.p2">Englisch — fließend</li>
+                        <li data-i18n="skills.lang.p3">Russisch — Muttersprache</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="ueber-mich" class="about-trust">
+        <div class="container">
+            <div class="about-trust-grid">
+                <div class="about-trust-photo">
+                    <picture>
+                        <source srcset="images/photo.webp" type="image/webp">
+                        <img src="images/photo.jpg" data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov – Frontend-Entwickler"
+                             width="864" height="1184" loading="lazy" decoding="async">
+                    </picture>
                 </div>
-                <div class="skill-category">
-                    <h3 class="category-title" data-i18n="skills.category.backend">Backend</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">🚀</div>
-                            <h4 data-i18n="skills.backend.node">Node.js</h4>
-                            <p data-i18n="skills.backend.nodeDesc">Express, серверная разработка</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">🗄️</div>
-                            <h4 data-i18n="skills.backend.db">Базы данных</h4>
-                            <p data-i18n="skills.backend.dbDesc">MongoDB, SQL основы</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">🔌</div>
-                            <h4 data-i18n="skills.backend.api">API</h4>
-                            <p data-i18n="skills.backend.apiDesc">REST, интеграции</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">⚙️</div>
-                            <h4 data-i18n="skills.backend.dataProcessing">Data Processing</h4>
-                            <p data-i18n="skills.backend.dataProcessingDesc">Обработка и валидация данных</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title" data-i18n="skills.category.tools">Инструменты</h3>
-                    <div class="skills-grid">
-                        <div class="skill-card">
-                            <div class="skill-icon">📦</div>
-                            <h4 data-i18n="skills.tools.git">Git / GitHub</h4>
-                            <p data-i18n="skills.tools.gitDesc">Версионирование, работа в команде</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">🎨</div>
-                            <h4 data-i18n="skills.tools.design">Figma</h4>
-                            <p data-i18n="skills.tools.designDesc">Работа с макетами, UI/UX</p>
-                        </div>
-                        <div class="skill-card">
-                            <div class="skill-icon">☁️</div>
-                            <h4 data-i18n="skills.tools.deploy">Деплой</h4>
-                            <p data-i18n="skills.tools.deployDesc">Vercel, Render, облачные сервисы</p>
-                        </div>
-                    </div>
+                <div class="about-trust-text">
+                    <h2 class="section-title section-title-left" data-i18n="about.title">Über mich</h2>
+                    <p data-i18n="about.p1"><strong>Anatolii Yastrebov</strong> — Frontend Developer aus Nordrhein-Westfalen. Diese Seite ist mein persönliches Portfolio – kein Angebot, sondern eine Sammlung von Projekten und Lernschritten.</p>
+                    <p data-i18n="about.p2">Ich beschäftige mich mit moderner Web-Entwicklung: sauberes HTML, durchdachtes CSS, JavaScript für sinnvolle Interaktionen. Mir wichtig: lesbarer Code, Performance und Zugänglichkeit.</p>
+                    <p data-i18n="about.p3">Außerhalb des Codes lese ich, lerne weiter und experimentiere mit kleinen Side-Projects. Wenn dich etwas hier interessiert oder du einfach Hallo sagen willst – schreib mir gerne.</p>
+                    <ul class="about-points">
+                        <li data-i18n="about.point1">📍 Standort: NRW · Deutschland</li>
+                        <li data-i18n="about.point2">💬 Sprachen: Deutsch, Englisch, Russisch</li>
+                        <li data-i18n="about.point3">📚 Aktuell: Vertiefung in moderne JavaScript-Patterns</li>
+                    </ul>
+                    <a href="#kontakt" class="btn btn-primary" data-i18n="about.cta">Schreib mir</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <!-- BLOG TEASER -->
+    <section id="blog-teaser" class="blog-teaser">
         <div class="container">
-            <h2 class="section-title" data-i18n="projects.title">Проекты</h2>
-            <p class="section-description" data-i18n="projects.description">Примеры моих работ: веб-приложения, сайты и интерфейсы, которые я разработал</p>
-            <div class="projects-grid" id="projects-container">
-                <!-- Проекты будут добавлены через JavaScript -->
+            <h2 class="section-title" data-i18n="blog.title">Blog &amp; Notizen</h2>
+            <p class="section-description" data-i18n="blog.subtitle">Gedanken zur Web-Entwicklung, Notizen aus dem Lernprozess.</p>
+            <div class="blog-grid">
+                <a href="blog.html#kosten" class="blog-card">
+                    <div class="blog-card-cat" data-i18n="blog.cat1">Notiz</div>
+                    <h3 class="blog-card-title" data-i18n="blog.a1.title">Was kostet eine Website in Deutschland?</h3>
+                    <p class="blog-card-excerpt" data-i18n="blog.a1.excerpt">Überblick über realistische Preisrahmen für Web-Projekte – als Lese-Notiz, nicht als Angebot.</p>
+                    <span class="blog-card-link" data-i18n="blog.read">Weiterlesen →</span>
+                </a>
+                <a href="blog.html#baukasten" class="blog-card">
+                    <div class="blog-card-cat" data-i18n="blog.cat2">Strategie</div>
+                    <h3 class="blog-card-title" data-i18n="blog.a2.title">Baukasten vs. eigener Code</h3>
+                    <p class="blog-card-excerpt" data-i18n="blog.a2.excerpt">Wann lohnt sich ein Website-Baukasten, und wann ist eine eigene Lösung besser? Eine ehrliche Übersicht.</p>
+                    <span class="blog-card-link" data-i18n="blog.read">Weiterlesen →</span>
+                </a>
+                <a href="blog.html#handwerker" class="blog-card">
+                    <div class="blog-card-cat" data-i18n="blog.cat3">Web</div>
+                    <h3 class="blog-card-title" data-i18n="blog.a3.title">Websites lokaler Betriebe</h3>
+                    <p class="blog-card-excerpt" data-i18n="blog.a3.excerpt">Was kleine Websites gut macht: Klarheit, Schnelligkeit, Mobile-First.</p>
+                    <span class="blog-card-link" data-i18n="blog.read">Weiterlesen →</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- CONTACT -->
+    <section id="kontakt" class="contact">
         <div class="container">
-            <h2 class="section-title" data-i18n="contact.title">Связаться со мной</h2>
-            <p class="section-description" data-i18n="contact.description">Есть проект или вопрос? Напишите мне, и я отвечу в ближайшее время. Готов обсудить вашу задачу и предложить решение.</p>
+            <h2 class="section-title" data-i18n="contact.title">Kontakt</h2>
+            <p class="section-description" data-i18n="contact.subtitle">Schreib mir – ich antworte gewöhnlich innerhalb von ein paar Tagen.</p>
             <p class="contact-gdpr-notice" data-i18n="contact.gdpr">Ihre Daten werden ausschließlich zur Beantwortung Ihrer Anfrage verwendet. Weitere Informationen finden Sie in unserer <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.</p>
+
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="contact-item">
-                        <div class="contact-icon-wrapper">
-                            <div class="contact-icon">📧</div>
-                        </div>
+                        <div class="contact-icon-wrapper"><div class="contact-icon">📧</div></div>
                         <div class="contact-details">
-                            <h3 data-i18n="contact.email.label">Email</h3>
-                            <p><a href="mailto:anatoliiyastrebov@gmail.com" class="contact-link">anatoliiyastrebov@gmail.com</a></p>
+                            <h3 data-i18n="contact.email.label">E-Mail</h3>
+                            <p><a href="mailto:kontakt@anatolii-yastrebov.top" class="contact-link">kontakt@anatolii-yastrebov.top</a></p>
                         </div>
                     </div>
-                    <div class="contact-item" id="contact-telegram" style="display: none;">
-                        <div class="contact-icon-wrapper">
-                            <div class="contact-icon">✈️</div>
-                        </div>
+                    <div class="contact-item">
+                        <div class="contact-icon-wrapper"><div class="contact-icon">📍</div></div>
                         <div class="contact-details">
-                            <h3 data-i18n="contact.telegram.label">Telegram</h3>
-                            <p><a href="#" class="contact-link" id="telegram-link" target="_blank" rel="noopener noreferrer" data-i18n="contact.telegram.value">@username</a></p>
-                        </div>
-                    </div>
-                    <div class="contact-item" id="contact-github" style="display: none;">
-                        <div class="contact-icon-wrapper">
-                            <div class="contact-icon">💻</div>
-                        </div>
-                        <div class="contact-details">
-                            <h3 data-i18n="contact.github.label">GitHub</h3>
-                            <p><a href="#" class="contact-link" id="github-link" target="_blank" rel="noopener noreferrer" data-i18n="contact.github.value">github.com/username</a></p>
+                            <h3 data-i18n="contact.region.label">Region</h3>
+                            <p data-i18n="contact.region.value">Nordrhein-Westfalen · Deutschland</p>
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
+
+                <form class="contact-form" novalidate>
+                    <!-- Honeypot field — should always stay empty.
+                         Bots fill every input; humans never see this. -->
+                    <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                     <div class="form-group">
+                        <label class="sr-only" for="contact-name" data-i18n="contact.form.name">Ihr Name</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">👤</span>
-                            <input type="text" data-i18n-placeholder="contact.form.name" placeholder="Ваше имя" required>
+                            <span class="input-icon" aria-hidden="true">👤</span>
+                            <input type="text" id="contact-name" name="name" autocomplete="name"
+                                   data-i18n-placeholder="contact.form.name" placeholder="Ihr Name"
+                                   minlength="2" maxlength="100" aria-required="true" required>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="sr-only" for="contact-email" data-i18n="contact.form.email">E-Mail</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">✉️</span>
-                            <input type="email" data-i18n-placeholder="contact.form.email" placeholder="Email" required>
+                            <span class="input-icon" aria-hidden="true">✉️</span>
+                            <input type="email" id="contact-email" name="email" autocomplete="email"
+                                   data-i18n-placeholder="contact.form.email" placeholder="E-Mail"
+                                   maxlength="200" aria-required="true" required>
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="sr-only" for="contact-message" data-i18n="contact.form.message">Nachricht</label>
                         <div class="input-wrapper">
-                            <span class="input-icon textarea-icon">💬</span>
-                            <textarea data-i18n-placeholder="contact.form.message" placeholder="Сообщение" rows="5" required></textarea>
+                            <span class="input-icon textarea-icon" aria-hidden="true">💬</span>
+                            <textarea id="contact-message" name="message" autocomplete="off"
+                                      data-i18n-placeholder="contact.form.message"
+                                      placeholder="Worum geht es? Eine kurze Nachricht reicht."
+                                      minlength="10" maxlength="5000" rows="5" aria-required="true" required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -305,20 +283,21 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary contact-submit-btn" data-i18n="contact.form.submit">
-                        <span class="btn-text">Отправить</span>
+                        <span class="btn-text">Nachricht senden</span>
                         <span class="btn-icon">→</span>
                     </button>
+                    <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2024</span> <span data-i18n="footer.name">Анатолий Ястребов</span>. <span data-i18n="footer.rights">Все права защищены.</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend Developer · NRW</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="impressum.html" class="footer-link" data-i18n="footer.impressum">Impressum</a>
@@ -329,7 +308,11 @@
         </div>
     </footer>
 
+    <script src="portfolio-projects.js"></script>
+    <script src="portfolio-i18n.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
+
 

@@ -1,7 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
+# Note: lock files MUST be committed — they pin deterministic installs.
 
 # Environment variables
 .env

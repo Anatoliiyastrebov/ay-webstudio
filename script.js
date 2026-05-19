@@ -378,9 +378,11 @@ window.getPersonName = (lang) => {
 };
 
 function applyTranslations(lang) {
-    const dict = translations[lang];
+    const isLegalPage = Boolean(document.body.dataset.legalPage);
+    const uiLang = isLegalPage ? 'de' : lang;
+    const dict = translations[uiLang];
     if (!dict) return;
-    document.documentElement.lang = lang;
+    document.documentElement.lang = uiLang;
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
@@ -414,19 +416,19 @@ function applyTranslations(lang) {
     }
 
     document.querySelectorAll('.lang-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === uiLang);
     });
 
     applyLegalLabels();
 
-    if (typeof renderCases === 'function') renderCases();
+    if (!isLegalPage && typeof renderCases === 'function') renderCases();
 
-    if (typeof window.renderBlogArticles === 'function') {
+    if (!isLegalPage && typeof window.renderBlogArticles === 'function') {
         const readTime = getTranslation('blog.readTime', dict) || 'ca. %n Min.';
         window.renderBlogArticles(lang, readTime);
     }
 
-    window.dispatchEvent(new CustomEvent('languagechange', { detail: { lang } }));
+    window.dispatchEvent(new CustomEvent('languagechange', { detail: { lang: uiLang } }));
 }
 
 function setLanguage(lang) {

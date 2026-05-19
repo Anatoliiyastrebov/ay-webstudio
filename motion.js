@@ -284,13 +284,24 @@
     function animateProjectDetail() {
         const root = document.querySelector('#project-content');
         if (!root || !root.children.length) return;
-        gsap.from(root.children, {
-            y: 36,
-            autoAlpha: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: 'power3.out'
-        });
+
+        gsap.set(root.children, { autoAlpha: 1, opacity: 1, visibility: 'inherit', y: 0 });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        gsap.fromTo(
+            root.children,
+            { y: 24, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: 'power3.out',
+                overwrite: true,
+                immediateRender: false
+            }
+        );
     }
 
     function init() {

@@ -2970,9 +2970,11 @@ section:not(.hero) {
 
 .portfolio-card--compact {
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 0;
 }
 
 .portfolio-card-body {
@@ -3036,6 +3038,7 @@ section:not(.hero) {
     position: relative;
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    border-radius: var(--radius-lg, 24px) var(--radius-lg, 24px) 0 0;
     background: var(--bg-elevated, #171a21);
     border-bottom: 1px solid var(--border);
 }

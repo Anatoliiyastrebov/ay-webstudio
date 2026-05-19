@@ -41,12 +41,14 @@
         return field[lang] || field.de || [];
     }
 
-    function listBlock(label, items) {
-        if (!items || !items.length) return '';
+    function listBlock(label, items, modifier) {
+        const list = (items || []).filter(Boolean);
+        if (!list.length) return '';
+        const mod = modifier ? ` ${modifier}` : '';
         return `
-            <section class="case-detail-block">
+            <section class="case-detail-block${mod}">
                 <div class="case-label">${label}</div>
-                <ul class="portfolio-list case-detail-text">${items.map((i) => `<li>${i}</li>`).join('')}</ul>
+                <ul class="portfolio-list case-detail-list">${list.map((i) => `<li>${i}</li>`).join('')}</ul>
             </section>
         `;
     }
@@ -81,10 +83,10 @@
         const summary = isPortfolio ? pickLocalized(caseItem, lang, 'summary') : pickLocalized(caseItem, lang, 'problem');
         const implemented = isPortfolio
             ? pickLocalizedList(caseItem.implemented, lang)
-            : [pickLocalized(caseItem, lang, 'solution')];
+            : [pickLocalized(caseItem, lang, 'solution')].filter(Boolean);
         const planned = isPortfolio
             ? pickLocalizedList(caseItem.planned, lang)
-            : [pickLocalized(caseItem, lang, 'result')];
+            : [pickLocalized(caseItem, lang, 'result')].filter(Boolean);
 
         const lSummary = cases.labelSummary || cases.labelProblem || 'Overview';
         const lImplemented = cases.labelImplemented || cases.labelSolution || 'Implemented';
@@ -112,38 +114,40 @@
         const styles = pickLocalizedList(caseItem.styles, lang);
         const techStack = pickLocalizedList(caseItem.techStack, lang);
         const stylesBlock = styles.length
-            ? `<section class="case-detail-block">
+            ? `<section class="case-detail-block case-detail-block--styles">
                 <div class="case-stack-label">${lStyles}</div>
                 <div class="case-stack case-stack-styles">${styles.map((s) => `<span class="case-stack-tag case-stack-tag-style">${s}</span>`).join('')}</div>
                </section>`
             : '';
 
-        document.getElementById('project-content').innerHTML = `
-            ${preview}
-            <header class="project-detail-header">
-                <div class="case-industry" style="margin-bottom: 8px;">${category}</div>
-                <h1 class="project-detail-title">${title}</h1>
-                ${buttons}
-            </header>
-
-            <section class="case-detail-block">
-                <div class="case-label">${lSummary}</div>
-                <p class="case-detail-text">${summary}</p>
-            </section>
-
-            ${listBlock(lImplemented, implemented)}
-            ${listBlock(lPlanned, planned)}
-
-            <section class="case-detail-block">
+        const stackBlock = techStack.length
+            ? `<section class="case-detail-block case-detail-block--stack">
                 <div class="case-stack-label">${lStack}</div>
                 <div class="case-stack">${techStack.map((s) => `<span class="case-stack-tag">${s}</span>`).join('')}</div>
-            </section>
+               </section>`
+            : '';
 
-            ${stylesBlock}
+        document.getElementById('project-content').innerHTML = `
+            <article class="project-detail-article">
+                ${preview}
+                <header class="project-detail-header">
+                    <p class="case-industry project-detail-category">${category}</p>
+                    <h1 class="project-detail-title">${title}</h1>
+                    ${buttons}
+                </header>
+
+                <section class="case-detail-block case-detail-block--summary">
+                    <div class="case-label">${lSummary}</div>
+                    <p class="case-detail-text case-detail-summary">${summary}</p>
+                </section>
+
+                ${listBlock(lImplemented, implemented, 'case-detail-block--implemented')}
+                ${listBlock(lPlanned, planned, 'case-detail-block--planned')}
+                ${stackBlock}
+                ${stylesBlock}
+            </article>
         `;
 
-        const metaTitle = dict.project && dict.project.metaTitle;
-        const metaDesc = dict.project && dict.project.metaDescription;
         if (title) {
             const person =
                 (dict.ui && dict.ui.personName) ||
@@ -152,7 +156,9 @@
             document.title = `${title} · ${person}`;
         }
         const metaDescEl = document.querySelector('meta[name="description"]');
-        if (metaDescEl && metaDesc) metaDescEl.setAttribute('content', metaDesc);
+        if (metaDescEl && summary) metaDescEl.setAttribute('content', summary);
+
+        window.scrollTo(0, 0);
 
         if (typeof window.animateProjectDetail === 'function') {
             requestAnimationFrame(() => window.animateProjectDetail());

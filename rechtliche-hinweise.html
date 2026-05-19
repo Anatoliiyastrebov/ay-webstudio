@@ -6,18 +6,18 @@
     <meta name="theme-color" content="#0b0d10">
     <script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;var c=document.documentElement.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}});})();</script>
 
-    <title data-i18n="project.metaTitle">Projekt · Anatolii Yastrebov</title>
-    <meta name="description" data-i18n-attr="content" data-i18n="project.metaDescription" content="Portfolio-Projekt im Detail: Umsetzung, Technologien und geplante Erweiterungen.">
+    <title>Rechtliche Hinweise · Anatolii Yastrebov</title>
+    <meta name="description" content="Rechtliche Hinweise zum persönlichen Portfolio von Anatolii Yastrebov — Status Impressum und Kontakt.">
 
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://anatolii-yastrebov.top/project.html">
-    <meta property="og:title" content="Projekt · Anatolii Yastrebov">
-    <meta property="og:description" content="Portfolio-Projekt im Detail: Aufgabe, Umsetzung und eingesetzte Technologien.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://anatolii-yastrebov.top/rechtliche-hinweise.html">
+    <meta property="og:title" content="Rechtliche Hinweise · Anatolii Yastrebov">
+    <meta property="og:description" content="Rechtliche Hinweise zum persönlichen Portfolio — Vorbereitung zur Selbständigkeit als Freiberufler.">
     <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
     <meta property="og:locale" content="de_DE">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Projekt · Anatolii Yastrebov">
+    <meta name="twitter:title" content="Rechtliche Hinweise · Anatolii Yastrebov">
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="premium.css">
 </head>
-<body>
+<body data-legal-page="rechtliche-hinweise">
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -37,32 +37,35 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="index.html#home" class="logo-link"><span class="logo-text">AY</span></a>
+                <a href="index.html#home" class="logo-link" data-i18n-attr="aria-label" data-i18n="ui.logoHome" aria-label="Zum Seitenanfang">
+                    <span class="logo-text">AY</span>
+                </a>
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
-                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Kompetenzen</a></li>
                 <li><a href="index.html#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
-                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Notizen</a></li>
                 <li><a href="index.html#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn active" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="ru" type="button">RU</button>
+                <button class="lang-btn" data-lang="en" type="button">EN</button>
+                <button class="lang-btn active" data-lang="de" type="button">DE</button>
             </div>
             <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
                 <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            <div class="hamburger"><span></span><span></span><span></span></div>
+            <div class="hamburger" data-i18n-attr="aria-label" data-i18n="ui.menu" aria-label="Menü" role="button" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </nav>
 
-    <main class="project-page">
+    <main class="legal-page">
         <div class="container">
-            <a href="index.html#projekte" class="back-link" data-i18n="project.back">← Zurück zur Übersicht</a>
-            <div id="project-content" class="project-detail"></div>
+            <div class="legal-content" id="legal-content"></div>
         </div>
     </main>
 
@@ -70,7 +73,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Webentwickler · NRW</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend-Entwickler · NRW</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="rechtliche-hinweise.html" class="footer-link" data-i18n="footer.rechtlicheHinweise">Rechtliche Hinweise</a>
@@ -83,17 +86,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-    <script src="motion.js"></script>
-    <script src="portfolio-projects.js"></script>
-    <script src="portfolio-i18n.js"></script>
     <script src="script.js"></script>
-    <script src="project.js"></script>
-    <script>
-        if (typeof applyTranslations === 'function') {
-            applyTranslations(localStorage.getItem('language') || 'de');
-        }
-    </script>
+    <script src="legal.js"></script>
 </body>
 </html>

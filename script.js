@@ -119,6 +119,7 @@ const translations = {
         footer: {
             name: 'Anatolii Yastrebov',
             role: 'Frontend-Entwickler · NRW',
+            rechtlicheHinweise: 'Rechtliche Hinweise',
             impressum: 'Impressum',
             datenschutz: 'Datenschutzerklärung'
         },
@@ -222,7 +223,7 @@ const translations = {
                 consentError: 'Please agree to the processing of your data.'
             }
         },
-        footer: { name: 'Anatolii Yastrebov', role: 'Frontend developer · NRW', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
+        footer: { name: 'Anatolii Yastrebov', role: 'Frontend developer · NRW', rechtlicheHinweise: 'Rechtliche Hinweise', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
         project: {
             back: '← Back to overview',
             notFoundTitle: '—',
@@ -323,7 +324,7 @@ const translations = {
                 consentError: 'Подтвердите согласие на обработку данных.'
             }
         },
-        footer: { name: 'Анатолий Ястребов', role: 'Фронтенд-разработчик · NRW', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
+        footer: { name: 'Анатолий Ястребов', role: 'Фронтенд-разработчик · NRW', rechtlicheHinweise: 'Rechtliche Hinweise', impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' },
         project: {
             back: '← К списку проектов',
             notFoundTitle: '—',
@@ -352,7 +353,11 @@ function getTranslation(key, dict) {
 }
 
 
-const LEGAL_LABELS = { impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' };
+const LEGAL_LABELS = {
+    rechtlicheHinweise: 'Rechtliche Hinweise',
+    impressum: 'Impressum',
+    datenschutz: 'Datenschutzerklärung'
+};
 
 function pickLocalizedList(field, lang) {
     if (!field) return [];
@@ -361,6 +366,9 @@ function pickLocalizedList(field, lang) {
 }
 
 function applyLegalLabels() {
+    document.querySelectorAll('[data-i18n="footer.rechtlicheHinweise"]').forEach((el) => {
+        el.textContent = LEGAL_LABELS.rechtlicheHinweise;
+    });
     document.querySelectorAll('[data-i18n="footer.impressum"]').forEach((el) => {
         el.textContent = LEGAL_LABELS.impressum;
     });

@@ -275,6 +275,18 @@ const legalTranslations = {
                     </div>
                 `
             },
+            'rechtliche-hinweise': {
+                title: 'Rechtliche Hinweise',
+                content: `
+                    <h1>Rechtliche Hinweise</h1>
+                    <p>Diese Website ist ein persönliches Portfolio von Anatolii Yastrebov. Ich befinde mich derzeit in der Vorbereitung zur Selbständigkeit als Freiberufler. Daher ist noch kein Impressum im Sinne des §&nbsp;5 DDG vorhanden. Sobald mein Gewerbe angemeldet ist, werde ich dies ergänzen.</p>
+                    <p>Für erste Anfragen kontaktieren Sie mich bitte über <a href="index.html#kontakt">das Kontaktformular</a> – ich melde mich innerhalb 24h.</p>
+                    <div class="legal-footer">
+                        <p><a href="index.html">← Zurück zur Startseite</a></p>
+                        <p><a href="datenschutz.html">Datenschutzerklärung</a></p>
+                    </div>
+                `
+            },
             impressum: {
                 title: 'Impressum',
                 content: `

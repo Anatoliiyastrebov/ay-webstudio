@@ -147,6 +147,10 @@
         if (title) document.title = `${title} · Anatolii Yastrebov`;
         const metaDescEl = document.querySelector('meta[name="description"]');
         if (metaDescEl && metaDesc) metaDescEl.setAttribute('content', metaDesc);
+
+        if (typeof window.animateProjectDetail === 'function') {
+            requestAnimationFrame(() => window.animateProjectDetail());
+        }
     }
 
     function init() {

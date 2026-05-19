@@ -3032,7 +3032,7 @@ section:not(.hero) {
     position: relative;
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    background: var(--bg-tertiary);
+    background: var(--bg-elevated, #171a21);
     border-bottom: 1px solid var(--border);
 }
 

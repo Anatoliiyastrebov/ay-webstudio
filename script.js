@@ -61,9 +61,10 @@ const translations = {
             },
             lang: {
                 title: 'Sprachen',
-                p1: 'Deutsch — Arbeitssprache',
-                p2: 'Englisch — fließend',
-                p3: 'Russisch — Muttersprache'
+                p1: 'Deutsch — B2',
+                p2: 'Englisch — Grundkenntnisse',
+                p3: 'Russisch — Muttersprache',
+                p4: 'Ukrainisch — Muttersprache'
             }
         },
         about: {
@@ -72,7 +73,7 @@ const translations = {
             p2: 'Ich beschäftige mich mit moderner Web-Entwicklung: sauberes HTML, durchdachtes CSS, JavaScript für sinnvolle Interaktionen. Mir wichtig: lesbarer Code, Performance und Zugänglichkeit.',
             p3: 'Außerhalb des Codes lese ich, lerne weiter und experimentiere mit kleinen Side-Projects. Wenn dich etwas hier interessiert oder du einfach Hallo sagen willst – schreib mir gerne.',
             point1: '📍 Standort: NRW · Deutschland',
-            point2: '💬 Sprachen: Deutsch, Englisch, Russisch',
+            point2: '💬 Sprachen: Deutsch (B2), Englisch (Grundkenntnisse), Russisch & Ukrainisch (Muttersprache)',
             point3: '📚 Aktuell: Vertiefung in moderne JavaScript-Patterns',
             cta: 'Schreib mir'
         },
@@ -163,7 +164,13 @@ const translations = {
             subtitle: 'Technologies I work with most often.',
             frontend: { title: 'Frontend', p1: 'HTML5, CSS3, modern JavaScript (ES2020+)', p2: 'Responsive design, mobile-first', p3: 'CSS Grid, Flexbox, animations', p4: 'Accessibility & semantic HTML' },
             tools: { title: 'Tools & Workflow', p1: 'Git & GitHub', p2: 'Vite / npm scripts', p3: 'VS Code, Chrome DevTools', p4: 'Figma for reading designs' },
-            lang: { title: 'Languages', p1: 'German — working language', p2: 'English — fluent', p3: 'Russian — native' }
+            lang: {
+                title: 'Languages',
+                p1: 'German — B2',
+                p2: 'English — beginner',
+                p3: 'Russian — native',
+                p4: 'Ukrainian — native'
+            }
         },
         about: {
             title: 'About me',
@@ -171,7 +178,7 @@ const translations = {
             p2: 'I focus on modern web development: clean HTML, considered CSS, JavaScript for meaningful interactions. What matters to me: readable code, performance and accessibility.',
             p3: 'Outside of code I read, keep learning and tinker with small side-projects. If something here interests you or you just want to say hi – feel free to drop me a line.',
             point1: '📍 Location: NRW · Germany',
-            point2: '💬 Languages: German, English, Russian',
+            point2: '💬 Languages: German (B2), English (beginner), Russian & Ukrainian (native)',
             point3: '📚 Currently: deeper dive into modern JavaScript patterns',
             cta: 'Get in touch'
         },
@@ -255,7 +262,13 @@ const translations = {
             subtitle: 'Технологии, с которыми работаю чаще всего.',
             frontend: { title: 'Фронтенд', p1: 'HTML5, CSS3, современный JavaScript (ES2020+)', p2: 'Адаптивная вёрстка, mobile-first', p3: 'CSS Grid, Flexbox, анимации', p4: 'Доступность и семантический HTML' },
             tools: { title: 'Инструменты', p1: 'Git и GitHub', p2: 'Vite / npm-скрипты', p3: 'VS Code, Chrome DevTools', p4: 'Figma для чтения дизайнов' },
-            lang: { title: 'Языки', p1: 'Немецкий — рабочий', p2: 'Английский — свободно', p3: 'Русский — родной' }
+            lang: {
+                title: 'Языки',
+                p1: 'Немецкий — B2',
+                p2: 'Английский — начальный уровень',
+                p3: 'Русский — родной',
+                p4: 'Украинский — родной'
+            }
         },
         about: {
             title: 'Обо мне',
@@ -263,7 +276,7 @@ const translations = {
             p2: 'Занимаюсь современной веб-разработкой: чистый HTML, продуманный CSS, JavaScript для осмысленных взаимодействий. Что важно для меня: читаемый код, производительность и доступность.',
             p3: 'Вне кода читаю, продолжаю учиться и пилю небольшие пет-проекты. Если что-то здесь зацепило или просто хочется поздороваться — напиши.',
             point1: '📍 Локация: NRW · Германия',
-            point2: '💬 Языки: немецкий, английский, русский',
+            point2: '💬 Языки: немецкий (B2), английский (начальный), русский и украинский (родные)',
             point3: '📚 Сейчас: углубляюсь в современные JavaScript-паттерны',
             cta: 'Написать мне'
         },
@@ -458,6 +471,7 @@ function renderCases() {
         const el = document.getElementById(id);
         if (el) el.innerHTML = html;
     });
+    window.dispatchEvent(new Event('casesrendered'));
 }
 
 
@@ -502,19 +516,6 @@ window.addEventListener('scroll', () => {
     if (!navbar) return;
     navbar.classList.toggle('is-scrolled', window.pageYOffset > 24);
 }, { passive: true });
-
-// ============================================================
-// Scroll reveal
-// ============================================================
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-document.querySelectorAll('.fade-in, .fade-in-up, .section-title, .service-card, .package-card, .case-card, .wartung-card, .process-step, .blog-card, .faq-item').forEach((el) => {
-    observer.observe(el);
-});
 
 // ============================================================
 // Year in footer
@@ -637,4 +638,7 @@ if (contactForm) {
 // Init
 // ============================================================
 applyTranslations(currentLanguage);
-renderCases();
+
+if (typeof window.initPremiumMotion === 'function') {
+    requestAnimationFrame(() => window.initPremiumMotion());
+}

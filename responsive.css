@@ -1,0 +1,428 @@
+/* ===================================================================
+   RESPONSIVE LAYER — mobile / tablet / desktop / ultra-wide
+   Loaded after premium.css. No visual redesign — layout & overflow fixes.
+   =================================================================== */
+
+:root {
+    --page-gutter: clamp(12px, 4vw, 24px);
+    --content-max: 1180px;
+    --touch-target-min: 44px;
+    --section-pad-y: clamp(3rem, 8vw, 5rem);
+}
+
+/* ----- Global overflow & box model ----- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+video,
+iframe,
+svg,
+canvas,
+picture {
+    max-width: 100%;
+    height: auto;
+}
+
+main,
+section,
+article,
+header,
+footer,
+nav,
+.hero,
+.hero-content,
+.container,
+.navbar,
+.nav-container,
+.footer-content {
+    min-width: 0;
+}
+
+/* Grid/flex children must shrink on narrow screens */
+[class*="-grid"] > *,
+.hero-content > *,
+.contact-content > *,
+.portfolio-card--compact,
+.service-card,
+.case-card,
+.blog-card {
+    min-width: 0;
+}
+
+/* ----- Unified container (overrides duplicate rules) ----- */
+.container {
+    width: min(100% - (var(--page-gutter) * 2), var(--content-max));
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+    box-sizing: border-box;
+}
+
+section {
+    padding-block: var(--section-pad-y);
+}
+
+/* Decorative background must not widen viewport */
+.animated-bg {
+    width: 100%;
+    max-width: 100%;
+    contain: paint;
+    overflow: hidden;
+}
+
+.gradient-orb {
+    max-width: min(600px, 85vw);
+    max-height: min(600px, 85vw);
+}
+
+/* ----- Mobile nav: scroll lock & touch targets ----- */
+body.nav-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
+@media (min-width: 901px) {
+    .nav-menu {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex-basis: auto;
+        order: 0;
+        width: auto;
+        padding: 0;
+        margin: 0;
+        border: none;
+    }
+
+    .hamburger {
+        display: none !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .hamburger {
+        display: flex;
+        min-width: var(--touch-target-min);
+        min-height: var(--touch-target-min);
+    }
+
+    .theme-toggle {
+        min-width: var(--touch-target-min);
+        min-height: var(--touch-target-min);
+    }
+
+    .lang-btn {
+        min-width: 2.25rem;
+        min-height: var(--touch-target-min);
+        padding-block: 8px;
+    }
+
+    .nav-menu .nav-link {
+        min-height: var(--touch-target-min);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar {
+        width: min(100% - 16px, 100%);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .nav-container {
+        padding: 6px 8px 6px 14px;
+        gap: 8px;
+    }
+
+    .language-switcher {
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+}
+
+/* ----- Typography scale ----- */
+html {
+    font-size: clamp(15px, 2.5vw, 16px);
+}
+
+.hero-subtitle,
+.section-description,
+.contact-gdpr-notice {
+    font-size: clamp(0.9375rem, 2.8vw, 1.125rem);
+}
+
+/* ----- Hero ----- */
+.hero,
+.hero-sales {
+    padding-inline: var(--page-gutter);
+}
+
+.hero-content {
+    width: 100%;
+    max-width: min(1200px, 100%);
+    padding-inline: 0;
+}
+
+.hero-buttons {
+    width: 100%;
+}
+
+.hero-photo-wrapper,
+.photo-container {
+    width: 100%;
+    max-width: min(380px, 100%);
+    margin-inline: auto;
+}
+
+.photo-container img,
+.hero-photo,
+.about-trust-photo img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ----- Grids ----- */
+.services-grid,
+.packages-grid,
+.cases-grid,
+.portfolio-grid,
+.wartung-grid,
+.blog-grid,
+.process-steps,
+.trust-grid,
+.skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.about-trust-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 5vw, 3rem);
+}
+
+.contact-content {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+@media (min-width: 901px) {
+    .contact-content {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    }
+
+    .about-trust-grid {
+        grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+        align-items: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .portfolio-grid,
+    .cases-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-card-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .portfolio-card-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ----- Forms ----- */
+.contact-form {
+    padding: clamp(1rem, 4vw, 2rem);
+    width: 100%;
+    max-width: 100%;
+}
+
+.input-wrapper input,
+.input-wrapper textarea,
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px; /* prevents iOS zoom on focus */
+}
+
+.checkbox-wrapper {
+    align-items: flex-start;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    width: 1.125rem;
+    height: 1.125rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+/* ----- Footer ----- */
+.footer-content {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.footer-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+    text-align: center;
+}
+
+.footer-legal-links span[aria-hidden="true"] {
+    display: none;
+}
+
+.footer-legal-links a {
+    display: inline-block;
+    padding: 0.25rem 0;
+}
+
+/* ----- Legal / project / blog pages ----- */
+.legal-page {
+    padding-top: clamp(6rem, 14vw, 9rem);
+    padding-inline: var(--page-gutter);
+}
+
+.legal-content {
+    width: 100%;
+    max-width: 100%;
+    padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.project-detail-header,
+.blog-article,
+.case-detail-block {
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* ----- Tablet (iPad) ----- */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .portfolio-grid,
+    .cases-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .services-grid,
+    .packages-grid,
+    .wartung-grid,
+    .blog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ----- Small phones (320px / iPhone SE) ----- */
+@media (max-width: 374px) {
+    :root {
+        --page-gutter: 12px;
+    }
+
+    .navbar {
+        width: calc(100% - 12px);
+        top: 8px;
+    }
+
+    .nav-container {
+        padding: 6px 6px 6px 12px;
+        gap: 6px;
+    }
+
+    .lang-btn {
+        min-width: 28px;
+        padding: 6px 6px;
+        font-size: 0.65rem;
+    }
+
+    .logo-text {
+        font-size: 0.95rem;
+    }
+
+    .footer-legal-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .contact-form {
+        padding: 1rem;
+    }
+
+    .package-price-amount,
+    .wartung-price-amount {
+        font-size: 1.4rem;
+    }
+}
+
+/* ----- Laptops ----- */
+@media (min-width: 1025px) {
+    .portfolio-grid,
+    .services-grid,
+    .packages-grid,
+    .wartung-grid,
+    .blog-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ----- Ultra-wide ----- */
+@media (min-width: 1440px) {
+    :root {
+        --content-max: 1280px;
+    }
+}
+
+@media (min-width: 1920px) {
+    :root {
+        --content-max: 1400px;
+    }
+
+    .hero-content {
+        max-width: min(1400px, 100%);
+    }
+}
+
+/* ----- Reduced motion: no layout shift from hover transforms on touch ----- */
+@media (hover: none) {
+    .service-card:hover,
+    .package-card:hover,
+    .case-card:hover,
+    .blog-card:hover,
+    .portfolio-card--compact:hover {
+        transform: none;
+    }
+}
+
+/* ----- Safe areas (notched iPhones) ----- */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+
+    .navbar {
+        top: max(10px, env(safe-area-inset-top));
+    }
+}

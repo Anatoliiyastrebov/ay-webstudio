@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0b0d10">
-    <script>(function(){try{var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;var c=document.documentElement.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}});})();</script>
+    <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
 
     <title>Rechtliche Hinweise · Anatolii Yastrebov</title>
     <meta name="description" content="Rechtliche Hinweise zum persönlichen Portfolio von Anatolii Yastrebov — Status Impressum und Kontakt.">

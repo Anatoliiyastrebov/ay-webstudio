@@ -4,7 +4,7 @@
   "description": "Modern portfolio website - static frontend",
   "main": "legal.js",
   "scripts": {
-    "build": "node scripts/apply-promo.mjs && node scripts/build-assets.mjs && node scripts/prerender-blog.mjs",
+    "build": "node scripts/apply-promo.mjs && node scripts/build-assets.mjs && node scripts/prerender-blog.mjs && node scripts/build-dist.mjs",
     "optimize-images": "node scripts/optimize-images.mjs",
     "perf": "node scripts/perf-audit.mjs",
     "capture-previews": "node scripts/capture-previews.mjs",

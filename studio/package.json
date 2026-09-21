@@ -1,0 +1,18 @@
+{
+  "name": "portfolio-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sanity Studio for the portfolio site (projects + blog)",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "import": "sanity dataset import ../scripts/sanity-seed.ndjson production --replace"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanity": "^4.0.0",
+    "styled-components": "^6.1.0"
+  }
+}

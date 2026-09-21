@@ -28,12 +28,19 @@ for (const { slug, url } of projects) {
     try {
         await page.goto(url, { waitUntil: 'networkidle', timeout: 45000 });
         await page.waitForTimeout(1500);
+        const jpgPath = path.join(outDir, `${slug}.jpg`);
         await page.screenshot({
-            path: path.join(outDir, `${slug}.jpg`),
+            path: jpgPath,
             type: 'jpeg',
             quality: 82,
             fullPage: false
         });
+        try {
+            const { execSync } = await import('child_process');
+            execSync(`cwebp -q 82 "${jpgPath}" -o "${jpgPath.replace(/\.jpe?g$/i, '.webp')}"`, { stdio: 'ignore' });
+        } catch {
+            /* optional: install cwebp for WebP output */
+        }
         console.log('OK', slug);
     } catch (err) {
         console.error('FAIL', slug, err.message);

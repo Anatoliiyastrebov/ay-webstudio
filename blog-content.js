@@ -240,8 +240,9 @@
         if (!container || !window.blogArticles) return;
 
         const order = ['kosten', 'baukasten', 'handwerker'];
+        const cta = typeof window.getBlogCtaHtml === 'function' ? window.getBlogCtaHtml(lang) : '';
         container.innerHTML = order
-            .map((id) => (window.blogArticles[id][lang] || window.blogArticles[id].de))
+            .map((id) => (window.blogArticles[id][lang] || window.blogArticles[id].de) + cta)
             .join('');
 
         container.querySelectorAll('.blog-read-time').forEach((el) => {

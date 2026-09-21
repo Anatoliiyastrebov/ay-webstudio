@@ -1,6 +1,9 @@
 {
-  "name": "AY - Портфолио",
-  "short_name": "AY Portfolio",
+  "name": "Websites für kleine Betriebe — Leverkusen, Köln",
+  "short_name": "AY Websites",
+  "description": "Websites für kleine Betriebe in Leverkusen, Köln und dem Rheinisch-Bergischen Kreis. Festpreis ab 600 €.",
+  "lang": "de",
+  "start_url": "/",
   "icons": [
     {
       "src": "/favicon.svg",
@@ -9,6 +12,6 @@
     }
   ],
   "theme_color": "#6366f1",
-  "background_color": "#0a0a0f",
+  "background_color": "#0b0d10",
   "display": "standalone"
 }

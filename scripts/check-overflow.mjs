@@ -5,7 +5,7 @@ import path from 'path';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const base = `file://${root}/`;
 
-const pages = ['index.html', 'blog.html', 'project.html?id=handwerk', 'impressum.html'];
+const pages = ['index.html', 'leistungen.html', '404.html', 'blog.html', 'project.html?id=handwerk', 'impressum.html'];
 const viewports = [
     { name: 'iPhone SE', width: 320, height: 568 },
     { name: 'Android', width: 390, height: 844 },

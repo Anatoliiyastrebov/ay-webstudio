@@ -77,16 +77,26 @@
     function revealSection(selector, vars) {
         const el = document.querySelector(selector);
         if (!el) return;
-        gsap.from(el.querySelectorAll('.section-title, .section-description, .section-kicker'), {
+        const targets = el.querySelectorAll('.section-title, .section-description, .section-kicker');
+        if (!targets.length) return;
+        gsap.from(targets, {
             y: 36,
             autoAlpha: 0,
             duration: 0.9,
             stagger: 0.08,
             ease: 'power3.out',
+            // Mit immediateRender wird die Überschrift schon beim Laden auf
+            // unsichtbar gesetzt. Kommt danach ein ScrollTrigger.refresh(),
+            // liest der Tween diesen Zustand als Endwert ein und animiert von
+            // unsichtbar nach unsichtbar — die Überschrift blieb dann weg und
+            // hinterließ ein Loch im Layout. Erst beim Trigger rendern löst das;
+            // dieselbe Kombination benutzt initProjectCards() weiter unten.
+            immediateRender: false,
             scrollTrigger: {
                 trigger: el,
                 start: 'top 82%',
-                toggleActions: 'play none none reverse'
+                once: true,
+                invalidateOnRefresh: true
             },
             ...vars
         });
@@ -103,7 +113,8 @@
                 autoAlpha: 0,
                 duration: 1,
                 ease: 'power3.out',
-                scrollTrigger: { trigger: about, start: 'top 78%' }
+                immediateRender: false,
+                scrollTrigger: { trigger: about, start: 'top 78%', once: true }
             });
             gsap.from('.about-trust-text > *', {
                 y: 28,
@@ -111,7 +122,8 @@
                 duration: 0.75,
                 stagger: 0.07,
                 ease: 'power3.out',
-                scrollTrigger: { trigger: about, start: 'top 75%' }
+                immediateRender: false,
+                scrollTrigger: { trigger: about, start: 'top 75%', once: true }
             });
         }
 
@@ -123,28 +135,40 @@
                 duration: 0.85,
                 stagger: 0.12,
                 ease: 'power3.out',
-                scrollTrigger: { trigger: blog, start: 'top 78%' }
+                immediateRender: false,
+                scrollTrigger: { trigger: blog, start: 'top 78%', once: true }
             });
         }
 
         const contact = document.querySelector('#kontakt.contact');
         if (contact) {
-            gsap.from('.contact-info .contact-item', {
-                x: -24,
-                autoAlpha: 0,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: contact, start: 'top 80%' }
-            });
-            gsap.from('.contact-form .form-group, .contact-form .contact-submit-btn', {
-                y: 24,
-                autoAlpha: 0,
-                duration: 0.65,
-                stagger: 0.06,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: '.contact-form', start: 'top 85%' }
-            });
+            // fromTo с явным конечным состоянием: gsap.from берёт за конец
+            // текущее состояние элемента, и если оно почему-то скрыто,
+            // контакты остаются невидимыми навсегда. Здесь это критично.
+            gsap.fromTo('.contact-info .contact-item',
+                { x: -24, autoAlpha: 0 },
+                {
+                    x: 0,
+                    autoAlpha: 1,
+                    duration: 0.7,
+                    stagger: 0.1,
+                    ease: 'power2.out',
+                    clearProps: 'opacity,visibility,transform',
+                    scrollTrigger: { trigger: contact, start: 'top 80%', once: true }
+                }
+            );
+            gsap.fromTo('.contact-form .form-group, .contact-form .contact-submit-btn',
+                { y: 24, autoAlpha: 0 },
+                {
+                    y: 0,
+                    autoAlpha: 1,
+                    duration: 0.65,
+                    stagger: 0.06,
+                    ease: 'power2.out',
+                    clearProps: 'opacity,visibility,transform',
+                    scrollTrigger: { trigger: '.contact-form', start: 'top 85%', once: true }
+                }
+            );
         }
 
         gsap.utils.toArray('.services-section .service-card').forEach((card, i) => {
@@ -154,7 +178,8 @@
                 rotation: (i - 1) * 1.5,
                 duration: 0.85,
                 ease: 'power3.out',
-                scrollTrigger: { trigger: card, start: 'top 88%' }
+                immediateRender: false,
+                scrollTrigger: { trigger: card, start: 'top 88%', once: true }
             });
             gsap.to(card, {
                 y: (i % 2 === 0 ? -6 : 6),
@@ -218,11 +243,22 @@
         buttons.forEach((btn) => {
             if (btn.dataset.magnetic) return;
             btn.dataset.magnetic = '1';
+            // Смещение ограничено: у кнопки во всю ширину контейнера
+            // множитель 0.18 давал сдвиг до 60 px, и правый край уезжал
+            // за границу блока.
+            const MAX_SHIFT = 10;
+            const clamp = (v) => Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, v));
+
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.18, y: y * 0.22, duration: 0.35, ease: 'power2.out' });
+                gsap.to(btn, {
+                    x: clamp(x * 0.18),
+                    y: clamp(y * 0.22),
+                    duration: 0.35,
+                    ease: 'power2.out'
+                });
             });
             btn.addEventListener('mouseleave', () => {
                 gsap.to(btn, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1, 0.5)' });

@@ -41,7 +41,9 @@
     --radius-lg: 24px;
     --radius-xl: 32px;
 
-    --section-gap: clamp(5rem, 12vw, 8rem);
+    /* Vertikaler Abstand zwischen Abschnitten — eine Stelle für die
+       gesamte Seite. Vorher 5–8rem, das riss die Seite auseinander. */
+    --section-gap: clamp(2.75rem, 5vw, 4rem);
     --cursor-size: 12px;
 }
 
@@ -229,8 +231,31 @@ section {
 }
 
 #home.hero {
-    min-height: min(100vh, 920px);
-    padding-top: clamp(7rem, 14vh, 9rem);
+    /* Ohne feste Mindesthöhe: der Inhalt bestimmt die Höhe des ersten
+       Bildschirms. Oben bleibt Platz für die schwebende Kopfzeile. */
+    min-height: auto;
+    padding-top: clamp(6.5rem, 10vh, 7.5rem);
+    /* Unten nur ein knapper Abstand: der Sprachhinweis schließt den Bereich
+       ab, und der nächste Abschnitt bringt seinen eigenen Abstand mit.
+       Beides zusammen ergab vorher ein sichtbares Loch von 160 px. */
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Erster Abschnitt nach dem Hero braucht keinen vollen Abstand. */
+.hero + section {
+    padding-top: var(--spacing-lg);
+}
+
+/* Auf dem Handy stehen der Sprachhinweis und die nächste Überschrift
+   direkt untereinander — 45 px dazwischen wirkten dort wie eine Lücke. */
+@media (max-width: 640px) {
+    #home.hero {
+        padding-bottom: var(--spacing-xs);
+    }
+
+    .hero + section {
+        padding-top: var(--spacing-sm);
+    }
 }
 
 .cases-section {
@@ -404,21 +429,21 @@ section {
     background: rgba(125, 211, 252, 0.06);
 }
 
+/* Sichtbarer Fokus für alle bedienbaren Elemente — auch für einfache
+   Textlinks (Fußzeile, Fallbeispiele) und Auswahlfelder. */
 .btn:focus-visible,
 .nav-link:focus-visible,
 .lang-btn:focus-visible,
 .theme-toggle:focus-visible,
+a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px rgba(125, 211, 252, 0.55);
-}
-
-/* Logo */
-.logo-text {
-    background: linear-gradient(135deg, #e2e8f0, #7dd3fc);
-    -webkit-background-clip: text;
-    background-clip: text;
+    border-radius: 6px;
 }
 
 .nav-link {

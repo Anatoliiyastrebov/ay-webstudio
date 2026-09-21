@@ -6,41 +6,138 @@
     <meta name="theme-color" content="#0b0d10">
     <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
 
-    <title data-i18n="meta.title">Anatolii Yastrebov – Frontend Developer Portfolio</title>
-    <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="Personal portfolio of Anatolii Yastrebov – frontend developer based in NRW, Germany. HTML, CSS, JavaScript, modern web development.">
+    <title data-i18n="meta.title">Website für kleine Betriebe — Leverkusen, Köln, NRW | ab 600 €</title>
+    <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="Websites für Handwerk, Kfz-Werkstatt, Salon und Gastronomie in Leverkusen, Köln und ganz NRW. Festpreis ab 600 €, fertig in wenigen Tagen.">
+    <link rel="canonical" href="https://anatolii-yastrebov.top/">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anatolii-yastrebov.top/">
-    <meta property="og:title" content="Anatolii Yastrebov – Frontend Developer Portfolio">
-    <meta property="og:description" content="Personal portfolio of Anatolii Yastrebov – frontend developer based in NRW, Germany.">
-    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
+    <meta property="og:title" content="Website für kleine Betriebe — Leverkusen, Köln, NRW">
+    <meta property="og:description" content="Websites für Handwerk, Kfz-Werkstatt, Salon, Gastronomie und lokale Dienstleister. Festpreis ab 600 €, fertig in wenigen Tagen.">
+    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo-og.webp">
     <meta property="og:locale" content="de_DE">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Anatolii Yastrebov – Frontend Developer Portfolio">
+    <meta name="twitter:title" content="Website für kleine Betriebe — Leverkusen, Köln, NRW">
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="premium.css">
-    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="premium.min.css">
+    <link rel="stylesheet" href="responsive.min.css">
 
-    <script type="application/ld+json">
+    <!-- Wird von scripts/set-domain.mjs aus site.config.json erzeugt. Nicht von Hand ändern. -->
+    <script type="application/ld+json" data-schema="localbusiness">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Anatolii Yastrebov — Websites für kleine Betriebe",
+  "description": "Websites für kleine Betriebe in Leverkusen, Köln und ganz NRW. Festpreis ab 600 €.",
+  "url": "https://anatolii-yastrebov.top",
+  "email": "kontakt@anatolii-yastrebov.top",
+  "image": "https://anatolii-yastrebov.top/images/photo-og.webp",
+  "priceRange": "600–3000 EUR",
+  "availableLanguage": [
+    "de",
+    "uk",
+    "ru",
+    "en"
+  ],
+  "areaServed": [
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Anatolii Yastrebov",
-      "jobTitle": "Frontend Developer",
-      "url": "https://anatolii-yastrebov.top",
-      "email": "kontakt@anatolii-yastrebov.top",
-      "sameAs": []
+      "@type": "City",
+      "name": "Leverkusen"
+    },
+    {
+      "@type": "City",
+      "name": "Köln"
+    },
+    {
+      "@type": "State",
+      "name": "Nordrhein-Westfalen"
+    },
+    {
+      "@type": "Country",
+      "name": "Deutschland"
     }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Website-Pakete",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Landingpage"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "minPrice": 600,
+          "maxPrice": 800,
+          "priceCurrency": "EUR"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Basis-Website"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "minPrice": 900,
+          "maxPrice": 1400,
+          "priceCurrency": "EUR"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Erweiterte Website"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "minPrice": 1800,
+          "maxPrice": 3000,
+          "priceCurrency": "EUR"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Wartung"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "minPrice": 60,
+          "maxPrice": 150,
+          "priceCurrency": "EUR",
+          "unitCode": "MON"
+        }
+      }
+    ]
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Memelstraße 8",
+    "postalCode": "51371",
+    "addressLocality": "Leverkusen",
+    "addressCountry": "DE"
+  }
+}
     </script>
+    <link rel="preload" as="image" type="image/webp" fetchpriority="high"
+          href="/images/photo-hero-800.webp"
+          imagesrcset="/images/photo-hero-400.webp 400w, /images/photo-hero-600.webp 600w, /images/photo-hero-800.webp 800w"
+          imagesizes="(max-width: 1023px) 280px, 340px">
 </head>
-<body>
+<body data-page="home">
+    <a class="skip-link" href="#inhalt" data-i18n="ui.skipLink">Zum Inhalt springen</a>
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -51,20 +148,21 @@
         <div class="nav-container">
             <div class="logo">
                 <a href="#home" class="logo-link" data-i18n-attr="aria-label" data-i18n="ui.logoHome" aria-label="Zum Seitenanfang">
-                    <span class="logo-text">AY</span>
+                    <svg class="logo-mark" viewBox="0 0 116 60" aria-hidden="true" focusable="false"><path d="M28 7 8 30l20 23M88 7l20 23-20 23" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><text x="58" y="44" text-anchor="middle" font-size="38" font-weight="800" letter-spacing="-2.5" fill="currentColor">AY</text></svg><span class="logo-wordmark"><span class="logo-name">AY Webstudio</span><span class="logo-place">Leverkusen</span></span>
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
-                <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="leistungen.html" class="nav-link" data-i18n="nav.services">Leistungen &amp; Preise</a></li>
+                <li><a href="#projekte" class="nav-link" data-i18n="nav.projects">Beispiele</a></li>
+                <li><a href="#leistungsumfang" class="nav-link" data-i18n="nav.included">Was enthalten ist</a></li>
                 <li><a href="#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
                 <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Blog</a></li>
                 <li><a href="#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn active" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+                <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                <button class="lang-btn active" data-lang="de" aria-pressed="true">DE</button>
             </div>
             <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
@@ -78,91 +176,241 @@
         </div>
     </nav>
 
+    <main id="inhalt">
+
     <!-- HERO -->
     <section id="home" class="hero hero-sales">
         <div class="hero-content">
             <div class="hero-text">
-                <span class="hero-eyebrow" data-i18n="hero.eyebrow">Frontend Developer · NRW · Deutschland</span>
+                <span class="hero-eyebrow" data-i18n="hero.eyebrow">Websites für kleine Betriebe · Leverkusen · Köln · NRW · Deutschland</span>
                 <h1 class="hero-title">
                     <span class="hero-headline">
-                        <span class="hero-name-line" data-i18n="hero.firstName">Anatolii</span>
-                        <span class="hero-name-line hero-name-line--last" data-i18n="hero.lastName">Yastrebov</span>
-                        <span class="hero-role-line" data-i18n="hero.roleLine">Frontend-Entwickler.</span>
+                        <span class="hero-name-line" data-i18n="hero.line1">Ihre Website für</span>
+                        <span class="hero-name-line hero-name-line--last" data-i18n="hero.line2">Ihren Betrieb</span>
+                        <span class="hero-role-line" data-i18n="hero.roleLine">In wenigen Tagen fertig. Zum Festpreis.</span>
                     </span>
                 </h1>
-                <p class="hero-subtitle" data-i18n="hero.subtitle">Persönliches Portfolio: ausgewählte Projekte, eingesetzte Technologien und ein bisschen über mich. HTML, CSS, JavaScript, moderne Web-Entwicklung.</p>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Für Handwerk, Kfz-Werkstatt, Salon, Gastronomie, Pflegedienst, Fahrschule und andere Betriebe in der Region. Sie bekommen eine klare Website mit Kontaktformular, Impressum und Datenschutzerklärung — fertig eingerichtet mit Domain und Hosting. <strong>Ab 600 €, fertig in 1–4 Tagen.</strong></p>
                 <div class="hero-buttons">
-                    <a href="#projekte" class="btn btn-primary" data-i18n="hero.ctaPrimary">Projekte ansehen</a>
-                    <a href="#kontakt" class="btn btn-secondary" data-i18n="hero.ctaSecondary">Schreib mir</a>
+                    <a href="#kontakt" class="btn btn-primary" data-i18n="hero.ctaPrimary">Kostenloses Erstgespräch</a>
+                    <a href="leistungen.html" class="btn btn-secondary" data-i18n="hero.ctaSecondary">Preise ansehen</a>
                 </div>
+                <p class="hero-trust" data-i18n="hero.trust">Impressum, Datenschutzerklärung und DSGVO-konforme Einwilligung sind in jedem Projekt enthalten.</p>
+                <p class="hero-langs" data-i18n="hero.langs">🗣️ Ich spreche Deutsch, Ukrainisch und Russisch — Sie können mir in Ihrer Sprache schreiben.</p>
             </div>
             <div class="hero-image">
                 <div class="hero-photo-wrapper">
                     <div class="photo-container">
-                        <picture>
-                            <source srcset="images/photo.webp" type="image/webp">
-                            <img src="images/photo.jpg" data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov – Frontend-Entwickler"
-                                 class="hero-photo" width="864" height="1184"
-                                 loading="eager" decoding="async">
-                        </picture>
+                        <img src="images/photo-hero-800.webp"
+                             srcset="images/photo-hero-400.webp 400w, images/photo-hero-600.webp 600w, images/photo-hero-800.webp 800w"
+                             sizes="(max-width: 1023px) 280px, 340px"
+                             data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov, entwickelt Websites für kleine Betriebe im Rheinland"
+                             class="hero-photo" width="800" height="800"
+                             loading="eager" fetchpriority="high" decoding="async">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- BEISPIELE / FALLBEISPIELE -->
     <section id="projekte" class="cases-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="cases.title">Projekte</h2>
-            <p class="section-description" data-i18n="cases.subtitle">Eine Auswahl an Projekten – Aufgabe, Umsetzung und eingesetzte Technologien.</p>
-            <div class="cases-grid portfolio-grid" id="cases-container">
-                <!-- gerendert über JavaScript -->
+            <h2 class="section-title" data-i18n="study.title">So kann Ihre Website aussehen</h2>
+            <p class="section-description" data-i18n="study.subtitle">Drei Beispiele aus verschiedenen Branchen. Sie sehen, was gebaut wurde, wie lange es dauert und können jede Seite live öffnen.</p>
+            <details class="study-disclaimer">
+                <summary><span class="study-disclaimer-short" data-i18n="study.disclaimerShort">Hinweis: Das sind Konzeptprojekte, keine echten Kundenaufträge.</span></summary>
+                <p data-i18n="study.disclaimer">Hinweis: Das sind <strong>Konzeptprojekte</strong>. Ich habe sie selbst gebaut, um zu zeigen, wie eine Website für die jeweilige Branche aussehen kann. Es sind keine echten Kundenaufträge und keine echten Unternehmen.</p>
+            </details>
+
+            <div class="case-studies">
+                <!-- 1 · Handwerk -->
+                <article class="case-study">
+                    <div class="case-study-media">
+                        <a href="https://handwerker-nrw.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+                            <picture>
+                                <source srcset="images/projects/handwerker-nrw.webp" type="image/webp">
+                                <img src="images/projects/handwerker-nrw.jpg" data-i18n-attr="alt" data-i18n="study.c1.alt"
+                                     alt="Startseite der Beispiel-Website für einen Renovierungsbetrieb mit Vorher-Nachher-Vergleich"
+                                     width="640" height="360" loading="lazy" decoding="async">
+                            </picture>
+                        </a>
+                        <span class="case-study-badge" data-i18n="study.badge">Konzeptprojekt</span>
+                    </div>
+                    <div class="case-study-body">
+                        <p class="case-study-branch" data-i18n="study.c1.branch">Handwerksbetrieb · Renovierung und Malerarbeiten</p>
+                        <h3 class="case-study-title" data-i18n="study.c1.name">MeisterHaus Renovierung</h3>
+
+                        <button type="button" class="case-study-toggle" aria-expanded="false" aria-controls="case-study-details-1">
+                            <span class="case-study-toggle-label" data-i18n="study.detailsShow">Details anzeigen</span>
+                            <span class="case-study-toggle-icon" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="case-study-details" id="case-study-details-1">
+                            <h4 class="case-study-label" data-i18n="study.labelTask">Die Aufgabe</h4>
+                            <p data-i18n="study.c1.task">Ein Handwerksbetrieb wird meist über Empfehlungen gefunden. Die Website soll zeigen, was der Betrieb kann, und Vertrauen aufbauen, bevor jemand anruft.</p>
+
+                            <h4 class="case-study-label" data-i18n="study.labelDone">Was gemacht wurde</h4>
+                            <ul class="case-study-list">
+                                <li data-i18n="study.c1.d1">Sechs Leistungsbereiche, klar getrennt und leicht zu lesen</li>
+                                <li data-i18n="study.c1.d2">Vorher-Nachher-Regler für abgeschlossene Arbeiten</li>
+                                <li data-i18n="study.c1.d3">Bildergalerie der Projekte mit Ortsangabe</li>
+                                <li data-i18n="study.c1.d4">Preisrechner, damit Kunden eine erste Einschätzung bekommen</li>
+                                <li data-i18n="study.c1.d5">Anruf- und WhatsApp-Schaltfläche, die am Handy immer sichtbar bleibt</li>
+                            </ul>
+
+                            <h4 class="case-study-label" data-i18n="study.labelTime">Umfang und Arbeitsaufwand</h4>
+                            <p class="case-study-time" data-i18n="study.c1.time">Entspricht dem Paket „Erweiterte Website“ — Arbeitsaufwand 6–10 Arbeitstage</p>
+                            <a class="case-study-delivery-link" href="leistungen.html#lieferzeiten" data-i18n="services.deliveryLink">Lieferzeiten ansehen</a>
+                        </div>
+
+                        <div class="case-study-actions">
+                            <a href="https://handwerker-nrw.vercel.app/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n="study.live">Live-Demo öffnen ↗</a>
+                            <a href="project.html?id=handwerker-nrw" class="case-study-more" data-i18n="study.more">Alle Details</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2 · Kfz-Werkstatt -->
+                <article class="case-study">
+                    <div class="case-study-media">
+                        <a href="https://kfz-eta.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+                            <picture>
+                                <source srcset="images/projects/kfz-werkstatt.webp" type="image/webp">
+                                <img src="images/projects/kfz-werkstatt.jpg" data-i18n-attr="alt" data-i18n="study.c2.alt"
+                                     alt="Startseite der Beispiel-Website für eine Kfz-Werkstatt mit Leistungen und Preisen"
+                                     width="640" height="360" loading="lazy" decoding="async">
+                            </picture>
+                        </a>
+                        <span class="case-study-badge" data-i18n="study.badge">Konzeptprojekt</span>
+                    </div>
+                    <div class="case-study-body">
+                        <p class="case-study-branch" data-i18n="study.c2.branch">Kfz-Werkstatt · Reparatur und Wartung</p>
+                        <h3 class="case-study-title" data-i18n="study.c2.name">Meisterwerkstatt Schmidt</h3>
+
+                        <button type="button" class="case-study-toggle" aria-expanded="false" aria-controls="case-study-details-2">
+                            <span class="case-study-toggle-label" data-i18n="study.detailsShow">Details anzeigen</span>
+                            <span class="case-study-toggle-icon" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="case-study-details" id="case-study-details-2">
+                            <h4 class="case-study-label" data-i18n="study.labelTask">Die Aufgabe</h4>
+                            <p data-i18n="study.c2.task">Wer eine Werkstatt sucht, will drei Dinge sofort wissen: Was kostet es ungefähr, wann habt ihr auf und wie erreiche ich euch. Alles andere kann warten.</p>
+
+                            <h4 class="case-study-label" data-i18n="study.labelDone">Was gemacht wurde</h4>
+                            <ul class="case-study-list">
+                                <li data-i18n="study.c2.d1">Leistungen mit Preisangabe „ab … €“ direkt auf der Startseite</li>
+                                <li data-i18n="study.c2.d2">Öffnungszeiten und Telefonnummer gut sichtbar</li>
+                                <li data-i18n="study.c2.d3">Kurze Liste der Vorteile, zum Beispiel Meisterbetrieb und Garantie</li>
+                                <li data-i18n="study.c2.d4">Schaltfläche für die Terminanfrage</li>
+                            </ul>
+
+                            <h4 class="case-study-label" data-i18n="study.labelTime">Umfang und Arbeitsaufwand</h4>
+                            <p class="case-study-time" data-i18n="study.c2.time">Entspricht dem Paket „Landingpage“ — Arbeitsaufwand 1–2 Arbeitstage</p>
+                            <a class="case-study-delivery-link" href="leistungen.html#lieferzeiten" data-i18n="services.deliveryLink">Lieferzeiten ansehen</a>
+                        </div>
+
+                        <div class="case-study-actions">
+                            <a href="https://kfz-eta.vercel.app/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n="study.live">Live-Demo öffnen ↗</a>
+                            <a href="project.html?id=kfz-werkstatt" class="case-study-more" data-i18n="study.more">Alle Details</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3 · Friseur / Beauty -->
+                <article class="case-study">
+                    <div class="case-study-media">
+                        <a href="https://friseursalon.vercel.app/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+                            <picture>
+                                <source srcset="images/projects/friseursalon.webp" type="image/webp">
+                                <img src="images/projects/friseursalon.jpg" data-i18n-attr="alt" data-i18n="study.c3.alt"
+                                     alt="Startseite der Beispiel-Website für einen Friseursalon mit Leistungen und Terminformular"
+                                     width="640" height="360" loading="lazy" decoding="async">
+                            </picture>
+                        </a>
+                        <span class="case-study-badge" data-i18n="study.badge">Konzeptprojekt</span>
+                    </div>
+                    <div class="case-study-body">
+                        <p class="case-study-branch" data-i18n="study.c3.branch">Friseur- und Beauty-Salon</p>
+                        <h3 class="case-study-title" data-i18n="study.c3.name">Mira Beauty Lounge</h3>
+
+                        <button type="button" class="case-study-toggle" aria-expanded="false" aria-controls="case-study-details-3">
+                            <span class="case-study-toggle-label" data-i18n="study.detailsShow">Details anzeigen</span>
+                            <span class="case-study-toggle-icon" aria-hidden="true"></span>
+                        </button>
+
+                        <div class="case-study-details" id="case-study-details-3">
+                            <h4 class="case-study-label" data-i18n="study.labelTask">Die Aufgabe</h4>
+                            <p data-i18n="study.c3.task">Ein Salon lebt von Terminen. Die Website soll die Preise zeigen, einen Eindruck vom Salon geben und die Terminanfrage so einfach wie möglich machen.</p>
+
+                            <h4 class="case-study-label" data-i18n="study.labelDone">Was gemacht wurde</h4>
+                            <ul class="case-study-list">
+                                <li data-i18n="study.c3.d1">Leistungen mit Preis und Dauer je Behandlung</li>
+                                <li data-i18n="study.c3.d2">Bildergalerie und Vorstellung des Teams</li>
+                                <li data-i18n="study.c3.d3">Formular für die Terminanfrage</li>
+                                <li data-i18n="study.c3.d4">Häufige Fragen zum Aufklappen</li>
+                            </ul>
+
+                            <h4 class="case-study-label" data-i18n="study.labelTime">Umfang und Arbeitsaufwand</h4>
+                            <p class="case-study-time" data-i18n="study.c3.time">Entspricht dem Paket „Basis-Website“ — Arbeitsaufwand 2–4 Arbeitstage</p>
+                            <a class="case-study-delivery-link" href="leistungen.html#lieferzeiten" data-i18n="services.deliveryLink">Lieferzeiten ansehen</a>
+                        </div>
+
+                        <div class="case-study-actions">
+                            <a href="https://friseursalon.vercel.app/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-i18n="study.live">Live-Demo öffnen ↗</a>
+                            <a href="project.html?id=friseursalon" class="case-study-more" data-i18n="study.more">Alle Details</a>
+                        </div>
+                    </div>
+                </article>
             </div>
+
             <p class="blog-all-projects-wrap">
-                <a href="blog.html#meine-projekte" class="btn btn-secondary" data-i18n="blog.allProjects">Alle Live-Demos im Blog →</a>
+                <a href="blog.html#meine-projekte" class="btn btn-secondary" data-i18n="study.allDemos">Alle zehn Beispiel-Websites ansehen →</a>
             </p>
         </div>
     </section>
 
-    <!-- SKILLS / STACK -->
-    <section id="skills" class="services-section">
+    <!-- WAS IN IHRER WEBSITE ENTHALTEN IST -->
+    <section id="leistungsumfang" class="services-section">
         <div class="container">
-            <h2 class="section-title" data-i18n="skills.title">Skills &amp; Stack</h2>
-            <p class="section-description" data-i18n="skills.subtitle">Technologien, mit denen ich am häufigsten arbeite.</p>
+            <h2 class="section-title" data-i18n="included.title">Was in Ihrer Website enthalten ist</h2>
+            <p class="section-description" data-i18n="included.subtitle">In jedem Paket enthalten — ohne Aufpreis.</p>
 
-            <div class="services-grid">
-                <article class="service-card">
-                    <div class="service-icon">🎨</div>
-                    <h3 class="service-name" data-i18n="skills.frontend.title">Frontend</h3>
-                    <ul class="service-points">
-                        <li data-i18n="skills.frontend.p1">HTML5, CSS3, modernes JavaScript (ES2020+)</li>
-                        <li data-i18n="skills.frontend.p2">Responsive Design, Mobile-First</li>
-                        <li data-i18n="skills.frontend.p3">CSS Grid, Flexbox, Animationen</li>
-                        <li data-i18n="skills.frontend.p4">Accessibility &amp; semantisches HTML</li>
-                    </ul>
+            <div class="services-grid included-grid">
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">📱</div>
+                    <h3 class="service-name" data-i18n="included.i1.title">Funktioniert auf jedem Gerät</h3>
+                    <p class="service-desc" data-i18n="included.i1.text">Ihre Website sieht auf dem Handy, auf dem Tablet und am Computer gut aus. Die meisten Kunden suchen unterwegs.</p>
                 </article>
 
-                <article class="service-card">
-                    <div class="service-icon">⚙️</div>
-                    <h3 class="service-name" data-i18n="skills.tools.title">Tools &amp; Workflow</h3>
-                    <ul class="service-points">
-                        <li data-i18n="skills.tools.p1">Git &amp; GitHub</li>
-                        <li data-i18n="skills.tools.p2">Vite / npm-Skripte</li>
-                        <li data-i18n="skills.tools.p3">VS Code, Chrome DevTools</li>
-                        <li data-i18n="skills.tools.p4">Figma zum Lesen von Designs</li>
-                    </ul>
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">✉️</div>
+                    <h3 class="service-name" data-i18n="included.i2.title">Kontaktformular</h3>
+                    <p class="service-desc" data-i18n="included.i2.text">Anfragen kommen direkt in Ihr E-Mail-Postfach. Sie brauchen dafür kein zusätzliches Programm.</p>
                 </article>
 
-                <article class="service-card">
-                    <div class="service-icon">🌐</div>
-                    <h3 class="service-name" data-i18n="skills.lang.title">Sprachen</h3>
-                    <ul class="service-points">
-                        <li data-i18n="skills.lang.p1">Deutsch — B2</li>
-                        <li data-i18n="skills.lang.p2">Englisch — Grundkenntnisse</li>
-                        <li data-i18n="skills.lang.p3">Russisch — Muttersprache</li>
-                        <li data-i18n="skills.lang.p4">Ukrainisch — Muttersprache</li>
-                    </ul>
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">⚖️</div>
+                    <h3 class="service-name" data-i18n="included.i3.title">Rechtlich sauber</h3>
+                    <p class="service-desc" data-i18n="included.i3.text">Impressum und Datenschutzerklärung gehören dazu, ebenso die DSGVO-konforme Einwilligung im Formular.</p>
+                </article>
+
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">🔎</div>
+                    <h3 class="service-name" data-i18n="included.i4.title">Für Google vorbereitet</h3>
+                    <p class="service-desc" data-i18n="included.i4.text">Ihre Website ist technisch sauber aufgebaut: Ort und Leistung stehen in Titeln, Texten und Seitenangaben — zum Beispiel „Friseur Leverkusen“. Eine bestimmte Position bei Google kann niemand garantieren.</p>
+                </article>
+
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">⚡</div>
+                    <h3 class="service-name" data-i18n="included.i5.title">Schnelle Ladezeit</h3>
+                    <p class="service-desc" data-i18n="included.i5.text">Die Seiten laden schnell, auch bei mobilem Internet. Wer lange wartet, geht wieder weg.</p>
+                </article>
+
+                <article class="service-card included-card">
+                    <div class="service-icon" aria-hidden="true">🔑</div>
+                    <h3 class="service-name" data-i18n="included.i6.title">Die Website gehört Ihnen</h3>
+                    <p class="service-desc" data-i18n="included.i6.text">Sie erhalten alle Rechte und alle Zugänge. Sie sind an niemanden gebunden und können jederzeit wechseln.</p>
                 </article>
             </div>
         </div>
@@ -173,23 +421,29 @@
         <div class="container">
             <div class="about-trust-grid">
                 <div class="about-trust-photo">
-                    <picture>
-                        <source srcset="images/photo.webp" type="image/webp">
-                        <img src="images/photo.jpg" data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov – Frontend-Entwickler"
-                             width="864" height="1184" loading="lazy" decoding="async">
-                    </picture>
+                    <img src="images/photo-about-640.webp"
+                         srcset="images/photo-about-320.webp 320w, images/photo-about-640.webp 640w"
+                         sizes="(max-width: 900px) 100vw, 320px"
+                         data-i18n-attr="alt" data-i18n="ui.photoAlt" alt="Anatolii Yastrebov, entwickelt Websites für kleine Betriebe im Rheinland"
+                         width="640" height="877" loading="lazy" decoding="async">
                 </div>
                 <div class="about-trust-text">
                     <h2 class="section-title section-title-left" data-i18n="about.title">Über mich</h2>
-                    <p data-i18n="about.p1"><strong>Anatolii Yastrebov</strong> — Frontend Developer aus Nordrhein-Westfalen. Diese Seite ist mein persönliches Portfolio – kein Angebot, sondern eine Sammlung von Projekten und Lernschritten.</p>
-                    <p data-i18n="about.p2">Ich beschäftige mich mit moderner Web-Entwicklung: sauberes HTML, durchdachtes CSS, JavaScript für sinnvolle Interaktionen. Mir wichtig: lesbarer Code, Performance und Zugänglichkeit.</p>
-                    <p data-i18n="about.p3">Außerhalb des Codes lese ich, lerne weiter und experimentiere mit kleinen Side-Projects. Wenn dich etwas hier interessiert oder du einfach Hallo sagen willst – schreib mir gerne.</p>
+                    <p data-i18n="about.p1">Mein Name ist <strong>Anatolii Yastrebov</strong>. Ich baue Websites für kleine Betriebe in Leverkusen, Köln, in ganz NRW und deutschlandweit.</p>
+                    <p data-i18n="about.p2">Ich arbeite allein, ohne Agentur dazwischen. Sie sprechen also immer direkt mit der Person, die Ihre Website baut. Das macht die Wege kurz und die Preise überschaubar.</p>
+                    <p data-i18n="about.p3">Mir ist wichtig, dass Sie verstehen, wofür Sie bezahlen. Ich erkläre alles ohne Fachwörter und sage offen, wenn etwas nicht nötig ist oder wenn ich der Falsche für die Aufgabe bin.</p>
                     <ul class="about-points">
-                        <li data-i18n="about.point1">📍 Standort: NRW · Deutschland</li>
-                        <li data-i18n="about.point2">💬 Sprachen: Deutsch (B2), Englisch (Grundkenntnisse), Russisch & Ukrainisch (Muttersprache)</li>
-                        <li data-i18n="about.point3">📚 Aktuell: Vertiefung in moderne JavaScript-Patterns</li>
+                        <li data-i18n="about.point1">📍 Region: Leverkusen, Köln, ganz NRW und deutschlandweit</li>
+                        <li data-i18n="about.point2">💬 Sprachen: Deutsch (B2), Ukrainisch und Russisch (Muttersprache), Englisch (Grundkenntnisse)</li>
+                        <li data-i18n="about.point3">⏱️ Antwort auf Anfragen in der Regel innerhalb von 24 Stunden (werktags)</li>
                     </ul>
-                    <a href="#kontakt" class="btn btn-primary" data-i18n="about.cta">Schreib mir</a>
+
+                    <details class="tech-details">
+                        <summary data-i18n="about.techTitle">Technik — für alle, die es interessiert</summary>
+                        <p class="tech-list" data-i18n="about.techText">HTML5, CSS3, modernes JavaScript (ES2020+), responsives Layout mit CSS Grid und Flexbox, semantisches HTML und Barrierefreiheit, Git &amp; GitHub, Vite und npm-Skripte. Beim Bauen setze ich KI-Werkzeuge ein — das beschleunigt die Arbeit und erweitert, was ich umsetzen kann. Geprüft wird danach von Hand: Formulare, Ladezeit und die Darstellung auf dem Handy teste ich selbst, bevor eine Website online geht. Gebaut wird ohne Baukasten — das hält die Seiten schnell und wartbar.</p>
+                    </details>
+
+                    <a href="#kontakt" class="btn btn-primary" data-i18n="about.cta">Kostenloses Erstgespräch</a>
                 </div>
             </div>
         </div>
@@ -198,7 +452,7 @@
     <!-- BLOG TEASER -->
     <section id="blog-teaser" class="blog-teaser">
         <div class="container">
-            <h2 class="section-title" data-i18n="blog.title">Blog &amp; Notizen</h2>
+            <h2 class="section-title" data-i18n="blog.title">Notizen zur Web-Entwicklung</h2>
             <p class="section-description" data-i18n="blog.subtitle">Gedanken zur Web-Entwicklung, Notizen aus dem Lernprozess.</p>
             <div class="blog-grid">
                 <a href="blog.html#kosten" class="blog-card">
@@ -226,24 +480,49 @@
     <!-- CONTACT -->
     <section id="kontakt" class="contact">
         <div class="container">
-            <h2 class="section-title" data-i18n="contact.title">Kontakt</h2>
-            <p class="section-description" data-i18n="contact.subtitle">Schreib mir – ich antworte gewöhnlich innerhalb von ein paar Tagen.</p>
+            <h2 class="section-title" data-i18n="contact.title">Kostenloses Erstgespräch</h2>
+            <p class="section-description" data-i18n="contact.subtitle">Erzählen Sie kurz, was Sie machen und was die Website können soll. Sie bekommen von mir eine ehrliche Einschätzung mit Preis und Termin — kostenlos und unverbindlich.</p>
             <p class="contact-gdpr-notice" data-i18n="contact.gdpr">Ihre Daten werden ausschließlich zur Beantwortung Ihrer Anfrage verwendet. Weitere Informationen finden Sie in unserer <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.</p>
 
             <div class="contact-content">
                 <div class="contact-info">
+                    <p class="contact-direct-hint" data-i18n="contact.directHint">Sie schreiben nicht gern über Formulare? Schreiben Sie mir einfach direkt eine E-Mail.</p>
+
                     <div class="contact-item">
-                        <div class="contact-icon-wrapper"><div class="contact-icon">📧</div></div>
+                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">📧</div></div>
                         <div class="contact-details">
                             <h3 data-i18n="contact.email.label">E-Mail</h3>
-                            <p><a href="mailto:kontakt@anatolii-yastrebov.top" class="contact-link">kontakt@anatolii-yastrebov.top</a></p>
+                            <p><a href="mailto:kontakt@anatolii-yastrebov.top" class="contact-link contact-link--big">kontakt@anatolii-yastrebov.top</a></p>
+                        </div>
+                    </div>
+                    <!-- whatsapp:contact:start -->
+                    <div class="contact-item">
+                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">💬</div></div>
+                        <div class="contact-details">
+                            <h3 data-i18n="contact.whatsapp.label">WhatsApp</h3>
+                            <p><a href="https://wa.me/380501725570?text=Guten%20Tag!%20Ich%20habe%20eine%20Frage%20zu%20einer%20Website." target="_blank" rel="noopener noreferrer" class="contact-link contact-link--big" data-wa-msg="contact.whatsapp.msg" data-i18n="contact.whatsapp.hint">Schreiben Sie mir direkt</a></p>
+                        </div>
+                    </div>
+                    <!-- whatsapp:contact:end -->
+                    <div class="contact-item">
+                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">⏱️</div></div>
+                        <div class="contact-details">
+                            <h3 data-i18n="contact.reply.label">Antwortzeit</h3>
+                            <p data-i18n="contact.reply.value">Antwort in der Regel innerhalb von 24 Stunden (werktags)</p>
+                        </div>
+                    </div>
+                    <div class="contact-item contact-item--langs">
+                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">🗣️</div></div>
+                        <div class="contact-details">
+                            <h3 data-i18n="contact.langs.label">Sprachen</h3>
+                            <p data-i18n="contact.langs.value"><strong>Ich spreche Deutsch, Ukrainisch und Russisch.</strong> Schreiben Sie mir ruhig in der Sprache, die Ihnen leichter fällt.</p>
                         </div>
                     </div>
                     <div class="contact-item">
-                        <div class="contact-icon-wrapper"><div class="contact-icon">📍</div></div>
+                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">📍</div></div>
                         <div class="contact-details">
                             <h3 data-i18n="contact.region.label">Region</h3>
-                            <p data-i18n="contact.region.value">Nordrhein-Westfalen · Deutschland</p>
+                            <p data-i18n="contact.region.value">Leverkusen, Köln, ganz NRW und deutschlandweit</p>
                         </div>
                     </div>
                 </div>
@@ -272,12 +551,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="sr-only" for="contact-message" data-i18n="contact.form.message">Nachricht</label>
+                        <label class="form-label" for="contact-type" data-i18n="contact.form.typeLabel">Um welche Art von Website geht es? (optional)</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon" aria-hidden="true">📄</span>
+                            <select id="contact-type" name="projectType" class="form-select" aria-describedby="contact-type-hint">
+                                <option value="" data-i18n="contact.form.typeAny">Weiß ich noch nicht</option>
+                                <option value="Landingpage" data-i18n="contact.form.type1">Landingpage (600–800 €)</option>
+                                <option value="Basis-Website" data-i18n="contact.form.type2">Basis-Website (900–1 400 €)</option>
+                                <option value="Erweiterte Website" data-i18n="contact.form.type3">Erweiterte Website (1 800–3 000 €)</option>
+                                <option value="Wartung" data-i18n="contact.form.type4">Wartung (60–150 € im Monat)</option>
+                                <option value="Bestehende Website überarbeiten" data-i18n="contact.form.type5">Bestehende Website überarbeiten (45 €/Stunde)</option>
+                            </select>
+                        </div>
+                        <p class="form-hint" id="contact-type-hint" data-i18n="contact.form.typeHint">Die Lieferzeit beginnt, sobald Ihre Inhalte vollständig vorliegen.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="contact-message" data-i18n="contact.form.messageLabel">Nachricht</label>
                         <div class="input-wrapper">
                             <span class="input-icon textarea-icon" aria-hidden="true">💬</span>
                             <textarea id="contact-message" name="message" autocomplete="off"
                                       data-i18n-placeholder="contact.form.message"
-                                      placeholder="Worum geht es? Eine kurze Nachricht reicht."
+                                      placeholder="Was für ein Betrieb ist es, und was soll die Website können? Ein paar Sätze reichen."
                                       minlength="10" maxlength="5000" rows="5" aria-required="true" required></textarea>
                         </div>
                     </div>
@@ -300,11 +594,13 @@
     </section>
 
     <!-- FOOTER -->
+    </main>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend Developer · NRW</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Websites für kleine Betriebe · Leverkusen</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="rechtliche-hinweise.html" class="footer-link" data-i18n="footer.rechtlicheHinweise">Rechtliche Hinweise</a>
@@ -316,13 +612,7 @@
             </div>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-    <script src="motion.js"></script>
-    <script src="portfolio-projects.js"></script>
-    <script src="portfolio-i18n.js"></script>
-    <script src="script.js"></script>
+    <script src="site-boot.js" defer></script>
 </body>
 </html>
 

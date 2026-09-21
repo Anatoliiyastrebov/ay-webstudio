@@ -6,14 +6,16 @@
     <meta name="theme-color" content="#0b0d10">
     <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
 
-    <title data-i18n="blog.pageTitle">Notizen · Web-Entwicklung — Anatolii Yastrebov</title>
+    <title data-i18n="blog.pageTitle">Blog: Was eine Website kostet — für kleine Betriebe</title>
     <meta name="description" data-i18n-attr="content" data-i18n="blog.pageDescription" content="Persönliche Notizen zur Web-Entwicklung: Preisrahmen von Websites, Baukasten vs. eigener Code, kleine lokale Websites.">
+
+    <link rel="canonical" href="https://anatolii-yastrebov.top/blog.html">
 
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://anatolii-yastrebov.top/blog.html">
     <meta property="og:title" content="Blog · Notizen zur Web-Entwicklung — Anatolii Yastrebov">
     <meta property="og:description" content="Persönliche Notizen zur Web-Entwicklung: Preisrahmen, Baukasten vs. eigener Code, kleine lokale Websites.">
-    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
+    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo-og.webp">
     <meta property="og:locale" content="de_DE">
 
     <meta name="twitter:card" content="summary_large_image">
@@ -23,12 +25,12 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="premium.css">
-    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="premium.min.css">
+    <link rel="stylesheet" href="responsive.min.css">
 </head>
-<body>
+<body data-page="blog">
+    <a class="skip-link" href="#inhalt" data-i18n="ui.skipLink">Zum Inhalt springen</a>
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -38,19 +40,20 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="index.html#home" class="logo-link"><span class="logo-text">AY</span></a>
+                <a href="index.html#home" class="logo-link"><svg class="logo-mark" viewBox="0 0 116 60" aria-hidden="true" focusable="false"><path d="M28 7 8 30l20 23M88 7l20 23-20 23" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><text x="58" y="44" text-anchor="middle" font-size="38" font-weight="800" letter-spacing="-2.5" fill="currentColor">AY</text></svg><span class="logo-wordmark"><span class="logo-name">AY Webstudio</span><span class="logo-place">Leverkusen</span></span></a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
-                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Kompetenzen</a></li>
+                <li><a href="leistungen.html" class="nav-link" data-i18n="nav.services">Leistungen &amp; Preise</a></li>
+                <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Beispiele</a></li>
+                <li><a href="index.html#leistungsumfang" class="nav-link" data-i18n="nav.included">Was enthalten ist</a></li>
                 <li><a href="index.html#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
-                <li><a href="blog.html" class="nav-link active" data-i18n="nav.blog">Notizen</a></li>
+                <li><a href="blog.html" class="nav-link active" data-i18n="nav.blog">Blog</a></li>
                 <li><a href="index.html#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn" data-lang="ru">RU</button>
-                <button class="lang-btn" data-lang="en">EN</button>
-                <button class="lang-btn active" data-lang="de">DE</button>
+                <button class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+                <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                <button class="lang-btn active" data-lang="de" aria-pressed="true">DE</button>
             </div>
             <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
@@ -60,10 +63,12 @@
         </div>
     </nav>
 
+    <main id="inhalt">
+
     <section class="blog-page">
         <div class="container">
-            <h1 class="section-title" data-i18n="blog.title">Blog &amp; Notizen</h1>
-            <p class="blog-page-intro" data-i18n="blog.subtitle">Persönliche Notizen rund um Web-Entwicklung. Beobachtungen aus dem Lernprozess, keine Verkaufstexte.</p>
+            <h1 class="section-title" data-i18n="blog.title">Notizen zur Web-Entwicklung</h1>
+            <p class="blog-page-intro" data-i18n="blog.subtitle">Gedanken zur Web-Entwicklung, Notizen aus dem Lernprozess.</p>
 
             <section id="meine-projekte" class="blog-projects-section">
                 <h2 class="section-title section-title-left" data-i18n="blog.projectsTitle">Meine Live-Projekte</h2>
@@ -71,15 +76,102 @@
                 <div class="cases-grid portfolio-grid" id="blog-projects-container"></div>
             </section>
 
-            <div id="blog-articles" class="blog-articles"></div>
+            <div id="blog-articles" class="blog-articles">
+<article id="kosten" class="blog-article">
+            <div class="blog-meta">
+                <span>Notiz · Preisrahmen</span><span>·</span><span class="blog-read-time" data-read-min="6">Lesezeit: ca. 6 Min.</span>
+            </div>
+            <h2>Was kostet eine Website in Deutschland?</h2>
+            <p>Eine Frage, die in vielen Diskussionen auftaucht – und auf die es selten eine einfache Antwort gibt. Diese Notiz fasst grobe Preisrahmen zusammen, wie sie in öffentlichen Quellen und Foren genannt werden. <strong>Kein Angebot</strong>, einfach ein Lese-Überblick.</p>
+                <h3>Grobe Preisrahmen, wie sie häufig genannt werden</h3>
+                <ul>
+                    <li><strong>Baukasten (Wix, Jimdo, Squarespace):</strong> ca. 10–30 € pro Monat – Eigenleistung beim Aufbau, eingeschränktes Design.</li>
+                    <li><strong>Freelancer / Einzelentwickler:</strong> häufig 600 – 3.000 € einmalig für kleine Business-Websites.</li>
+                    <li><strong>Klassische Webagentur:</strong> 3.000 – 15.000 € für vergleichbare Projekte – mit mehr Overhead.</li>
+                    <li><strong>Größere Agentur / komplexe Projekte:</strong> ab 20.000 € – meist bei E-Commerce, mehrsprachigen Plattformen, individuellen Tools.</li>
+                </ul>
+                <h3>Was den Preis typischerweise treibt</h3>
+                <ul>
+                    <li><strong>Umfang:</strong> 1 Seite kostet weniger als 10 Seiten – logisch, wird aber oft unterschätzt.</li>
+                    <li><strong>Texte und Bilder:</strong> Wer sie nicht mitbringt, zahlt für die Erstellung.</li>
+                    <li><strong>Funktionen:</strong> Online-Buchung, Shop, Mitgliederbereich – das ist eigene Software, kein „Add-on“.</li>
+                    <li><strong>Design-Komplexität:</strong> Standard-Layout ist günstig; sehr individuelles Branding deutlich teurer.</li>
+                </ul>
+                <h3>Nicht vergessen: laufende Kosten</h3>
+                <p>Eine Website ist nach dem Launch nicht „fertig“. In groben Zahlen:</p>
+                <ul>
+                    <li>Hosting: 5–20 € / Monat (Deutschland)</li>
+                    <li>Domain: 10–20 € / Jahr</li>
+                    <li>Wartung &amp; Updates: variabel, je nach Stack</li>
+                </ul>
+        </article><aside class="blog-cta">
+        <h3 class="blog-cta-title">Brauchen Sie eine Website für Ihren Betrieb?</h3>
+        <p class="blog-cta-text">Feste Preise, feste Termine: ab 600 € und in wenigen Tagen fertig. Impressum, Datenschutzerklärung und Kontaktformular sind immer dabei.</p>
+        <a href="leistungen.html" class="btn btn-primary">Leistungen und Preise ansehen</a>
+    </aside>
+<article id="baukasten" class="blog-article">
+            <div class="blog-meta">
+                <span>Strategie</span><span>·</span><span class="blog-read-time" data-read-min="5">Lesezeit: ca. 5 Min.</span>
+            </div>
+            <h2>Baukasten vs. eigener Code</h2>
+            <p>Wix, Jimdo, Squarespace – „Website in 10 Minuten“. Klingt verlockend, ist aber nicht für jeden Fall die richtige Wahl. Diese Notiz sammelt Punkte, die man vor der Entscheidung im Hinterkopf haben sollte.</p>
+                <h3>1. Miete vs. Eigentum</h3>
+                <p>Ein Baukasten ist ein Abo. Endet das Abo, ist die Seite weg. Eine eigene Lösung läuft auf eigenem Hosting – die Migration und Datenhoheit liegen bei einem selbst.</p>
+                <h3>2. Geschwindigkeit und SEO</h3>
+                <p>Baukasten-Seiten enthalten oft viel automatisch erzeugtes Markup. Eine schlanke, individuell strukturierte Seite hat es bei Page-Speed-Themen meist leichter.</p>
+                <h3>3. Datenschutz</h3>
+                <p>Manche Baukästen laden externe Schriften, Tracker oder Skripte. Wer den Datenschutz selbst kontrollieren will, hat mit eigenem Code weniger Überraschungen – setzt aber natürlich auch eigenes Wissen voraus.</p>
+                <h3>4. Migration und Lock-in</h3>
+                <p>Beim Wechsel von einem Baukasten lassen sich Inhalte oft nicht 1:1 exportieren. Das ist kein Showstopper, aber ein Punkt, den man kennen sollte.</p>
+                <h3>Wann ein Baukasten ein guter Weg ist</h3>
+                <ul>
+                    <li>Schnelles Ausprobieren einer Idee in 1–2 Wochen.</li>
+                    <li>Reine Visitenkarte für ein temporäres Projekt.</li>
+                    <li>Internes Projekt ohne hohe Performance- oder SEO-Anforderungen.</li>
+                </ul>
+        </article><aside class="blog-cta">
+        <h3 class="blog-cta-title">Brauchen Sie eine Website für Ihren Betrieb?</h3>
+        <p class="blog-cta-text">Feste Preise, feste Termine: ab 600 € und in wenigen Tagen fertig. Impressum, Datenschutzerklärung und Kontaktformular sind immer dabei.</p>
+        <a href="leistungen.html" class="btn btn-primary">Leistungen und Preise ansehen</a>
+    </aside>
+<article id="handwerker" class="blog-article">
+            <div class="blog-meta">
+                <span>Web · kleine Websites</span><span>·</span><span class="blog-read-time" data-read-min="5">Lesezeit: ca. 5 Min.</span>
+            </div>
+            <h2>Websites lokaler Betriebe</h2>
+            <p>Kleine, lokale Websites sind eine eigene Disziplin: wenig Platz, hohe Erwartungen, viele Mobil-Besuche. Eine Notiz mit Beobachtungen darüber, was solche Seiten gut macht.</p>
+                <h3>Was Besucher solcher Seiten typischerweise wollen</h3>
+                <ul>
+                    <li>Schnell verstehen, ob das Angebot passt.</li>
+                    <li>Eine klare Möglichkeit, in Kontakt zu kommen.</li>
+                    <li>Vertrauensanker: Adresse, Bilder, ggf. Bewertungen.</li>
+                </ul>
+                <h3>Bewährte Bausteine</h3>
+                <ul>
+                    <li>Klickbare Telefonnummer / Kontakt-Element direkt im sichtbaren Bereich auf Mobil.</li>
+                    <li>Wenige, klar benannte Schwerpunkte statt langer Listen.</li>
+                    <li>Ort / Region klar nennen – das hilft auch bei lokaler Suche.</li>
+                    <li>Echte Bilder statt austauschbarer Stockfotos.</li>
+                    <li>Sehr kurzes Kontaktformular: jedes zusätzliche Feld kostet Abschlüsse.</li>
+                </ul>
+                <h3>Was meist nicht hilft</h3>
+                <p>Viele Animationen, schwere Slider, große Hintergrundvideos. Sieht modern aus, kostet aber Performance und lenkt von der eigentlichen Botschaft ab.</p>
+        </article><aside class="blog-cta">
+        <h3 class="blog-cta-title">Brauchen Sie eine Website für Ihren Betrieb?</h3>
+        <p class="blog-cta-text">Feste Preise, feste Termine: ab 600 € und in wenigen Tagen fertig. Impressum, Datenschutzerklärung und Kontaktformular sind immer dabei.</p>
+        <a href="leistungen.html" class="btn btn-primary">Leistungen und Preise ansehen</a>
+    </aside>
+            </div>
         </div>
     </section>
+
+    </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend-Entwickler · NRW</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Websites für kleine Betriebe · Leverkusen</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="rechtliche-hinweise.html" class="footer-link" data-i18n="footer.rechtlicheHinweise">Rechtliche Hinweise</a>
@@ -91,28 +183,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-    <script src="motion.js"></script>
-    <script src="portfolio-projects.js"></script>
-    <script src="portfolio-i18n.js"></script>
-    <script src="blog-content.js"></script>
-    <script src="script.js"></script>
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        document.querySelector('.hamburger').addEventListener('click', () => {
-            document.querySelector('.nav-menu').classList.toggle('active');
-            document.querySelector('.hamburger').classList.toggle('active');
-        });
-        document.querySelectorAll('.lang-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                if (typeof setLanguage === 'function') setLanguage(btn.getAttribute('data-lang'));
-            });
-        });
-        if (typeof applyTranslations === 'function') {
-            applyTranslations(localStorage.getItem('language') || 'de');
-        }
-    </script>
+    <script src="site-boot.js" defer></script>
 </body>
 </html>

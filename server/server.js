@@ -99,7 +99,19 @@ function validateContactForm(data) {
         errors.push('message: length must be 10–5000 characters');
     }
 
-    return { valid: errors.length === 0, errors, clean: { name, email, message } };
+    // Пакет — из закрытого списка: значение приходит от клиента и попадает
+    // в тему письма, поэтому произвольную строку туда пускать нельзя.
+    const ALLOWED_TYPES = [
+        'Landingpage',
+        'Basis-Website',
+        'Erweiterte Website',
+        'Wartung',
+        'Bestehende Website überarbeiten'
+    ];
+    const rawType = typeof data.projectType === 'string' ? data.projectType.trim() : '';
+    const projectType = ALLOWED_TYPES.includes(rawType) ? rawType : '';
+
+    return { valid: errors.length === 0, errors, clean: { name, email, message, projectType } };
 }
 
 // ============================================
@@ -144,14 +156,21 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
             });
         }
 
-        const { name, email, message } = validation.clean;
+        const { name, email, message, projectType } = validation.clean;
 
         const msg = {
             to: process.env.EMAIL_TO,
             from: process.env.EMAIL_FROM,
             replyTo: email,
-            subject: `Portfolio contact — ${name}`,
-            text: `New message via contact form.\n\nName:  ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\n--\nSent from anatolii-yastrebov.top contact form.`
+            // Пакет в теме: так в почте сразу видно, о чём запрос.
+            subject: projectType
+                ? `Anfrage: ${projectType} — ${name}`
+                : `Anfrage über das Kontaktformular — ${name}`,
+            text: `Neue Anfrage über das Kontaktformular.\n\n`
+                + `Name:   ${name}\n`
+                + `E-Mail: ${email}\n`
+                + `Paket:  ${projectType || '— nicht angegeben —'}\n\n`
+                + `Nachricht:\n${message}\n\n--\nGesendet vom Kontaktformular auf anatolii-yastrebov.top.`
         };
 
         try {

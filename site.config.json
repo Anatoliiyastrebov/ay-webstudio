@@ -1,0 +1,100 @@
+{
+  "_comment": "Единственное место, где задаётся домен и контактные данные. После правки запустите: npm run set-domain",
+  "siteUrl": "https://anatolii-yastrebov.top",
+  "businessName": "Anatolii Yastrebov — Websites für kleine Betriebe",
+  "ownerName": "Anatolii Yastrebov",
+  "email": "kontakt@anatolii-yastrebov.top",
+  "_phoneComment": "Пусто = телефон нигде не показывается. Впишите номер в формате +49… чтобы он появился в контактах и Impressum.",
+  "phone": "",
+  "_whatsappComment": "Номер для WhatsApp в международном формате, только цифры: 4915112345678. Пусто = кнопки WhatsApp нигде нет. После правки: npm run set-domain",
+  "whatsapp": "380501725570",
+  "_addressComment": "Обязателен по § 5 DDG. После изменения запустите: npm run set-domain",
+  "address": {
+    "street": "Memelstraße 8",
+    "postalCode": "51371",
+    "city": "Leverkusen",
+    "countryCode": "DE"
+  },
+  "areaServed": [
+    "Leverkusen",
+    "Köln",
+    "Nordrhein-Westfalen",
+    "Deutschland"
+  ],
+  "priceRange": "600–3000 EUR",
+  "pages": [
+    {
+      "file": "index.html",
+      "path": "/",
+      "changefreq": "monthly",
+      "priority": "1.0"
+    },
+    {
+      "file": "leistungen.html",
+      "path": "/leistungen.html",
+      "changefreq": "monthly",
+      "priority": "0.9"
+    },
+    {
+      "file": "blog.html",
+      "path": "/blog.html",
+      "changefreq": "monthly",
+      "priority": "0.7"
+    },
+    {
+      "file": "rechtliche-hinweise.html",
+      "path": "/rechtliche-hinweise.html",
+      "changefreq": "yearly",
+      "priority": "0.3"
+    },
+    {
+      "file": "impressum.html",
+      "path": "/impressum.html",
+      "changefreq": "yearly",
+      "priority": "0.3"
+    },
+    {
+      "file": "datenschutz.html",
+      "path": "/datenschutz.html",
+      "changefreq": "yearly",
+      "priority": "0.3"
+    }
+  ],
+  "_offersComment": "Цены обязаны совпадать с пакетами в script.js (services.p1–p4) и leistungen.html",
+  "offers": [
+    {
+      "name": "Landingpage",
+      "priceFrom": 600,
+      "priceTo": 800
+    },
+    {
+      "name": "Basis-Website",
+      "priceFrom": 900,
+      "priceTo": 1400
+    },
+    {
+      "name": "Erweiterte Website",
+      "priceFrom": 1800,
+      "priceTo": 3000
+    },
+    {
+      "name": "Wartung",
+      "priceFrom": 60,
+      "priceTo": 150,
+      "unit": "MON"
+    }
+  ],
+  "_promoComment": "Aktion «скидка для первых клиентов». active:false убирает её с сайта полностью. slotsLeft обновляйте после каждого клиента: при 0 акция гаснет сама. После любой правки: npm run build",
+  "promo": {
+    "active": true,
+    "percent": 30,
+    "slotsTotal": 3,
+    "slotsLeft": 3,
+    "endsOn": "2026-12-31",
+    "appliesTo": [
+      "Landingpage",
+      "Basis-Website",
+      "Erweiterte Website"
+    ]
+  }
+}

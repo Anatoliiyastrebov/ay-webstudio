@@ -97,8 +97,15 @@
 
         const preview = caseItem.preview
             ? `<a class="project-detail-preview" href="${caseItem.liveUrl}" target="_blank" rel="noopener noreferrer">
-                <img src="${caseItem.preview}" alt="${title}" width="1280" height="800" loading="lazy" decoding="async">
-               </a>`
+                ${typeof buildPreviewPicture === 'function'
+                    ? buildPreviewPicture(caseItem.preview, title, {
+                        loading: 'lazy',
+                        width: 1280,
+                        height: 800,
+                        sizes: '(max-width: 1280px) 100vw, 960px'
+                    })
+                    : `<img src="${caseItem.preview}" alt="${title}" width="1280" height="800" loading="lazy" decoding="async">`}
+            </a>`
             : '';
 
         const liveBtn = caseItem.liveUrl

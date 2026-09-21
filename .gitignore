@@ -33,7 +33,12 @@ Thumbs.db
 dist/
 build/
 *.min.js
-*.min.css
+# Ausnahme: selbst gehostetes GSAP muss mit ins Repository —
+# sonst lädt die Seite es wieder von einem fremden CDN.
+!vendor/*.min.js
+
+# Large source photo — deploy WebP only (images/photo.webp, images/photo-og.webp)
+images/photo.jpg
 
 # Temporary files
 *.tmp
@@ -43,3 +48,24 @@ build/
 # Server files
 server/node_modules/
 server/.env
+
+# Sanity Studio
+studio/.sanity/
+studio/dist/
+scripts/sanity-seed.ndjson
+
+# ------------------------------------------------------------
+# Внутреннее — не для публичного репозитория
+# ------------------------------------------------------------
+# Счета: Steuernummer, IBAN, данные клиентов
+rechnungen/
+# Бизнес-планы и готовые документы
+Claude outputs/
+BUSINESSPLAN-ECKDATEN.md
+# Рабочие заметки «для себя»
+CHECKLISTE.md
+PROMT-RECHNUNG-SKILL.md
+PROMTY-DEMO-SITES.md
+SNAPSHOT.md
+# Локальные настройки Claude Code
+.claude/

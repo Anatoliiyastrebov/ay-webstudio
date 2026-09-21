@@ -4,8 +4,20 @@
   "description": "Modern portfolio website - static frontend",
   "main": "legal.js",
   "scripts": {
+    "build": "node scripts/apply-promo.mjs && node scripts/build-assets.mjs && node scripts/prerender-blog.mjs",
+    "optimize-images": "node scripts/optimize-images.mjs",
+    "perf": "node scripts/perf-audit.mjs",
     "capture-previews": "node scripts/capture-previews.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sanity-seed": "node scripts/sanity-seed.mjs",
+    "studio": "npm --prefix studio run dev",
+    "test": "node scripts/check-overflow.mjs",
+    "set-domain": "node scripts/set-domain.mjs",
+    "dev": "node scripts/dev-server.mjs",
+    "check-i18n": "node scripts/check-i18n.mjs",
+    "check": "npm run check-i18n && npm test",
+    "prerender-blog": "node scripts/prerender-blog.mjs",
+    "promo": "node scripts/apply-promo.mjs",
+    "photo": "python3 scripts/prepare-photo.py"
   },
   "repository": {
     "type": "git",
@@ -19,6 +31,8 @@
   },
   "homepage": "https://github.com/Anatoliiyastrebov/partfol#readme",
   "devDependencies": {
+    "clean-css": "^5.3.3",
+    "gsap": "^3.12.7",
     "playwright": "^1.60.0"
   }
 }

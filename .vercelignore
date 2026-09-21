@@ -4,3 +4,15 @@ node_modules/
 .env
 .env.local
 *.log
+
+# Внутренние файлы — не для публикации. Без этих строк `vercel` CLI
+# выкладывает всю папку, включая счета с IBAN, Steuernummer и данными
+# клиентов, а также бизнес-план и рабочие заметки.
+rechnungen/
+*.md
+Claude outputs/
+.claude/
+studio/
+
+# Мастер портрета (PNG без потерь, 2 МБ) нужен только для scripts/prepare-photo.py
+images/photo.jpg

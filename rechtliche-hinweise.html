@@ -6,29 +6,31 @@
     <meta name="theme-color" content="#0b0d10">
     <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
 
-    <title>Rechtliche Hinweise · Anatolii Yastrebov</title>
-    <meta name="description" content="Rechtliche Hinweise zum persönlichen Portfolio von Anatolii Yastrebov — Status Impressum und Kontakt.">
+    <title>Rechtliche Hinweise · Preise, Fristen, Beispielprojekte</title>
+    <meta name="description" content="Rechtliche Hinweise zu Preisen, Bearbeitungszeiten und den gezeigten Konzeptprojekten — Websites für kleine Betriebe in Leverkusen und Köln.">
+
+    <link rel="canonical" href="https://anatolii-yastrebov.top/rechtliche-hinweise.html">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://anatolii-yastrebov.top/rechtliche-hinweise.html">
-    <meta property="og:title" content="Rechtliche Hinweise · Anatolii Yastrebov">
-    <meta property="og:description" content="Rechtliche Hinweise zum persönlichen Portfolio — Vorbereitung zur Selbständigkeit als Freiberufler.">
-    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo.jpg">
+    <meta property="og:title" content="Rechtliche Hinweise · Preise, Fristen, Beispielprojekte">
+    <meta property="og:description" content="Rechtliche Hinweise zu Preisen, Bearbeitungszeiten und den gezeigten Konzeptprojekten — Websites für kleine Betriebe in Leverkusen und Köln.">
+    <meta property="og:image" content="https://anatolii-yastrebov.top/images/photo-og.webp">
     <meta property="og:locale" content="de_DE">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Rechtliche Hinweise · Anatolii Yastrebov">
+    <meta name="twitter:title" content="Rechtliche Hinweise · Preise, Fristen, Beispielprojekte">
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="premium.css">
-    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="stylesheet" href="premium.min.css">
+    <link rel="stylesheet" href="responsive.min.css">
 </head>
-<body data-legal-page="rechtliche-hinweise">
+<body data-legal-page="rechtliche-hinweise" data-page="legal">
+    <a class="skip-link" href="#inhalt" data-i18n="ui.skipLink">Zum Inhalt springen</a>
     <div class="animated-bg">
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
@@ -39,20 +41,21 @@
         <div class="nav-container">
             <div class="logo">
                 <a href="index.html#home" class="logo-link" data-i18n-attr="aria-label" data-i18n="ui.logoHome" aria-label="Zum Seitenanfang">
-                    <span class="logo-text">AY</span>
+                    <svg class="logo-mark" viewBox="0 0 116 60" aria-hidden="true" focusable="false"><path d="M28 7 8 30l20 23M88 7l20 23-20 23" fill="none" stroke="currentColor" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><text x="58" y="44" text-anchor="middle" font-size="38" font-weight="800" letter-spacing="-2.5" fill="currentColor">AY</text></svg><span class="logo-wordmark"><span class="logo-name">AY Webstudio</span><span class="logo-place">Leverkusen</span></span>
                 </a>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Projekte</a></li>
-                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Kompetenzen</a></li>
+                <li><a href="leistungen.html" class="nav-link" data-i18n="nav.services">Leistungen &amp; Preise</a></li>
+                <li><a href="index.html#projekte" class="nav-link" data-i18n="nav.projects">Beispiele</a></li>
+                <li><a href="index.html#leistungsumfang" class="nav-link" data-i18n="nav.included">Was enthalten ist</a></li>
                 <li><a href="index.html#ueber-mich" class="nav-link" data-i18n="nav.about">Über mich</a></li>
-                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Notizen</a></li>
+                <li><a href="blog.html" class="nav-link" data-i18n="nav.blog">Blog</a></li>
                 <li><a href="index.html#kontakt" class="nav-link" data-i18n="nav.contact">Kontakt</a></li>
             </ul>
             <div class="language-switcher">
-                <button class="lang-btn" data-lang="ru" type="button">RU</button>
-                <button class="lang-btn" data-lang="en" type="button">EN</button>
-                <button class="lang-btn active" data-lang="de" type="button">DE</button>
+                <button class="lang-btn" data-lang="ru" aria-pressed="false" type="button">RU</button>
+                <button class="lang-btn" data-lang="en" aria-pressed="false" type="button">EN</button>
+                <button class="lang-btn active" data-lang="de" aria-pressed="true" type="button">DE</button>
             </div>
             <button class="theme-toggle" type="button" data-i18n-attr="aria-label,title" data-i18n="ui.themeToggle" aria-label="Design umschalten" title="Design umschalten">
                 <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
@@ -64,7 +67,7 @@
         </div>
     </nav>
 
-    <main class="legal-page">
+    <main id="inhalt" class="legal-page">
         <div class="container">
             <div class="legal-content" id="legal-content"></div>
         </div>
@@ -74,7 +77,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
-                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Frontend-Entwickler · NRW</span></p>
+                    <p class="footer-copyright">&copy; <span id="current-year">2026</span> <span data-i18n="footer.name">Anatolii Yastrebov</span> · <span data-i18n="footer.role">Websites für kleine Betriebe · Leverkusen</span></p>
                 </div>
                 <div class="footer-legal-links">
                     <a href="rechtliche-hinweise.html" class="footer-link" data-i18n="footer.rechtlicheHinweise">Rechtliche Hinweise</a>
@@ -86,8 +89,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="script.js"></script>
-    <script src="legal.js"></script>
+    <script src="site-boot.js" defer></script>
 </body>
 </html>

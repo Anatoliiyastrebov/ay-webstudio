@@ -11,7 +11,7 @@
  *
  *   node scripts/build-dist.mjs
  */
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -66,6 +66,33 @@ for (const dir of DIRS) {
             return true;
         }
     });
+}
+
+// ---------- _headers для Cloudflare ----------
+// Cloudflare не читает vercel.json, поэтому переводим его заголовки в
+// формат _headers. Источник правды остаётся один — vercel.json.
+// Переносим только правила вида «/папка/(.*)»: их Cloudflare понимает
+// как «/папка/*». Правила по расширению (/(.*).css) пропускаем — такой
+// шаблон в _headers не поддерживается, а кеш для них Cloudflare и так
+// выставляет сам.
+const vercelPath = path.join(root, 'vercel.json');
+if (existsSync(vercelPath)) {
+    const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'));
+    const blocks = [];
+    const skipped = [];
+    for (const rule of vercel.headers || []) {
+        const m = /^(.*)\(\.\*\)$/.exec(rule.source);
+        if (!m || m[1].includes('(')) {
+            skipped.push(rule.source);
+            continue;
+        }
+        const lines = rule.headers.map((h) => `  ${h.key}: ${h.value}`);
+        blocks.push(`${m[1]}*\n${lines.join('\n')}`);
+    }
+    writeFileSync(path.join(dist, '_headers'), `${blocks.join('\n\n')}\n`);
+    files += 1;
+    console.log(`✓ dist/_headers: ${blocks.length} правил из vercel.json` +
+        (skipped.length ? ` (пропущены по расширению: ${skipped.join(', ')})` : ''));
 }
 
 console.log(`✓ dist/: ${files} файлов, ${(bytes / 1024 / 1024).toFixed(1)} МБ`);

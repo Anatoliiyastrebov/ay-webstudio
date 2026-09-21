@@ -1,0 +1,16 @@
+// Cloudflare Workers: сайт отдаётся как статические файлы из dist/,
+// серверного кода нет. Без этого файла шаг деплоя `npx wrangler deploy`
+// падает: ему не на что указывать — ни скрипта воркера, ни папки с файлами.
+//
+// Cloudflare Pages этот файл игнорирует (в нём нет pages_build_output_dir),
+// там папка dist/ указывается в настройках проекта.
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "ay-webstudio",
+    "compatibility_date": "2025-09-01",
+    "assets": {
+        "directory": "./dist",
+        // Несуществующий адрес → наш 404.html вместо пустой ошибки Cloudflare.
+        "not_found_handling": "404-page"
+    }
+}

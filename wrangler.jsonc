@@ -11,14 +11,21 @@
     // Обработчик формы: всё, кроме /api/contact, отдаёт ASSETS.
     "main": "src/index.js",
 
-    // Отправка писем без стороннего сервиса. Включается так:
-    //   1. в панели Cloudflare: Email → Email Routing → включить для домена;
-    //   2. там же подтвердить адрес получателя (Destination address);
-    //   3. раскомментировать блок ниже и подставить свой адрес;
-    //   4. задать переменные EMAIL_FROM (адрес на своём домене, например
-    //      formular@ay-webstudio.de) и EMAIL_TO (подтверждённый получатель).
-    // Пока блок закомментирован, письма уходят через SendGrid — если заданы
-    // секреты SENDGRID_API_KEY, EMAIL_FROM и EMAIL_TO.
+    // Адреса — не секреты, поэтому лежат прямо здесь. Секретом остаётся
+    // только SENDGRID_API_KEY, и то лишь если письма шлются через SendGrid.
+    "vars": {
+        "EMAIL_FROM": "formular@ay-webstudio.de",
+        "EMAIL_TO": "info.ay.webstudio.de@gmail.com"
+    },
+
+    // Отправка писем без стороннего сервиса. Осталось два шага в панели
+    // Cloudflare, их нельзя сделать из кода:
+    //   1. Email → Email Routing → Enable для ay-webstudio.de;
+    //   2. Destination addresses → добавить EMAIL_TO и подтвердить его
+    //      по ссылке из письма.
+    // После этого снять // с трёх строк ниже и задеплоить. Раскомментировать
+    // раньше нельзя: деплой упадёт с «destination address not verified».
+    // Альтернатива без Email Routing — секрет SENDGRID_API_KEY.
     // "send_email": [
     //     { "name": "SEND_EMAIL", "destination_address": "info.ay.webstudio.de@gmail.com" }
     // ],

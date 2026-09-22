@@ -148,6 +148,7 @@ const CONTACT = {
     postal: ${JSON.stringify([a.postalCode, a.city].filter(Boolean).join(' ') || '[PLZ ORT]')},
     country: 'Deutschland',
     email: ${JSON.stringify(cfg.email)},
+    emailAlt: ${JSON.stringify(cfg.emailAlt || '')},
     phone: ${JSON.stringify(cfg.phone || '')}
 };
 /* set-domain:contact-end */`;

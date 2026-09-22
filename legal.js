@@ -16,6 +16,7 @@ const CONTACT = {
     postal: "51371 Leverkusen",
     country: 'Deutschland',
     email: "kontakt@anatolii-yastrebov.top",
+    emailAlt: "info.ay.webstudio.de@gmail.com",
     phone: "+49 151 72443444"
 };
 /* set-domain:contact-end */
@@ -32,10 +33,15 @@ const phoneLine = CONTACT.phone
 
 const mailLink = `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`;
 
+// Вторая почта показывается рядом с основной, если она задана в конфиге.
+const mailLinkAlt = CONTACT.emailAlt
+    ? ` oder <a href="mailto:${CONTACT.emailAlt}">${CONTACT.emailAlt}</a>`
+    : '';
+const mailLinks = `${mailLink}${mailLinkAlt}`;
+
 const legalNoteOtherLanguages = `
-    <p><strong>Please note / Обратите внимание:</strong> the legally binding version of this
-    page is the German one, as required for websites operated from Germany.
-    Юридически обязательной является немецкая версия этой страницы.</p>`;
+    <p><strong>Please note:</strong> the legally binding version of this
+    page is the German one, as required for websites operated from Germany.</p>`;
 
 const legalTranslations = {
     de: {
@@ -59,7 +65,7 @@ const legalTranslations = {
 
                     <h2>Kontakt</h2>
                     <p>
-                        ${phoneLine}E-Mail: ${mailLink}
+                        ${phoneLine}E-Mail: ${mailLinks}
                     </p>
 
                     <h2>Umsatzsteuer</h2>
@@ -114,7 +120,7 @@ const legalTranslations = {
                     <h2>1. Verantwortlicher</h2>
                     <p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
                     <p>${addressBlock}<br>
-                        E-Mail: ${mailLink}
+                        E-Mail: ${mailLinks}
                     </p>
 
                     <h2>2. Hosting und Server-Logfiles</h2>
@@ -246,7 +252,7 @@ const legalTranslations = {
                         <li><strong>Widerspruch (Art. 21 DSGVO):</strong> Widerspruch gegen die Verarbeitung.</li>
                         <li><strong>Widerruf der Einwilligung (Art. 7 Abs. 3 DSGVO):</strong> jederzeit mit Wirkung für die Zukunft.</li>
                     </ul>
-                    <p>Zur Ausübung Ihrer Rechte genügt eine formlose Nachricht an ${mailLink}.</p>
+                    <p>Zur Ausübung Ihrer Rechte genügt eine formlose Nachricht an ${mailLinks}.</p>
 
                     <h2>7. Beschwerderecht bei der Aufsichtsbehörde</h2>
                     <p>Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen die DSGVO
@@ -262,7 +268,7 @@ const legalTranslations = {
                     Transportweg geschützt.</p>
 
                     <h2>9. Kontakt zum Datenschutz</h2>
-                    <p>Bei Fragen zum Datenschutz erreichen Sie mich unter: ${mailLink}</p>
+                    <p>Bei Fragen zum Datenschutz erreichen Sie mich unter: ${mailLinks}</p>
 
                     <div class="legal-footer">
                         <p><a href="index.html">← Zurück zur Startseite</a></p>
@@ -297,6 +303,10 @@ const legalTranslations = {
                     Bewertungen und Öffnungszeiten sind frei erfunden. Es handelt sich weder um
                     echte Unternehmen noch um Kundenaufträge, und es wird damit keine
                     Geschäftsbeziehung behauptet.</p>
+
+                    <h2>Kontakt</h2>
+                    <p>Fragen zu diesen Hinweisen richten Sie bitte an:<br>
+                    ${phoneLine}E-Mail: ${mailLinks}</p>
 
                     <h2>Weitere Pflichtangaben</h2>
                     <p>Die vollständigen Anbieterangaben finden Sie im

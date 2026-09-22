@@ -11,10 +11,16 @@
  *   src/index.js            — Cloudflare Workers (статика + этот обработчик)
  *   functions/api/contact.js — Cloudflare Pages Functions
  *
- * Переменные окружения (в Cloudflare задаются как Secrets):
- *   SENDGRID_API_KEY  — ключ SendGrid
- *   EMAIL_FROM        — отправитель, подтверждённый в SendGrid
- *   EMAIL_TO          — куда приходят заявки
+ * Письмо уходит одним из двух способов — что настроено, то и берётся:
+ *
+ *   1. Cloudflare Email Routing (рекомендуется): привязка SEND_EMAIL в
+ *      wrangler.jsonc. Ключи не нужны, сторонний почтовый сервис не нужен.
+ *      Отправлять можно только на адрес, подтверждённый в Email Routing.
+ *   2. SendGrid: секреты SENDGRID_API_KEY, EMAIL_FROM, EMAIL_TO.
+ *
+ * Общие переменные:
+ *   EMAIL_FROM — адрес отправителя на собственном домене
+ *   EMAIL_TO   — куда приходят заявки
  */
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -78,7 +84,7 @@ function validate(data) {
     return { valid: errors.length === 0, errors, clean: { name, email, message, projectType } };
 }
 
-async function sendMail(env, { name, email, message, projectType }) {
+export function buildMail({ name, email, message, projectType }) {
     const subject = projectType
         ? `Anfrage: ${projectType} — ${name}`
         : `Anfrage über das Kontaktformular — ${name}`;
@@ -89,6 +95,58 @@ async function sendMail(env, { name, email, message, projectType }) {
         `E-Mail: ${email}\n` +
         `Paket:  ${projectType || '— nicht angegeben —'}\n\n` +
         `Nachricht:\n${message}\n\n--\nGesendet vom Kontaktformular auf ay-webstudio.de.`;
+
+    return { subject, text };
+}
+
+// Тема письма и адреса в MIME должны быть в ASCII. Умляуты и кириллицу
+// кодируем по RFC 2047, тело — base64: иначе почтовые серверы ломают текст.
+function encodeHeader(value) {
+    if (/^[\x20-\x7E]*$/.test(value)) return value;
+    const bytes = new TextEncoder().encode(value);
+    let bin = '';
+    bytes.forEach((b) => { bin += String.fromCharCode(b); });
+    return `=?UTF-8?B?${btoa(bin)}?=`;
+}
+
+function base64Utf8(value) {
+    const bytes = new TextEncoder().encode(value);
+    let bin = '';
+    bytes.forEach((b) => { bin += String.fromCharCode(b); });
+    return btoa(bin);
+}
+
+export function buildMime({ from, to, replyTo, replyName, subject, text }) {
+    return [
+        `From: ${from}`,
+        `To: ${to}`,
+        `Reply-To: ${encodeHeader(replyName)} <${replyTo}>`,
+        `Subject: ${encodeHeader(subject)}`,
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: base64',
+        '',
+        base64Utf8(text)
+    ].join('\r\n');
+}
+
+// Способ 1: Cloudflare Email Routing — без сторонних сервисов и ключей.
+async function sendViaEmailRouting(env, data) {
+    const { EmailMessage } = await import('cloudflare:email');
+    const { subject, text } = buildMail(data);
+    const raw = buildMime({
+        from: env.EMAIL_FROM,
+        to: env.EMAIL_TO,
+        replyTo: data.email,
+        replyName: data.name,
+        subject,
+        text
+    });
+    await env.SEND_EMAIL.send(new EmailMessage(env.EMAIL_FROM, env.EMAIL_TO, raw));
+}
+
+async function sendMail(env, { name, email, message, projectType }) {
+    const { subject, text } = buildMail({ name, email, message, projectType });
 
     const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
         method: 'POST',
@@ -125,8 +183,13 @@ export async function handleContact(request, env) {
         return json({ success: false, message: 'Method not allowed' }, 405, { ...cors, Allow: 'POST, OPTIONS' });
     }
 
-    if (!env.SENDGRID_API_KEY || !env.EMAIL_FROM || !env.EMAIL_TO) {
-        console.error('Fehlende Secrets: SENDGRID_API_KEY / EMAIL_FROM / EMAIL_TO');
+    const canRoute = Boolean(env.SEND_EMAIL) && env.EMAIL_FROM && env.EMAIL_TO;
+    const canSendGrid = Boolean(env.SENDGRID_API_KEY) && env.EMAIL_FROM && env.EMAIL_TO;
+    if (!canRoute && !canSendGrid) {
+        console.error(
+            'Kein Versandweg konfiguriert: entweder Bindung SEND_EMAIL (Cloudflare Email ' +
+            'Routing) oder SENDGRID_API_KEY — dazu immer EMAIL_FROM und EMAIL_TO.'
+        );
         return json({ success: false, message: 'Email service is not configured.' }, 500, cors);
     }
 
@@ -149,9 +212,10 @@ export async function handleContact(request, env) {
     }
 
     try {
-        await sendMail(env, result.clean);
+        if (canRoute) await sendViaEmailRouting(env, result.clean);
+        else await sendMail(env, result.clean);
     } catch (err) {
-        console.error('SendGrid error:', err?.message || err);
+        console.error('Mail error:', err?.message || err);
         return json(
             { success: false, message: 'Email service temporarily unavailable. Please try again later.' },
             502,

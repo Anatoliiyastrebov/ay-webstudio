@@ -214,6 +214,28 @@ function applyWhatsApp() {
         }
     }
 
+    // --- почта в блоке контактов ---
+    const indexPathMail = path.join(root, 'index.html');
+    if (existsSync(indexPathMail)) {
+        const before = readFileSync(indexPathMail, 'utf8');
+        const mail = String(cfg.email || '').trim();
+        const block = mail
+            ? `\n                    <div class="contact-item">\n`
+              + `                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">📧</div></div>\n`
+              + `                        <div class="contact-details">\n`
+              + `                            <h3 data-i18n="contact.email.label">E-Mail</h3>\n`
+              + `                            <p><a href="mailto:${mail}" class="contact-link contact-link--big">${mail}</a></p>\n`
+              + `                        </div>\n`
+              + `                    </div>\n                    `
+            : '';
+        const html = fillMarker(before, 'email:contact', block, 'index.html');
+        if (html !== before) {
+            writeFileSync(indexPathMail, html);
+            changedFiles += 1;
+            console.log('✓ index.html (E-Mail)');
+        }
+    }
+
     // --- телефон в блоке контактов ---
     const indexPathPhone = path.join(root, 'index.html');
     if (existsSync(indexPathPhone)) {

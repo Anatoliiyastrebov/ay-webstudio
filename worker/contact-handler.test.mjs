@@ -4,7 +4,7 @@
  *
  *   npm run test-worker
  */
-import { handleContact } from './contact-handler.mjs';
+import { handleContact, buildMail, buildMime } from './contact-handler.mjs';
 
 const ENV = { SENDGRID_API_KEY: 'SG.test', EMAIL_FROM: 'from@x.de', EMAIL_TO: 'to@x.de' };
 let sent = null, sendStatus = 202;
@@ -51,5 +51,19 @@ sendStatus = 202;
 const noSecrets = await handleContact(post(ok, null), {});
 console.log(`${noSecrets.status === 500 ? '✓' : '✗'} ${'нет ключей в окружении'.padEnd(46)} ${noSecrets.status} (ждали 500)`);
 if (noSecrets.status !== 500) fails++;
+
+// --- сборка письма для Cloudflare Email Routing ---
+const mail = buildMail({ name: 'Jürgen Groß', email: 'j@example.de', message: 'Grüße aus Köln', projectType: 'Basis-Website' });
+const mime = buildMime({ from: 'formular@ay-webstudio.de', to: 'info@example.com', replyTo: 'j@example.de', replyName: 'Jürgen Groß', subject: mail.subject, text: mail.text });
+function expect(label, cond) { console.log(`${cond ? '✓' : '✗'} ${label}`); if (!cond) fails++; }
+const header = mime.slice(0, mime.indexOf('\r\n\r\n'));
+const body = mime.slice(mime.indexOf('\r\n\r\n') + 4);
+expect('тема с умляутом закодирована по RFC 2047'.padEnd(46), /Subject: =\?UTF-8\?B\?/.test(header));
+expect('заголовки остались в ASCII'.padEnd(46), /^[\x20-\x7E\r\n]*$/.test(header));
+expect('Reply-To — адрес посетителя'.padEnd(46), header.includes('<j@example.de>'));
+expect('тело раскодируется обратно в UTF-8'.padEnd(46),
+    new TextDecoder().decode(Uint8Array.from(atob(body), (c) => c.charCodeAt(0))).includes('Grüße aus Köln'));
+expect('пакет попал в тему'.padEnd(46), mail.subject === 'Anfrage: Basis-Website — Jürgen Groß');
+
 console.log(fails ? `\n✗ провалов: ${fails}` : '\n✓ все проверки пройдены');
 process.exit(fails ? 1 : 0);

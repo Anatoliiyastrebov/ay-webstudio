@@ -15,9 +15,9 @@ const CONTACT = {
     street: "Memelstraße 8",
     postal: "51371 Leverkusen",
     country: 'Deutschland',
-    email: "kontakt@anatolii-yastrebov.top",
-    emailAlt: "info.ay.webstudio.de@gmail.com",
-    phone: "+49 151 72443444"
+    email: "info.ay.webstudio.de@gmail.com",
+    emailAlt: "",
+    phone: ""
 };
 /* set-domain:contact-end */
 

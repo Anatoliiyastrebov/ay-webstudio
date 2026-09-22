@@ -75,6 +75,8 @@ for (const file of htmlFiles) {
 }
 
 // Ключи-сироты ищем только среди листьев-строк.
+// contact.phone.* не размечены в HTML, пока телефон пуст в site.config.json:
+// блок телефона тогда не выводится. Ключи нужны, если номер вернут.
 // Тексты сообщений WhatsApp подставляются в href через data-wa-msg,
 // а не через data-i18n, поэтому в разметке их не видно.
 // services.pN.price не размечены в HTML, пока идёт акция: карточки берут
@@ -82,7 +84,7 @@ for (const file of htmlFiles) {
 // поэтому в списке исключений — иначе их удалят как ненужные.
 const leaves = (obj, prefix = '') => Object.entries(obj).flatMap(([k, v]) =>
     v && typeof v === 'object' ? leaves(v, `${prefix}${k}.`) : [`${prefix}${k}`]);
-const skip = /^(meta\.|project\.|cases\.|contact\.(whatsapp\.msg|form\.(submitted|sending|sendingLong|error|consentError))|blog\.(pageTitle|pageDescription|readTime|cta\.)|services\.(pageTitle|pageDescription|p[0-9]\.price|whatsappMsg)|ui\.(personName|photoAlt)|nav\.skills|study\.(disclaimer|detailsHide|c[0-9]\.alt)|footer\.)/;
+const skip = /^(meta\.|project\.|cases\.|contact\.(phone\.|whatsapp\.msg|form\.(submitted|sending|sendingLong|error|consentError))|blog\.(pageTitle|pageDescription|readTime|cta\.)|services\.(pageTitle|pageDescription|p[0-9]\.price|whatsappMsg)|ui\.(personName|photoAlt)|nav\.skills|study\.(disclaimer|detailsHide|c[0-9]\.alt)|footer\.)/;
 for (const key of leaves(t.de)) {
     if (!usedKeys.has(key) && !skip.test(key)) problems.orphan.push(key);
 }

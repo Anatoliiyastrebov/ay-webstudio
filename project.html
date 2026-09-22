@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#0b0d10">
-    <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
+    <script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme')||'dark';r.setAttribute('data-theme',t);}catch(e){r.setAttribute('data-theme','dark');}try{var l=localStorage.getItem('language');if(l&&l!=='de'){r.classList.add('i18n-pending');r.style.visibility='hidden';setTimeout(function(){r.classList.remove('i18n-pending');r.style.visibility='';},1500);}}catch(e){}document.addEventListener('click',function(e){var b=e.target.closest('.theme-toggle');if(!b)return;r.classList.add('theme-switching');var c=r.getAttribute('data-theme')||'dark';var n=c==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(_){}requestAnimationFrame(function(){requestAnimationFrame(function(){r.classList.remove('theme-switching');});});});})();</script>
 
     <title data-i18n="project.metaTitle">Projekt · Anatolii Yastrebov</title>
     <meta name="description" data-i18n-attr="content" data-i18n="project.metaDescription" content="Portfolio-Projekt im Detail: Umsetzung, Technologien und geplante Erweiterungen.">
@@ -26,6 +26,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Переводы грузим прямо здесь, а не через site-boot.js: страница скрыта,
+         пока они не применены, поэтому чем раньше — тем короче ожидание.
+         data-src/onload нужны site-boot.js, чтобы не подключить файл второй раз. -->
+    <script src="script.js" defer data-src="script.js" onload="this.dataset.loaded='1'"></script>
     <link rel="stylesheet" href="styles.min.css">
     <link rel="stylesheet" href="premium.min.css">
     <link rel="stylesheet" href="responsive.min.css">

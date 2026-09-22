@@ -9,12 +9,33 @@
     const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
     const bust = isLocal ? `?t=${Date.now()}` : '';
 
+    // Имя файла без пути и без ?t=…: dev-сервер дописывает метку версии,
+    // поэтому сравнивать строки целиком нельзя — иначе скрипт, уже
+    // подключённый в <head>, подключится второй раз и упадёт на
+    // повторном объявлении переменных.
+    const baseName = (url) => String(url || '').split('?')[0].split('/').pop();
+
+    function findLoadedScript(src) {
+        const want = baseName(src);
+        return Array.from(document.querySelectorAll('script[src]'))
+            .find((el) => baseName(el.getAttribute('src')) === want);
+    }
+
     function loadScript(src) {
         return new Promise((resolve, reject) => {
-            const existing = document.querySelector(`script[data-src="${src}"]`);
+            const existing = findLoadedScript(src);
             if (existing) {
-                if (existing.dataset.loaded === '1') resolve();
-                else existing.addEventListener('load', resolve, { once: true });
+                // readyState === 'complete' значит, что все отложенные скрипты
+                // страницы уже выполнились — ждать событие load бессмысленно.
+                if (existing.dataset.loaded === '1' || document.readyState === 'complete') {
+                    resolve();
+                    return;
+                }
+                existing.addEventListener('load', resolve, { once: true });
+                // Ошибку не пробрасываем: иначе одна неудача остановит
+                // загрузку всех остальных скриптов страницы.
+                existing.addEventListener('error', resolve, { once: true });
+                setTimeout(resolve, 3000);
                 return;
             }
             const el = document.createElement('script');
@@ -58,9 +79,13 @@
             return;
         }
 
-        scripts.push('portfolio-projects.js', 'portfolio-i18n.js');
+        // script.js несёт переводы: пока он не отработал, страница скрыта
+        // (класс i18n-pending). Поэтому грузим его как можно раньше.
+        // На блоге перед ним нужен blog-content.js — из него script.js
+        // берёт функцию отрисовки статей.
         if (page === 'blog') scripts.push('blog-content.js');
         scripts.push('script.js');
+        scripts.push('portfolio-projects.js', 'portfolio-i18n.js');
         if (page === 'project') scripts.push('project.js');
         scripts.push('sanity-config.js', 'sanity-content.js');
         await loadSequential(scripts);

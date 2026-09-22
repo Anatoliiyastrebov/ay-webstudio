@@ -1433,5 +1433,8 @@ if (contactForm) {
 // Init
 // ============================================================
 applyTranslations(currentLanguage);
+// Перевод применён — показываем страницу (класс ставит скрипт в <head>).
+document.documentElement.classList.remove('i18n-pending');
+document.documentElement.style.visibility = '';
 initCaseStudyToggles();
 initPackagePreselect();

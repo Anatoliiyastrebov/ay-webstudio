@@ -4537,6 +4537,16 @@ html[data-theme="light"] .orb-3 {
    ACCESSIBILITY & FORM UTILITIES
    ============================================ */
 /* Screen-reader only — visually hidden but available to AT */
+/* Пока перевод не применён, содержимое скрыто: статический HTML написан
+   по-немецки, и без этого посетитель с русским или английским успевает
+   увидеть немецкий текст, который потом подменяется. Класс ставит
+   маленький скрипт в <head> и снимает script.js после applyTranslations;
+   там же страховочный таймер на 1,5 с — если скрипт не загрузился,
+   страница всё равно покажется (по-немецки), а не останется пустой. */
+html.i18n-pending body {
+    visibility: hidden;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;

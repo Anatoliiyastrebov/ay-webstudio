@@ -39,7 +39,7 @@ const langs = ['de', 'en', 'ru'];
 const get = (obj, key) => key.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
 
 const htmlFiles = readdirSync(root).filter((f) => f.endsWith('.html'));
-const problems = { missing: [], drift: [], orphan: [] };
+const problems = { missing: [], drift: [], wipe: [], orphan: [] };
 const usedKeys = new Set();
 
 for (const file of htmlFiles) {
@@ -60,6 +60,27 @@ for (const file of htmlFiles) {
 
         for (const l of langs) {
             if (get(t[l], key) === undefined) problems.missing.push(`${file}: ${key} → нет в «${l}»`);
+        }
+
+        // Ловушка: если у элемента с data-i18n есть вложенные теги, а перевод —
+        // простой текст, applyTranslations затрёт разметку через textContent.
+        // Так однажды исчезли <span> внутри кнопки отправки, и форма падала.
+        if (!attrs.includes('data-i18n-attr')) {
+            const deVal = get(t.de, key);
+            const openTag = new RegExp(`<[a-z][^>]*\\bdata-i18n="${key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`);
+            const at = html.search(openTag);
+            // Атрибут может стоять и перед data-i18n — смотрим тег целиком,
+            // иначе половина проверок ложные.
+            const fullTag = at === -1 ? '' : html.slice(at, html.indexOf('>', at) + 1);
+            if (at !== -1 && !fullTag.includes('data-i18n-attr')
+                && typeof deVal === 'string' && !/<[a-z]/i.test(deVal)) {
+                const tag = /^<([a-z0-9]+)/i.exec(html.slice(at))[1];
+                const close = html.indexOf(`</${tag}>`, at);
+                const inner = close === -1 ? '' : html.slice(html.indexOf('>', at) + 1, close);
+                if (/<[a-z]/i.test(inner)) {
+                    problems.wipe.push(`${file}: ${key} → внутри <${tag}> есть разметка, а перевод — простой текст; она будет затёрта`);
+                }
+            }
         }
 
         // Сравниваем только простой текст: элементы с data-i18n-attr задают атрибут,
@@ -92,6 +113,7 @@ for (const key of leaves(t.de)) {
 let bad = 0;
 for (const [name, title] of [['missing', 'Ключи, которых нет в каком-то языке'],
                              ['drift', 'Текст в HTML разошёлся с немецким переводом'],
+                             ['wipe', 'Перевод затрёт вложенную разметку'],
                              ['orphan', 'Ключи в переводах, не используемые ни на одной странице']]) {
     const list = problems[name];
     if (!list.length) { console.log(`✓ ${title}: не найдено`); continue; }

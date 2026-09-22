@@ -315,6 +315,7 @@ const translations = {
                 sending: 'Wird gesendet…',
                 sendingLong: 'Server wird gestartet, einen Moment…',
                 error: 'Sendefehler',
+                errorDirect: 'Die Anfrage konnte nicht gesendet werden. Bitte schreiben Sie mir direkt an %s — oder über WhatsApp.',
                 consent: 'Ich stimme der Verarbeitung meiner personenbezogenen Daten gemäß der <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> zu.',
                 consentError: 'Bitte stimmen Sie der Verarbeitung Ihrer Daten zu.'
             }
@@ -634,6 +635,7 @@ const translations = {
                 sending: 'Sending…',
                 sendingLong: 'Server is starting up, one moment…',
                 error: 'Sending error',
+                errorDirect: 'The enquiry could not be sent. Please email me directly at %s — or write on WhatsApp.',
                 consent: 'I agree to the processing of my personal data in accordance with the <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
                 consentError: 'Please agree to the processing of your data.'
             }
@@ -947,6 +949,7 @@ const translations = {
                 sending: 'Отправка…',
                 sendingLong: 'Сервер просыпается, секунду…',
                 error: 'Ошибка отправки',
+                errorDirect: 'Заявку отправить не удалось. Напишите мне напрямую на %s — или в WhatsApp.',
                 consent: 'Я согласен на обработку моих персональных данных в соответствии с <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
                 consentError: 'Подтвердите согласие на обработку данных.'
             }
@@ -1413,8 +1416,10 @@ if (contactForm) {
         const messageInput = contactForm.querySelector('textarea[name="message"]');
         const consent = contactForm.querySelector('#gdpr-consent');
         const button = contactForm.querySelector('button[type="submit"]');
-        const btnText = button.querySelector('.btn-text');
-        const btnIcon = button.querySelector('.btn-icon');
+        // Если разметку кнопки когда-нибудь изменят, форма должна продолжать
+        // работать: подпись и значок — украшение, отправка от них не зависит.
+        const btnText = button.querySelector('.btn-text') || { textContent: '' };
+        const btnIcon = button.querySelector('.btn-icon') || { textContent: '' };
 
         if (!consent || !consent.checked) {
             setFormStatus(statusEl, dict.contact.form.consentError, 'error');
@@ -1463,7 +1468,16 @@ if (contactForm) {
             btnText.textContent = dict.contact.form.error;
             btnIcon.textContent = '!';
             button.style.background = '';
-            setFormStatus(statusEl, (result && result.message) || dict.contact.form.error, 'error');
+            // Ответ сервера — английский технический текст, посетителю он
+            // ничего не говорит. Показываем понятное сообщение и прямой
+            // контакт, чтобы заявка не потерялась, а причину пишем в консоль.
+            if (result && result.message) console.warn('Kontaktformular:', result.message);
+            const mail = document.querySelector('.contact-info a[href^="mailto:"]');
+            const address = mail ? mail.textContent.trim() : '';
+            const direct = address
+                ? dict.contact.form.errorDirect.replace('%s', address)
+                : dict.contact.form.error;
+            setFormStatus(statusEl, direct, 'error');
         }
 
         setTimeout(() => {

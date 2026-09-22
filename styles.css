@@ -5317,6 +5317,14 @@ html.i18n-pending body {
     }
 }
 
+/* Пояснение под контактом (телефон): тише основной строки. */
+.contact-note {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
 /* Подсказка под полем формы: связана с полем через aria-describedby. */
 .form-hint {
     margin: 6px 0 0;

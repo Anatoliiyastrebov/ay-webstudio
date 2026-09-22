@@ -25,7 +25,8 @@ const ALLOWED_TYPES = [
     'Basis-Website',
     'Erweiterte Website',
     'Wartung',
-    'Bestehende Website überarbeiten'
+    'Bestehende Website überarbeiten',
+    'Hosting und Domain'
 ];
 
 const CORS_ORIGINS = [

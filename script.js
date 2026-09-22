@@ -42,8 +42,8 @@ const translations = {
         services: {
             /* promo:de:start */
             promo: {
-                badge: '−20 % für die ersten 3 Kunden',
-                note: 'Aktion: 20 % Rabatt auf Landingpage, Basis-Website und Erweiterte Website — für die ersten 3 Neukunden, die bis zum 31.12.2026 einen Auftrag erteilen. Aktuell sind noch 3 Plätze frei. Bezugspreis ist der reguläre Festpreis des jeweiligen Pakets. Danach gelten wieder die regulären Preise.',
+                badge: '−20 % für die ersten 2 Kunden',
+                note: 'Aktion: 20 % Rabatt auf Landingpage, Basis-Website und Erweiterte Website — für die ersten 2 Neukunden, die bis zum 31.12.2026 einen Auftrag erteilen. Aktuell sind noch 2 Plätze frei. Der Rabatt gilt im Gegenzug für eine Referenz und eine öffentliche Bewertung. Bezugspreis ist der reguläre Festpreis des jeweiligen Pakets. Danach gelten wieder die regulären Preise.',
                 p1: { price: '480–640 €', was: 'statt 600–800 €' },
                 p2: { price: '720–1 120 €', was: 'statt 900–1 400 €' },
                 p3: { price: '1 440–2 400 €', was: 'statt 1 800–3 000 €' },
@@ -103,6 +103,16 @@ const translations = {
                 f5: 'Änderungen innerhalb von 2 Werktagen',
                 f6: 'Domain und Hosting inklusive – keine weiteren laufenden Kosten'
             },
+            p5: {
+                name: 'Hosting und Domain',
+                price: '20 € im Monat',
+                time: 'Monatlich kündbar',
+                for: 'Für Kunden ohne Wartungsvertrag.',
+                f1: 'Betrieb Ihrer Website bei Cloudflare — schnelles weltweites Servernetz',
+                f2: 'SSL-Zertifikat und Schutz vor Überlastungsangriffen inklusive',
+                f3: 'Verwaltung Ihrer Domain',
+                f4: 'Keine Mindestlaufzeit — monatlich kündbar'
+            },
             hourly: '<strong>Einzelne Arbeiten: 45 € pro Stunde.</strong> Zum Beispiel: eine bestehende Website überarbeiten, Rechtstexte ergänzen oder eine weitere Seite hinzufügen.',
             vat: 'Kein Ausweis von Umsatzsteuer gemäß § 19 UStG (Kleinunternehmerregelung). Der genaue Preis hängt vom Umfang ab und steht vor dem Start fest.',
             deliveryLink: 'Lieferzeiten ansehen',
@@ -117,7 +127,8 @@ const translations = {
                     r1: { effort: '1–2 Arbeitstage', done: 'in der Regel bis 1 Woche' },
                     r2: { effort: '2–4 Arbeitstage', done: 'in der Regel bis 2 Wochen' },
                     r3: { effort: '6–10 Arbeitstage', done: 'in der Regel bis 4 Wochen' },
-                    r4: { effort: 'laufend', none: 'entfällt' }
+                    r4: { effort: 'laufend', none: 'entfällt' },
+                    r5: { effort: 'laufend', none: 'entfällt' }
                 },
                 whyTitle: 'Warum zwei Zahlen?',
                 why1: 'Der Arbeitsaufwand ist die Zeit, die ich tatsächlich an Ihrer Website arbeite. Die Fertigstellung ist der Termin, an dem sie online geht.',
@@ -154,7 +165,7 @@ const translations = {
                 q2: 'Wie viele Änderungen sind enthalten?',
                 a2: 'Zwei Korrekturrunden sind im Festpreis enthalten. Das reicht in den meisten Fällen. Wenn Sie danach noch etwas ändern möchten, rechne ich 45 € pro Stunde ab — vorher sage ich Ihnen, wie lange es ungefähr dauert.',
                 q3: 'Wer bezahlt Domain und Hosting?',
-                a3: 'Im Wartungspaket sind Domain und Hosting enthalten — Sie zahlen nur den monatlichen Betrag. Ohne Wartung läuft der Vertrag direkt auf Ihren Namen und Sie zahlen ihn selbst, üblicherweise 10–15 € im Monat.',
+                a3: 'Im Wartungspaket sind Domain und Hosting enthalten — Sie zahlen nur den monatlichen Betrag. Ohne Wartung können Sie das Hosting-Paket für 20 € im Monat nehmen. Alternativ melden Sie Domain und Hosting selbst an und zahlen direkt beim Anbieter, üblicherweise 10–15 € im Monat.',
                 q4: 'Was ist, wenn mir das Ergebnis nicht gefällt?',
                 a4: 'Sie sehen die Website, bevor sie online geht, und sagen mir, was geändert werden soll. Dafür sind die zwei Korrekturrunden da. Der Preis steht vorher fest und ändert sich dabei nicht.',
                 q5: 'Gehört die Website wirklich mir?',
@@ -166,7 +177,7 @@ const translations = {
                 q8: 'Kann ich Sie auf Russisch oder Ukrainisch erreichen?',
                 a8: 'Ja. Ich spreche Deutsch, Ukrainisch und Russisch. Schreiben Sie mir in der Sprache, die Ihnen leichter fällt — das Angebot und die Rechnung sind dann auf Deutsch.'
             },
-            honest: 'Online-Shops und komplexe Web-Anwendungen biete ich nicht an. Wenn Sie so etwas brauchen, sage ich das offen und empfehle Ihnen passende Kolleginnen und Kollegen.',
+            honest: 'Online-Shops, Buchungs- und Warenwirtschaftssysteme sowie komplexe Web-Anwendungen biete ich nicht an. Wenn Sie so etwas brauchen, sage ich das offen und empfehle Ihnen passende Kolleginnen und Kollegen.',
             finalText: 'Sie wissen noch nicht, welches Paket passt? Schreiben Sie mir kurz, worum es geht — ich sage Ihnen ehrlich, was Sie brauchen.',
             finalCta: 'Kostenloses Erstgespräch'
         },
@@ -282,6 +293,7 @@ const translations = {
             langs: { label: 'Sprachen', value: '<strong>Ich spreche Deutsch, Ukrainisch und Russisch.</strong> Schreiben Sie mir ruhig in der Sprache, die Ihnen leichter fällt.' },
             gdpr: 'Ihre Daten werden ausschließlich zur Beantwortung Ihrer Anfrage verwendet. Weitere Informationen finden Sie in unserer <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
             email: { label: 'E-Mail' },
+            phone: { label: 'Telefon', hint: 'Anruf oder Nachricht — auch am Wochenende' },
             whatsapp: { label: 'WhatsApp', hint: 'Schreiben Sie mir direkt', msg: 'Guten Tag! Ich habe eine Frage zu einer Website.' },
             region: { label: 'Region', value: 'Leverkusen, Köln, ganz NRW und deutschlandweit' },
             form: {
@@ -297,6 +309,7 @@ const translations = {
                 type3: 'Erweiterte Website (1 800–3 000 €)',
                 type4: 'Wartung (60 € im Monat)',
                 type5: 'Bestehende Website überarbeiten (45 €/Stunde)',
+                type6: 'Hosting und Domain (20 € im Monat)',
                 submit: 'Anfrage senden',
                 submitted: 'Gesendet! ✓',
                 sending: 'Wird gesendet…',
@@ -350,8 +363,8 @@ const translations = {
         services: {
             /* promo:en:start */
             promo: {
-                badge: '−20% for the first 3 clients',
-                note: 'Promotion: 20% off the Landing page, Basic website and Extended website packages — for the first 3 new clients who place an order by 2026-12-31. 3 slots are still available. The reference price is the regular fixed price of each package. After that the regular prices apply again.',
+                badge: '−20% for the first 2 clients',
+                note: 'Promotion: 20% off the Landing page, Basic website and Extended website packages — for the first 2 new clients who place an order by 2026-12-31. 2 slots are still available. The discount is granted in exchange for a reference and a public review. The reference price is the regular fixed price of each package. After that the regular prices apply again.',
                 p1: { price: '€480–640', was: 'instead of €600–800' },
                 p2: { price: '€720–1,120', was: 'instead of €900–1,400' },
                 p3: { price: '€1,440–2,400', was: 'instead of €1,800–3,000' },
@@ -411,6 +424,16 @@ const translations = {
                 f5: 'Changes done within 2 working days',
                 f6: 'Domain and hosting included – no other recurring costs'
             },
+            p5: {
+                name: 'Hosting and domain',
+                price: '€20 per month',
+                time: 'Cancel any month',
+                for: 'For clients without a maintenance contract.',
+                f1: 'Your website runs on Cloudflare — fast global server network',
+                f2: 'SSL certificate and protection against overload attacks included',
+                f3: 'I manage your domain',
+                f4: 'No minimum term — cancel any month'
+            },
             hourly: '<strong>Individual work: €45 per hour.</strong> For example: reworking an existing website, adding legal texts or adding another page.',
             vat: 'No VAT is charged under § 19 UStG (small business regulation). The exact price depends on the scope and is fixed before we start.',
             deliveryLink: 'See delivery times',
@@ -425,7 +448,8 @@ const translations = {
                     r1: { effort: '1–2 working days', done: 'usually within 1 week' },
                     r2: { effort: '2–4 working days', done: 'usually within 2 weeks' },
                     r3: { effort: '6–10 working days', done: 'usually within 4 weeks' },
-                    r4: { effort: 'ongoing', none: 'not applicable' }
+                    r4: { effort: 'ongoing', none: 'not applicable' },
+                    r5: { effort: 'ongoing', none: 'not applicable' }
                 },
                 whyTitle: 'Why two numbers?',
                 why1: 'Working time is the time I actually spend on your website. Go-live is the date it goes online.',
@@ -462,7 +486,7 @@ const translations = {
                 q2: 'How many changes are included?',
                 a2: 'Two rounds of revisions are included in the fixed price. That is enough in most cases. If you want to change something after that, I charge €45 per hour — and I tell you the estimated time beforehand.',
                 q3: 'Who pays for domain and hosting?',
-                a3: 'Domain and hosting are included in the maintenance package — you only pay the monthly amount. Without maintenance, the contract runs in your own name and you pay it yourself, usually €10–15 per month.',
+                a3: 'Domain and hosting are included in the maintenance package — you only pay the monthly amount. Without maintenance you can take the hosting package for €20 per month. Alternatively you register domain and hosting yourself and pay the provider directly, usually €10–15 per month.',
                 q4: 'What if I do not like the result?',
                 a4: 'You see the website before it goes online and tell me what should be changed. That is what the two revision rounds are for. The price is fixed beforehand and does not change.',
                 q5: 'Does the website really belong to me?',
@@ -474,7 +498,7 @@ const translations = {
                 q8: 'Can I contact you in Russian or Ukrainian?',
                 a8: 'Yes. I speak German, Ukrainian and Russian. Write in whichever language is easier for you — the quote and the invoice will be in German.'
             },
-            honest: 'I do not offer online shops or complex web applications. If you need something like that, I will say so openly and recommend suitable colleagues.',
+            honest: 'I do not offer online shops, booking or inventory systems, or complex web applications. If you need something like that, I will say so openly and recommend suitable colleagues.',
             finalText: 'Not sure which package fits? Write me a few lines about your situation — I will tell you honestly what you need.',
             finalCta: 'Free first consultation'
         },
@@ -588,6 +612,7 @@ const translations = {
             langs: { label: 'Languages', value: '<strong>I speak German, Ukrainian and Russian.</strong> Feel free to write in whichever language is easier for you.' },
             gdpr: 'Your data is used exclusively to respond to your inquiry. For more information, please see our <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
             email: { label: 'Email' },
+            phone: { label: 'Phone', hint: 'Call or message — also at the weekend' },
             whatsapp: { label: 'WhatsApp', hint: 'Message me directly', msg: 'Hello! I have a question about a website.' },
             region: { label: 'Region', value: 'Leverkusen, Cologne, all of NRW and Germany-wide' },
             form: {
@@ -603,6 +628,7 @@ const translations = {
                 type3: 'Extended website (€1,800–3,000)',
                 type4: 'Maintenance (€60 per month)',
                 type5: 'Rework an existing website (€45/hour)',
+                type6: 'Hosting and domain (€20 per month)',
                 submit: 'Send enquiry',
                 submitted: 'Sent! ✓',
                 sending: 'Sending…',
@@ -650,8 +676,8 @@ const translations = {
         services: {
             /* promo:ru:start */
             promo: {
-                badge: '−20 % для первых 3 клиентов',
-                note: 'Акция: скидка 20 % на пакеты «Landingpage», «Basis-Website» и «Erweiterte Website» — для первых 3 новых клиентов, оформивших заказ до 31.12.2026. Сейчас свободно мест: 3. Базой для скидки служит обычная фиксированная цена пакета. После этого действуют обычные цены.',
+                badge: '−20 % для первых 2 клиентов',
+                note: 'Акция: скидка 20 % на пакеты «Landingpage», «Basis-Website» и «Erweiterte Website» — для первых 2 новых клиентов, оформивших заказ до 31.12.2026. Сейчас свободно мест: 2. Скидка предоставляется в обмен на отзыв и публичную оценку. Базой для скидки служит обычная фиксированная цена пакета. После этого действуют обычные цены.',
                 p1: { price: '480–640 €', was: 'вместо 600–800 €' },
                 p2: { price: '720–1 120 €', was: 'вместо 900–1 400 €' },
                 p3: { price: '1 440–2 400 €', was: 'вместо 1 800–3 000 €' },
@@ -711,6 +737,16 @@ const translations = {
                 f5: 'Правки делаю в течение 2 рабочих дней',
                 f6: 'Домен и хостинг включены, других регулярных расходов нет'
             },
+            p5: {
+                name: 'Хостинг и домен',
+                price: '20 € в месяц',
+                time: 'Отказаться можно в любой месяц',
+                for: 'Для клиентов без договора обслуживания.',
+                f1: 'Сайт работает на Cloudflare — быстрая всемирная сеть серверов',
+                f2: 'SSL-сертификат и защита от атак перегрузкой включены',
+                f3: 'Я веду ваш домен',
+                f4: 'Без минимального срока — отказ в любой месяц'
+            },
             hourly: '<strong>Отдельные работы: 45 € в час.</strong> Например: переделать существующий сайт, добавить юридические тексты или ещё одну страницу.',
             vat: 'НДС не начисляется согласно § 19 UStG (режим Kleinunternehmer). Точная цена зависит от объёма и фиксируется до начала работы.',
             deliveryLink: 'Посмотреть сроки',
@@ -725,7 +761,8 @@ const translations = {
                     r1: { effort: '1–2 рабочих дня', done: 'как правило, до 1 недели' },
                     r2: { effort: '2–4 рабочих дня', done: 'как правило, до 2 недель' },
                     r3: { effort: '6–10 рабочих дней', done: 'как правило, до 4 недель' },
-                    r4: { effort: 'постоянно', none: 'не применяется' }
+                    r4: { effort: 'постоянно', none: 'не применяется' },
+                    r5: { effort: 'постоянно', none: 'не применяется' }
                 },
                 whyTitle: 'Почему два числа?',
                 why1: 'Объём работы — это время, которое я действительно трачу на ваш сайт. Запуск — это дата, когда сайт появляется в интернете.',
@@ -762,7 +799,7 @@ const translations = {
                 q2: 'Сколько правок входит в цену?',
                 a2: 'В фиксированную цену входят два круга правок. В большинстве случаев этого хватает. Если после этого захотите что-то менять — 45 € в час, причём я заранее говорю, сколько примерно займёт.',
                 q3: 'Кто платит за домен и хостинг?',
-                a3: 'В пакет обслуживания домен и хостинг входят — вы платите только ежемесячную сумму. Без обслуживания договор оформляется на вас, и вы платите сами, обычно 10–15 € в месяц.',
+                a3: 'В пакет обслуживания домен и хостинг входят — вы платите только ежемесячную сумму. Без обслуживания можно взять пакет «Хостинг и домен» за 20 € в месяц. Либо вы оформляете домен и хостинг сами и платите провайдеру напрямую, обычно 10–15 € в месяц.',
                 q4: 'А если результат мне не понравится?',
                 a4: 'Вы видите сайт до публикации и говорите, что поправить. Для этого и есть два круга правок. Цена зафиксирована заранее и от этого не меняется.',
                 q5: 'Сайт действительно будет принадлежать мне?',
@@ -774,7 +811,7 @@ const translations = {
                 q8: 'Можно обращаться на русском или украинском?',
                 a8: 'Да. Говорю по-немецки, по-украински и по-русски. Пишите на удобном вам языке — предложение и счёт будут на немецком.'
             },
-            honest: 'Интернет-магазины и сложные веб-приложения я не делаю. Если вам нужно именно это, я скажу честно и порекомендую подходящих коллег.',
+            honest: 'Интернет-магазины, системы бронирования и складского учёта, а также сложные веб-приложения я не делаю. Если вам нужно именно это, я скажу честно и посоветую подходящих коллег.',
             finalText: 'Не знаете, какой пакет подходит? Напишите коротко, в чём дело — честно скажу, что вам нужно.',
             finalCta: 'Бесплатная консультация'
         },
@@ -888,6 +925,7 @@ const translations = {
             langs: { label: 'Языки', value: '<strong>Говорю по-немецки, по-украински и по-русски.</strong> Пишите на том языке, на котором вам удобнее.' },
             gdpr: 'Ваши данные используются исключительно для ответа на ваш запрос. Подробнее в <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
             email: { label: 'E-mail' },
+            phone: { label: 'Телефон', hint: 'Звонок или сообщение — в том числе в выходные' },
             whatsapp: { label: 'WhatsApp', hint: 'Напишите мне напрямую', msg: 'Здравствуйте! У меня вопрос по сайту.' },
             region: { label: 'Регион', value: 'Леверкузен, Кёльн, вся NRW и по всей Германии' },
             form: {
@@ -903,6 +941,7 @@ const translations = {
                 type3: 'Расширенный сайт (1 800–3 000 €)',
                 type4: 'Обслуживание (60 € в месяц)',
                 type5: 'Переделать существующий сайт (45 €/час)',
+                type6: 'Хостинг и домен (20 € в месяц)',
                 submit: 'Отправить запрос',
                 submitted: 'Отправлено! ✓',
                 sending: 'Отправка…',
@@ -1187,6 +1226,7 @@ const PACKAGE_SLUGS = {
     basis: 'Basis-Website',
     erweitert: 'Erweiterte Website',
     wartung: 'Wartung',
+    hosting: 'Hosting und Domain',
     ueberarbeitung: 'Bestehende Website überarbeiten'
 };
 
@@ -1315,7 +1355,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 // Contact form
 // ============================================================
 /* set-domain:api-start */
-const API_BASE_CONFIGURED = "https://portfolio-backend-db2d.onrender.com";
+const API_BASE_CONFIGURED = "";
 /* set-domain:api-end */
 
 const API_BASE_URL = (() => {

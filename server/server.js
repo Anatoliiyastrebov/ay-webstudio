@@ -113,7 +113,8 @@ function validateContactForm(data) {
         'Basis-Website',
         'Erweiterte Website',
         'Wartung',
-        'Bestehende Website überarbeiten'
+        'Bestehende Website überarbeiten',
+        'Hosting und Domain'
     ];
     const rawType = typeof data.projectType === 'string' ? data.projectType.trim() : '';
     const projectType = ALLOWED_TYPES.includes(rawType) ? rawType : '';

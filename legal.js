@@ -16,7 +16,7 @@ const CONTACT = {
     postal: "51371 Leverkusen",
     country: 'Deutschland',
     email: "kontakt@anatolii-yastrebov.top",
-    phone: ""
+    phone: "+49 151 72443444"
 };
 /* set-domain:contact-end */
 
@@ -54,6 +54,8 @@ const legalTranslations = {
                     <h2>Angaben gemäß § 5 DDG</h2>
                     <p>${addressBlock}
                     </p>
+                    <p>Geschäftsbezeichnung: AY Webstudio<br>
+                    Rechtsform: Einzelunternehmen</p>
 
                     <h2>Kontakt</h2>
                     <p>
@@ -116,9 +118,10 @@ const legalTranslations = {
                     </p>
 
                     <h2>2. Hosting und Server-Logfiles</h2>
-                    <p>Diese Website wird bei der Vercel Inc. (USA) gehostet. Beim Aufruf der Seite
-                    werden automatisch Daten an den Server übertragen und in sogenannten Logfiles
-                    gespeichert:</p>
+                    <p>Diese Website wird bei der Cloudflare, Inc., 101 Townsend St, San Francisco,
+                    CA 94107, USA gehostet und über deren weltweites Servernetz ausgeliefert. Beim
+                    Aufruf der Seite werden automatisch Daten an den Server übertragen und in
+                    sogenannten Logfiles gespeichert:</p>
                     <ul>
                         <li>IP-Adresse des anfragenden Geräts</li>
                         <li>Datum und Uhrzeit des Zugriffs</li>
@@ -129,8 +132,11 @@ const legalTranslations = {
                     <p>Diese Verarbeitung ist technisch notwendig, um die Website auszuliefern und
                     ihren sicheren Betrieb zu gewährleisten. Rechtsgrundlage ist das berechtigte
                     Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO. Die Logfiles werden nach kurzer Zeit
-                    automatisch gelöscht. Da der Anbieter Daten auch in den USA verarbeiten kann,
-                    erfolgt die Übermittlung auf Grundlage der EU-Standardvertragsklauseln.</p>
+                    automatisch gelöscht. Anfragen aus Europa werden in der Regel von Servern
+                    innerhalb der EU beantwortet; eine Verarbeitung in den USA lässt sich jedoch
+                    nicht ausschließen. Mit Cloudflare besteht ein Vertrag zur Auftragsverarbeitung
+                    nach Art. 28 DSGVO; die Übermittlung in die USA erfolgt auf Grundlage der
+                    EU-Standardvertragsklauseln.</p>
 
                     <h2>3. Keine Cookies, kein Tracking</h2>
                     <p>Diese Website setzt keine Cookies für Analyse, Werbung oder Reichweitenmessung
@@ -155,9 +161,10 @@ const legalTranslations = {
 
                     <h3>4.2 Zweck und Empfänger</h3>
                     <p>Die Daten werden ausschließlich verwendet, um Ihre Anfrage zu beantworten.
-                    Für die technische Verarbeitung der Formularanfrage setze ich einen Serverdienst
-                    der Render Services, Inc. (USA) ein; für den Versand der E-Mail an mich wird
-                    SendGrid (Twilio Inc., USA) genutzt. Beide Anbieter verarbeiten die Daten
+                    Die Formularanfrage wird unmittelbar auf der Plattform verarbeitet, auf der
+                    diese Website läuft (Cloudflare, Inc., siehe Abschnitt 2); für den Versand der
+                    E-Mail an mich wird SendGrid (Twilio Inc., USA) genutzt. Beide Anbieter
+                    verarbeiten die Daten
                     ausschließlich in meinem Auftrag und auf Grundlage der
                     EU-Standardvertragsklauseln. Eine Weitergabe zu anderen Zwecken oder an weitere
                     Dritte findet nicht statt.</p>

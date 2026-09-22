@@ -69,6 +69,7 @@ const TEXTS = {
             `Aktion: ${p} % Rabatt auf Landingpage, Basis-Website und Erweiterte Website — ` +
             `für die ersten ${total} Neukunden, die bis zum ${until} einen Auftrag erteilen. ` +
             `Aktuell ${left === 1 ? 'ist noch 1 Platz' : `sind noch ${left} Plätze`} frei. ` +
+            `Der Rabatt gilt im Gegenzug für eine Referenz und eine öffentliche Bewertung. ` +
             `Bezugspreis ist der reguläre Festpreis des jeweiligen Pakets. ` +
             `Danach gelten wieder die regulären Preise.`
     },
@@ -79,6 +80,7 @@ const TEXTS = {
             `Promotion: ${p}% off the Landing page, Basic website and Extended website packages — ` +
             `for the first ${total} new clients who place an order by ${until}. ` +
             `${left === 1 ? '1 slot is' : `${left} slots are`} still available. ` +
+            `The discount is granted in exchange for a reference and a public review. ` +
             `The reference price is the regular fixed price of each package. ` +
             `After that the regular prices apply again.`
     },
@@ -89,6 +91,7 @@ const TEXTS = {
             `Акция: скидка ${p} % на пакеты «Landingpage», «Basis-Website» и «Erweiterte Website» — ` +
             `для первых ${total} новых клиентов, оформивших заказ до ${until}. ` +
             `Сейчас свободно мест: ${left}. ` +
+            `Скидка предоставляется в обмен на отзыв и публичную оценку. ` +
             `Базой для скидки служит обычная фиксированная цена пакета. ` +
             `После этого действуют обычные цены.`
     }

@@ -173,7 +173,7 @@ if (legalAfter !== legalBefore) {
 const WA_NUMBER = String(cfg.whatsapp || '').replace(/[^0-9]/g, '');
 
 // Пакеты идут в том же порядке, что карточки на странице услуг.
-const WA_PACKAGES = ['Landingpage', 'Basis-Website', 'Erweiterte Website', 'Wartung'];
+const WA_PACKAGES = ['Landingpage', 'Basis-Website', 'Erweiterte Website', 'Wartung', 'Hosting und Domain'];
 const WA_MSG = 'Guten Tag! Ich interessiere mich für das Paket %s.';
 const WA_MSG_GENERAL = 'Guten Tag! Ich habe eine Frage zu einer Website.';
 
@@ -181,10 +181,11 @@ function waHref(text) {
     return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
+// name — полное имя маркера, например whatsapp:p1 или phone:contact.
 function fillMarker(source, name, replacement, file) {
-    const re = new RegExp(`(<!-- whatsapp:${name}:start -->)[\\s\\S]*?(<!-- whatsapp:${name}:end -->)`);
+    const re = new RegExp(`(<!-- ${name}:start -->)[\\s\\S]*?(<!-- ${name}:end -->)`);
     if (!re.test(source)) {
-        warnings.push(`Маркер whatsapp:${name} не найден в ${file}.`);
+        warnings.push(`Маркер ${name} не найден в ${file}.`);
         return source;
     }
     return source.replace(re, `$1${replacement}$2`);
@@ -203,12 +204,36 @@ function applyWhatsApp() {
                   + ` data-wa-msg="services.whatsappMsg" data-wa-arg="${pkg}"`
                   + ` data-i18n="services.whatsappCta">Per WhatsApp fragen</a>\n                    `
                 : '';
-            html = fillMarker(html, `p${i + 1}`, link, 'leistungen.html');
+            html = fillMarker(html, `whatsapp:p${i + 1}`, link, 'leistungen.html');
         });
         if (html !== before) {
             writeFileSync(servicesPath, html);
             changedFiles += 1;
             console.log('✓ leistungen.html (WhatsApp)');
+        }
+    }
+
+    // --- телефон в блоке контактов ---
+    const indexPathPhone = path.join(root, 'index.html');
+    if (existsSync(indexPathPhone)) {
+        const before = readFileSync(indexPathPhone, 'utf8');
+        // Пусто в конфиге — блока нет: лучше без телефона, чем с чужим.
+        const tel = String(cfg.phone || '').trim();
+        const block = tel
+            ? `\n                    <div class="contact-item">\n`
+              + `                        <div class="contact-icon-wrapper"><div class="contact-icon" aria-hidden="true">📞</div></div>\n`
+              + `                        <div class="contact-details">\n`
+              + `                            <h3 data-i18n="contact.phone.label">Telefon</h3>\n`
+              + `                            <p><a href="tel:${tel.replace(/[^+0-9]/g, '')}" class="contact-link contact-link--big">${tel}</a></p>\n`
+              + `                            <p class="contact-note" data-i18n="contact.phone.hint">Anruf oder Nachricht — auch am Wochenende</p>\n`
+              + `                        </div>\n`
+              + `                    </div>\n                    `
+            : '';
+        const html = fillMarker(before, 'phone:contact', block, 'index.html');
+        if (html !== before) {
+            writeFileSync(indexPathPhone, html);
+            changedFiles += 1;
+            console.log('✓ index.html (Telefon)');
         }
     }
 
@@ -227,7 +252,7 @@ function applyWhatsApp() {
               + `                        </div>\n`
               + `                    </div>\n                    `
             : '';
-        const html = fillMarker(before, 'contact', block, 'index.html');
+        const html = fillMarker(before, 'whatsapp:contact', block, 'index.html');
         if (html !== before) {
             writeFileSync(indexPath, html);
             changedFiles += 1;

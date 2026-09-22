@@ -1,6 +1,6 @@
 {
   "_comment": "Единственное место, где задаётся домен и контактные данные. После правки запустите: npm run set-domain",
-  "siteUrl": "https://anatolii-yastrebov.top",
+  "siteUrl": "https://www.ay-webstudio.de",
   "businessName": "Anatolii Yastrebov — Websites für kleine Betriebe",
   "ownerName": "Anatolii Yastrebov",
   "email": "kontakt@anatolii-yastrebov.top",

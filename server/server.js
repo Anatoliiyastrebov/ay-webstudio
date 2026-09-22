@@ -16,8 +16,15 @@ const PORT = process.env.PORT || 3000;
 // production domain (apex + www), localhost dev origins, and an
 // optional FRONTEND_URL override for staging.
 const allowedOrigins = [
+    // Основной домен с сентября 2026. Без этих строк форма на новом
+    // сайте получала 403: браузер отправлял запрос, бэкенд его отклонял.
+    'https://ay-webstudio.de',
+    'https://www.ay-webstudio.de',
+    // Прежний домен — пока он жив, форма должна работать и там.
     'https://anatolii-yastrebov.top',
     'https://www.anatolii-yastrebov.top',
+    // Локальная разработка: npm run dev (4321) и старый порт.
+    'http://localhost:4321',
     'http://localhost:8000',
     'http://127.0.0.1:8000'
 ];
@@ -170,7 +177,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
                 + `Name:   ${name}\n`
                 + `E-Mail: ${email}\n`
                 + `Paket:  ${projectType || '— nicht angegeben —'}\n\n`
-                + `Nachricht:\n${message}\n\n--\nGesendet vom Kontaktformular auf anatolii-yastrebov.top.`
+                + `Nachricht:\n${message}\n\n--\nGesendet vom Kontaktformular auf ay-webstudio.de.`
         };
 
         try {

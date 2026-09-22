@@ -8,8 +8,11 @@
     "$schema": "node_modules/wrangler/config-schema.json",
     "name": "ay-webstudio",
     "compatibility_date": "2025-09-01",
+    // Обработчик формы: всё, кроме /api/contact, отдаёт ASSETS.
+    "main": "src/index.js",
     "assets": {
         "directory": "./dist",
+        "binding": "ASSETS",
         // Несуществующий адрес → наш 404.html вместо пустой ошибки Cloudflare.
         "not_found_handling": "404-page"
     }

@@ -1,6 +1,8 @@
 {
   "_comment": "Единственное место, где задаётся домен и контактные данные. После правки запустите: npm run set-domain",
   "siteUrl": "https://www.ay-webstudio.de",
+  "_apiComment": "Куда форма шлёт заявку. Пусто = тот же домен — так работает обработчик на Cloudflare (worker/contact-handler.mjs). Адрес = внешний бэкенд, сейчас Render. После правки: npm run set-domain",
+  "apiBaseUrl": "https://portfolio-backend-db2d.onrender.com",
   "businessName": "Anatolii Yastrebov — Websites für kleine Betriebe",
   "ownerName": "Anatolii Yastrebov",
   "email": "kontakt@anatolii-yastrebov.top",
@@ -87,7 +89,7 @@
   "_promoComment": "Aktion «скидка для первых клиентов». active:false убирает её с сайта полностью. slotsLeft обновляйте после каждого клиента: при 0 акция гаснет сама. После любой правки: npm run build",
   "promo": {
     "active": true,
-    "percent": 30,
+    "percent": 20,
     "slotsTotal": 3,
     "slotsLeft": 3,
     "endsOn": "2026-12-31",

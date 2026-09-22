@@ -1,0 +1,162 @@
+/**
+ * Обработчик контактной формы для Cloudflare.
+ *
+ * Логика повторяет server/server.js (Express на Render): honeypot,
+ * проверка полей, закрытый список пакетов, письмо через SendGrid.
+ * Отличие одно — в Workers нет Node API, поэтому SendGrid вызывается
+ * обычным fetch к их HTTP-интерфейсу, а не через пакет @sendgrid/mail.
+ *
+ * Используется из двух точек входа, чтобы работало и на Workers,
+ * и на Pages:
+ *   src/index.js            — Cloudflare Workers (статика + этот обработчик)
+ *   functions/api/contact.js — Cloudflare Pages Functions
+ *
+ * Переменные окружения (в Cloudflare задаются как Secrets):
+ *   SENDGRID_API_KEY  — ключ SendGrid
+ *   EMAIL_FROM        — отправитель, подтверждённый в SendGrid
+ *   EMAIL_TO          — куда приходят заявки
+ */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// Значение приходит от клиента и попадает в тему письма — только из списка.
+const ALLOWED_TYPES = [
+    'Landingpage',
+    'Basis-Website',
+    'Erweiterte Website',
+    'Wartung',
+    'Bestehende Website überarbeiten'
+];
+
+const CORS_ORIGINS = [
+    'https://ay-webstudio.de',
+    'https://www.ay-webstudio.de',
+    'https://anatolii-yastrebov.top',
+    'https://www.anatolii-yastrebov.top',
+    'http://localhost:4321',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+];
+
+function corsHeaders(request) {
+    const origin = request.headers.get('Origin');
+    // Запрос с той же страницы приходит без Origin — это норма.
+    if (!origin) return {};
+    if (!CORS_ORIGINS.includes(origin)) return null;
+    return {
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        Vary: 'Origin'
+    };
+}
+
+function json(body, status, extraHeaders) {
+    return new Response(JSON.stringify(body), {
+        status,
+        headers: { 'Content-Type': 'application/json; charset=utf-8', ...(extraHeaders || {}) }
+    });
+}
+
+function validate(data) {
+    const errors = [];
+    if (!data || typeof data !== 'object') return { valid: false, errors: ['Invalid payload'] };
+
+    const name = typeof data.name === 'string' ? data.name.trim() : '';
+    if (name.length < 2 || name.length > 100) errors.push('name: length must be 2–100 characters');
+
+    const email = typeof data.email === 'string' ? data.email.trim() : '';
+    if (!email || email.length > 200 || !EMAIL_RE.test(email)) errors.push('email: must be a valid address');
+
+    const message = typeof data.message === 'string' ? data.message.trim() : '';
+    if (message.length < 10 || message.length > 5000) errors.push('message: length must be 10–5000 characters');
+
+    const rawType = typeof data.projectType === 'string' ? data.projectType.trim() : '';
+    const projectType = ALLOWED_TYPES.includes(rawType) ? rawType : '';
+
+    return { valid: errors.length === 0, errors, clean: { name, email, message, projectType } };
+}
+
+async function sendMail(env, { name, email, message, projectType }) {
+    const subject = projectType
+        ? `Anfrage: ${projectType} — ${name}`
+        : `Anfrage über das Kontaktformular — ${name}`;
+
+    const text =
+        'Neue Anfrage über das Kontaktformular.\n\n' +
+        `Name:   ${name}\n` +
+        `E-Mail: ${email}\n` +
+        `Paket:  ${projectType || '— nicht angegeben —'}\n\n` +
+        `Nachricht:\n${message}\n\n--\nGesendet vom Kontaktformular auf ay-webstudio.de.`;
+
+    const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${env.SENDGRID_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            personalizations: [{ to: [{ email: env.EMAIL_TO }] }],
+            from: { email: env.EMAIL_FROM },
+            reply_to: { email, name },
+            subject,
+            content: [{ type: 'text/plain', value: text }]
+        })
+    });
+
+    if (!res.ok) {
+        const detail = await res.text().catch(() => '');
+        throw new Error(`SendGrid ${res.status}: ${detail.slice(0, 300)}`);
+    }
+}
+
+export async function handleContact(request, env) {
+    const cors = corsHeaders(request);
+    if (cors === null) {
+        return json({ success: false, message: 'Origin not allowed' }, 403);
+    }
+
+    if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: cors });
+    }
+
+    if (request.method !== 'POST') {
+        return json({ success: false, message: 'Method not allowed' }, 405, { ...cors, Allow: 'POST, OPTIONS' });
+    }
+
+    if (!env.SENDGRID_API_KEY || !env.EMAIL_FROM || !env.EMAIL_TO) {
+        console.error('Fehlende Secrets: SENDGRID_API_KEY / EMAIL_FROM / EMAIL_TO');
+        return json({ success: false, message: 'Email service is not configured.' }, 500, cors);
+    }
+
+    let data;
+    try {
+        data = await request.json();
+    } catch (e) {
+        return json({ success: false, message: 'Invalid JSON' }, 400, cors);
+    }
+
+    // Honeypot: боты заполняют все поля, человек этого поля не видит.
+    // Отвечаем «успешно», чтобы бот не подбирал обход.
+    if (typeof data?.website === 'string' && data.website.trim() !== '') {
+        return json({ success: true, message: 'OK' }, 200, cors);
+    }
+
+    const result = validate(data);
+    if (!result.valid) {
+        return json({ success: false, message: 'Validation error', errors: result.errors }, 400, cors);
+    }
+
+    try {
+        await sendMail(env, result.clean);
+    } catch (err) {
+        console.error('SendGrid error:', err?.message || err);
+        return json(
+            { success: false, message: 'Email service temporarily unavailable. Please try again later.' },
+            502,
+            cors
+        );
+    }
+
+    return json({ success: true, message: 'Message sent successfully.' }, 200, cors);
+}

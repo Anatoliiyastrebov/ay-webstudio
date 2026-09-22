@@ -244,6 +244,20 @@ function applyWhatsApp() {
 
 applyWhatsApp();
 
+// Адрес бэкенда формы — из того же конфига, что и домен.
+const scriptPath = path.join(root, 'script.js');
+const scriptBefore = readFileSync(scriptPath, 'utf8');
+const apiBlock = `/* set-domain:api-start */\nconst API_BASE_CONFIGURED = ${JSON.stringify(cfg.apiBaseUrl || '')};\n/* set-domain:api-end */`;
+const scriptAfter = scriptBefore.replace(
+    /\/\* set-domain:api-start \*\/[\s\S]*?\/\* set-domain:api-end \*\//,
+    apiBlock
+);
+if (scriptAfter !== scriptBefore) {
+    writeFileSync(scriptPath, scriptAfter);
+    changedFiles += 1;
+    console.log(`✓ script.js (Formular-Backend: ${cfg.apiBaseUrl || 'gleiche Domain'})`);
+}
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${cfg.pages

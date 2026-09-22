@@ -14,10 +14,11 @@
     "set-domain": "node scripts/set-domain.mjs",
     "dev": "node scripts/dev-server.mjs",
     "check-i18n": "node scripts/check-i18n.mjs",
-    "check": "npm run check-i18n && npm test",
+    "check": "npm run check-i18n && npm test && npm run test-worker",
     "prerender-blog": "node scripts/prerender-blog.mjs",
     "promo": "node scripts/apply-promo.mjs",
-    "photo": "python3 scripts/prepare-photo.py"
+    "photo": "python3 scripts/prepare-photo.py",
+    "test-worker": "node worker/contact-handler.test.mjs"
   },
   "repository": {
     "type": "git",

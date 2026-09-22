@@ -42,11 +42,11 @@ const translations = {
         services: {
             /* promo:de:start */
             promo: {
-                badge: '−30 % für die ersten 3 Kunden',
-                note: 'Aktion: 30 % Rabatt auf Landingpage, Basis-Website und Erweiterte Website — für die ersten 3 Neukunden, die bis zum 31.12.2026 einen Auftrag erteilen. Aktuell sind noch 3 Plätze frei. Bezugspreis ist der reguläre Festpreis des jeweiligen Pakets. Danach gelten wieder die regulären Preise.',
-                p1: { price: '420–560 €', was: 'statt 600–800 €' },
-                p2: { price: '630–980 €', was: 'statt 900–1 400 €' },
-                p3: { price: '1 260–2 100 €', was: 'statt 1 800–3 000 €' },
+                badge: '−20 % für die ersten 3 Kunden',
+                note: 'Aktion: 20 % Rabatt auf Landingpage, Basis-Website und Erweiterte Website — für die ersten 3 Neukunden, die bis zum 31.12.2026 einen Auftrag erteilen. Aktuell sind noch 3 Plätze frei. Bezugspreis ist der reguläre Festpreis des jeweiligen Pakets. Danach gelten wieder die regulären Preise.',
+                p1: { price: '480–640 €', was: 'statt 600–800 €' },
+                p2: { price: '720–1 120 €', was: 'statt 900–1 400 €' },
+                p3: { price: '1 440–2 400 €', was: 'statt 1 800–3 000 €' },
             },
             /* promo:de:end */
             pageTitle: 'Website-Preise für kleine Betriebe — Leverkusen & Köln',
@@ -350,11 +350,11 @@ const translations = {
         services: {
             /* promo:en:start */
             promo: {
-                badge: '−30% for the first 3 clients',
-                note: 'Promotion: 30% off the Landing page, Basic website and Extended website packages — for the first 3 new clients who place an order by 2026-12-31. 3 slots are still available. The reference price is the regular fixed price of each package. After that the regular prices apply again.',
-                p1: { price: '€420–560', was: 'instead of €600–800' },
-                p2: { price: '€630–980', was: 'instead of €900–1,400' },
-                p3: { price: '€1,260–2,100', was: 'instead of €1,800–3,000' },
+                badge: '−20% for the first 3 clients',
+                note: 'Promotion: 20% off the Landing page, Basic website and Extended website packages — for the first 3 new clients who place an order by 2026-12-31. 3 slots are still available. The reference price is the regular fixed price of each package. After that the regular prices apply again.',
+                p1: { price: '€480–640', was: 'instead of €600–800' },
+                p2: { price: '€720–1,120', was: 'instead of €900–1,400' },
+                p3: { price: '€1,440–2,400', was: 'instead of €1,800–3,000' },
             },
             /* promo:en:end */
             pageTitle: 'Website prices for small businesses — Leverkusen & Cologne',
@@ -650,11 +650,11 @@ const translations = {
         services: {
             /* promo:ru:start */
             promo: {
-                badge: '−30 % для первых 3 клиентов',
-                note: 'Акция: скидка 30 % на пакеты «Landingpage», «Basis-Website» и «Erweiterte Website» — для первых 3 новых клиентов, оформивших заказ до 31.12.2026. Сейчас свободно мест: 3. Базой для скидки служит обычная фиксированная цена пакета. После этого действуют обычные цены.',
-                p1: { price: '420–560 €', was: 'вместо 600–800 €' },
-                p2: { price: '630–980 €', was: 'вместо 900–1 400 €' },
-                p3: { price: '1 260–2 100 €', was: 'вместо 1 800–3 000 €' },
+                badge: '−20 % для первых 3 клиентов',
+                note: 'Акция: скидка 20 % на пакеты «Landingpage», «Basis-Website» и «Erweiterte Website» — для первых 3 новых клиентов, оформивших заказ до 31.12.2026. Сейчас свободно мест: 3. Базой для скидки служит обычная фиксированная цена пакета. После этого действуют обычные цены.',
+                p1: { price: '480–640 €', was: 'вместо 600–800 €' },
+                p2: { price: '720–1 120 €', was: 'вместо 900–1 400 €' },
+                p3: { price: '1 440–2 400 €', was: 'вместо 1 800–3 000 €' },
             },
             /* promo:ru:end */
             pageTitle: 'Цены на сайты для малого бизнеса — Леверкузен и Кёльн',
@@ -1314,11 +1314,17 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 // ============================================================
 // Contact form
 // ============================================================
+/* set-domain:api-start */
+const API_BASE_CONFIGURED = "https://portfolio-backend-db2d.onrender.com";
+/* set-domain:api-end */
+
 const API_BASE_URL = (() => {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         return 'http://localhost:3001';
     }
-    return 'https://portfolio-backend-db2d.onrender.com';
+    // Пустая строка = запрос уходит на тот же домен: на Cloudflare форму
+    // обслуживает воркер рядом со статикой, отдельный бэкенд не нужен.
+    return API_BASE_CONFIGURED;
 })();
 
 // Render free tier sleeps after inactivity; first request can take 30+ s.

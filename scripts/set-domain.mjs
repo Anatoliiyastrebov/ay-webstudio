@@ -74,10 +74,14 @@ function buildLocalBusiness() {
             itemListElement: cfg.offers.map((o) => ({
                 '@type': 'Offer',
                 itemOffered: { '@type': 'Service', name: o.name },
+                // Фиксированная цена — price, диапазон — minPrice/maxPrice.
+                // Цена за период (unit) по schema.org — UnitPriceSpecification:
+                // unitCode у обычного PriceSpecification не предусмотрен.
                 priceSpecification: {
-                    '@type': 'PriceSpecification',
-                    minPrice: o.priceFrom,
-                    maxPrice: o.priceTo,
+                    '@type': o.unit ? 'UnitPriceSpecification' : 'PriceSpecification',
+                    ...(o.priceFrom === o.priceTo
+                        ? { price: o.priceFrom }
+                        : { minPrice: o.priceFrom, maxPrice: o.priceTo }),
                     priceCurrency: 'EUR',
                     ...(o.unit ? { unitCode: o.unit } : {})
                 }

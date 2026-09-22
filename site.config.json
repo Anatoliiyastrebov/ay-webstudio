@@ -80,7 +80,7 @@
     {
       "name": "Wartung",
       "priceFrom": 60,
-      "priceTo": 150,
+      "priceTo": 60,
       "unit": "MON"
     }
   ],

@@ -37,8 +37,12 @@ await check('без пакета — общая тема', post({ ...ok, project
     (b, s) => s.subject.startsWith('Anfrage über das Kontaktformular') ? null : 'тема: ' + s.subject);
 await check('чужой пакет в поле (подмена)', post({ ...ok, projectType: '<script>' }, null), 200,
     (b, s) => s.subject.includes('script') ? 'подстановка попала в тему!' : null);
-await check('honeypot заполнен — тихий успех', post({ ...ok, website: 'bot' }, null), 200,
+await check('honeypot (hp_ref) — тихий успех', post({ ...ok, hp_ref: 'bot' }, null), 200,
     (b, s) => s ? 'письмо всё-таки ушло' : null);
+await check('honeypot (старое имя website)', post({ ...ok, website: 'bot' }, null), 200,
+    (b, s) => s ? 'письмо всё-таки ушло' : null);
+await check('пустая ловушка не мешает отправке', post({ ...ok, hp_ref: '' }, null), 200,
+    (b, s) => s ? null : 'письмо не отправлено');
 await check('короткое сообщение', post({ ...ok, message: 'привет' }, null), 400);
 await check('кривая почта', post({ ...ok, email: 'не-почта' }, null), 400);
 await check('пустое имя', post({ ...ok, name: '' }, null), 400);

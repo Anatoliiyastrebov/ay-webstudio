@@ -1408,6 +1408,15 @@ const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     const statusEl = document.getElementById('form-status');
 
+    // Браузер иногда сам заполняет скрытое поле-ловушку, и тогда настоящая
+    // заявка молча отбрасывалась как спам. Живой ввод даёт isTrusted: бот
+    // так не умеет, поэтому при первом настоящем нажатии поле очищаем.
+    contactForm.addEventListener('input', (e) => {
+        if (!e.isTrusted) return;
+        const trap = contactForm.querySelector('input[name="hp_ref"]');
+        if (trap && trap !== e.target) trap.value = '';
+    }, { once: true });
+
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const dict = translations[currentLanguage] || translations.de;
@@ -1453,7 +1462,7 @@ if (contactForm) {
             message: projectType ? `[${projectType}]\n\n${messageText}` : messageText,
             // Honeypot — must remain empty. If a bot filled it, the
             // server quietly returns success without sending email.
-            website: contactForm.querySelector('input[name="website"]')?.value || ''
+            hp_ref: contactForm.querySelector('input[name="hp_ref"]')?.value || ''
         });
 
         clearTimeout(coldStartTimer);

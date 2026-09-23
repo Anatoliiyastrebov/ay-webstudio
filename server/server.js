@@ -151,7 +151,10 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     try {
         // Honeypot — bots fill every field, humans never see this one.
         // Quietly return 200 so the bot thinks it succeeded.
-        if (typeof req.body?.website === 'string' && req.body.website.trim() !== '') {
+        const trap = [req.body?.hp_ref, req.body?.website]
+            .find((v) => typeof v === 'string' && v.trim() !== '');
+        if (trap) {
+            console.warn('Honeypot ausgelöst, keine E-Mail verschickt:', trap.slice(0, 80));
             return res.status(200).json({ success: true, message: 'OK' });
         }
 

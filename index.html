@@ -534,9 +534,12 @@
                 </div>
 
                 <form class="contact-form" novalidate>
-                    <!-- Honeypot field — should always stay empty.
-                         Bots fill every input; humans never see this. -->
-                    <input class="hp-field" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <!-- Ловушка для ботов — поле всегда должно остаться пустым.
+                         Имя намеренно бессмысленное: поле с name="website"
+                         заполнял автозаполнением сам браузер, и настоящие
+                         заявки молча считались спамом. Скрипт дополнительно
+                         очищает поле, как только человек начинает печатать. -->
+                    <input class="hp-field" type="text" name="hp_ref" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                     <div class="form-group">
                         <label class="sr-only" for="contact-name" data-i18n="contact.form.name">Ihr Name</label>

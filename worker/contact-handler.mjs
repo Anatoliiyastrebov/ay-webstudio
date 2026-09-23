@@ -201,8 +201,11 @@ export async function handleContact(request, env) {
     }
 
     // Honeypot: боты заполняют все поля, человек этого поля не видит.
-    // Отвечаем «успешно», чтобы бот не подбирал обход.
-    if (typeof data?.website === 'string' && data.website.trim() !== '') {
+    // Отвечаем «успешно», чтобы бот не подбирал обход, но пишем в лог —
+    // иначе потерянную заявку потом не отличить от доставленной.
+    const trap = [data?.hp_ref, data?.website].find((v) => typeof v === 'string' && v.trim() !== '');
+    if (trap) {
+        console.warn('Honeypot ausgelöst, keine E-Mail verschickt. Feldinhalt:', trap.slice(0, 80));
         return json({ success: true, message: 'OK' }, 200, cors);
     }
 

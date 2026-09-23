@@ -104,7 +104,6 @@
 
     function initSections() {
         revealSection('#projekte.cases-section');
-        revealSection('#skills.services-section');
 
         const about = document.querySelector('#ueber-mich.about-trust');
         if (about) {
@@ -187,7 +186,11 @@
                 repeat: -1,
                 yoyo: true,
                 ease: 'sine.inOut',
-                scrollTrigger: { trigger: '#skills', start: 'top bottom', end: 'bottom top', toggleActions: 'play pause resume pause' }
+                // Раньше триггером был #skills — такого элемента на сайте нет
+                // с тех пор, как раздел переименовали, и ScrollTrigger писал
+                // «Element not found» на каждую карточку. Карточка сама —
+                // правильный триггер: покачивание идёт, пока она на экране.
+                scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', toggleActions: 'play pause resume pause' }
             });
         });
     }

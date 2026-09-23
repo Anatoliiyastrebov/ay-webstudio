@@ -68,6 +68,11 @@ expect('Reply-To — адрес посетителя'.padEnd(46), header.include
 expect('тело раскодируется обратно в UTF-8'.padEnd(46),
     new TextDecoder().decode(Uint8Array.from(atob(body), (c) => c.charCodeAt(0))).includes('Grüße aus Köln'));
 expect('пакет попал в тему'.padEnd(46), mail.subject === 'Anfrage: Basis-Website — Jürgen Groß');
+expect('есть Date по RFC 5322'.padEnd(46), /\r\nDate: \w{3}, \d{2} \w{3} \d{4} \d{2}:\d{2}:\d{2} \+0000\r\n/.test(mime));
+expect('есть Message-ID на домене отправителя'.padEnd(46), /\r\nMessage-ID: <[^>]+@ay-webstudio\.de>\r\n/.test(mime));
+expect('Message-ID не повторяется'.padEnd(46),
+    buildMime({ from: 'a@ay-webstudio.de', to: 'b@c.de', replyTo: 'x@y.de', replyName: 'X', subject: 's', text: 't' })
+    !== buildMime({ from: 'a@ay-webstudio.de', to: 'b@c.de', replyTo: 'x@y.de', replyName: 'X', subject: 's', text: 't' }));
 
 console.log(fails ? `\n✗ провалов: ${fails}` : '\n✓ все проверки пройдены');
 process.exit(fails ? 1 : 0);

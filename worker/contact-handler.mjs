@@ -116,12 +116,29 @@ function base64Utf8(value) {
     return btoa(bin);
 }
 
-export function buildMime({ from, to, replyTo, replyName, subject, text }) {
+// Date обязателен по RFC 5322, Message-ID ожидают почти все приёмники.
+// Без них Cloudflare письмо принимает, но дальше оно молча пропадает —
+// именно поэтому первые заявки не дошли даже в папку «Спам».
+function rfc5322Date(now = new Date()) {
+    return now.toUTCString().replace(/GMT$/, '+0000');
+}
+
+function messageId(from) {
+    const domain = String(from).split('@')[1] || 'localhost';
+    const rand = typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return `<${rand}@${domain}>`;
+}
+
+export function buildMime({ from, to, replyTo, replyName, subject, text, now }) {
     return [
         `From: ${from}`,
         `To: ${to}`,
         `Reply-To: ${encodeHeader(replyName)} <${replyTo}>`,
         `Subject: ${encodeHeader(subject)}`,
+        `Date: ${rfc5322Date(now)}`,
+        `Message-ID: ${messageId(from)}`,
         'MIME-Version: 1.0',
         'Content-Type: text/plain; charset=UTF-8',
         'Content-Transfer-Encoding: base64',

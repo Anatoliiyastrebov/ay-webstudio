@@ -317,6 +317,15 @@ const translations = {
                 error: 'Sendefehler',
                 errorDirect: 'Die Anfrage konnte nicht gesendet werden. Bitte schreiben Sie mir direkt an %s — oder über WhatsApp.',
                 consent: 'Ich stimme der Verarbeitung meiner personenbezogenen Daten gemäß der <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> zu.',
+                errors: {
+                    name: 'Bitte geben Sie Ihren Namen ein.',
+                    nameShort: 'Bitte geben Sie Ihren vollständigen Namen ein.',
+                    email: 'Bitte geben Sie Ihre E-Mail-Adresse ein.',
+                    emailBad: 'Diese E-Mail-Adresse sieht nicht richtig aus.',
+                    message: 'Bitte schreiben Sie kurz, worum es geht.',
+                    messageShort: 'Bitte schreiben Sie etwas ausführlicher — mindestens 10 Zeichen.',
+                    summary: 'Bitte prüfen Sie die markierten Felder.'
+                },
                 consentError: 'Bitte stimmen Sie der Verarbeitung Ihrer Daten zu.'
             }
         },
@@ -637,6 +646,15 @@ const translations = {
                 error: 'Sending error',
                 errorDirect: 'The enquiry could not be sent. Please email me directly at %s — or write on WhatsApp.',
                 consent: 'I agree to the processing of my personal data in accordance with the <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
+                errors: {
+                    name: 'Please enter your name.',
+                    nameShort: 'Please enter your full name.',
+                    email: 'Please enter your email address.',
+                    emailBad: 'This email address does not look right.',
+                    message: 'Please write briefly what it is about.',
+                    messageShort: 'Please write a bit more — at least 10 characters.',
+                    summary: 'Please check the highlighted fields.'
+                },
                 consentError: 'Please agree to the processing of your data.'
             }
         },
@@ -951,6 +969,15 @@ const translations = {
                 error: 'Ошибка отправки',
                 errorDirect: 'Заявку отправить не удалось. Напишите мне напрямую на %s — или в WhatsApp.',
                 consent: 'Я согласен на обработку моих персональных данных в соответствии с <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
+                errors: {
+                    name: 'Укажите, пожалуйста, ваше имя.',
+                    nameShort: 'Укажите, пожалуйста, полное имя.',
+                    email: 'Укажите, пожалуйста, вашу электронную почту.',
+                    emailBad: 'Этот адрес почты выглядит неверным.',
+                    message: 'Напишите коротко, о чём речь.',
+                    messageShort: 'Напишите чуть подробнее — не меньше 10 символов.',
+                    summary: 'Проверьте, пожалуйста, отмеченные поля.'
+                },
                 consentError: 'Подтвердите согласие на обработку данных.'
             }
         },
@@ -1408,6 +1435,99 @@ const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     const statusEl = document.getElementById('form-status');
 
+    // Проверка полей с подсказкой под каждым. Раньше при пустом поле стоял
+    // молчаливый return: кнопка нажималась, и не происходило ничего —
+    // человек не понимал, чего от него хотят.
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function errorBox(input) {
+        const id = `${input.id}-error`;
+        let box = document.getElementById(id);
+        if (!box) {
+            box = document.createElement('p');
+            box.id = id;
+            box.className = 'field-error';
+            box.hidden = true;
+            // role="alert" — диктор читает подсказку сразу, без перевода фокуса.
+            box.setAttribute('role', 'alert');
+            (input.closest('.form-group') || input.parentElement).appendChild(box);
+        }
+        return box;
+    }
+
+    function markField(input, text) {
+        const box = errorBox(input);
+        if (text) {
+            box.textContent = text;
+            box.hidden = false;
+            input.classList.add('is-invalid');
+            input.setAttribute('aria-invalid', 'true');
+            const described = (input.getAttribute('aria-describedby') || '').split(' ').filter(Boolean);
+            if (!described.includes(box.id)) {
+                input.setAttribute('aria-describedby', [...described, box.id].join(' '));
+            }
+        } else {
+            box.hidden = true;
+            box.textContent = '';
+            input.classList.remove('is-invalid');
+            input.removeAttribute('aria-invalid');
+        }
+    }
+
+    function checkField(input) {
+        const dict = translations[currentLanguage] || translations.de;
+        const e = dict.contact.form.errors;
+        const value = input.value.trim();
+        if (input === nameField) {
+            if (!value) return e.name;
+            if (value.length < 2) return e.nameShort;
+        }
+        if (input === emailField) {
+            if (!value) return e.email;
+            if (!EMAIL_RE.test(value)) return e.emailBad;
+        }
+        if (input === messageField) {
+            if (!value) return e.message;
+            if (value.length < 10) return e.messageShort;
+        }
+        return '';
+    }
+
+    const nameField = contactForm.querySelector('input[name="name"]');
+    const emailField = contactForm.querySelector('input[name="email"]');
+    const messageField = contactForm.querySelector('textarea[name="message"]');
+    const checkedFields = [nameField, emailField, messageField].filter(Boolean);
+
+    function validateFields() {
+        const dict = translations[currentLanguage] || translations.de;
+        let firstBad = null;
+        checkedFields.forEach((input) => {
+            const problem = checkField(input);
+            markField(input, problem);
+            if (problem && !firstBad) firstBad = input;
+        });
+        if (firstBad) {
+            setFormStatus(statusEl, dict.contact.form.errors.summary, 'error');
+            firstBad.focus({ preventScroll: false });
+        }
+        return !firstBad;
+    }
+
+    // Подсветку снимаем, как только человек исправил поле, — держать её
+    // до повторного нажатия кнопки незачем.
+    checkedFields.forEach((input) => {
+        input.addEventListener('input', () => {
+            if (!input.classList.contains('is-invalid') || checkField(input)) return;
+            markField(input, '');
+            // Последняя ошибка исправлена — убираем и общую строку сверху,
+            // иначе она висит и сбивает с толку.
+            if (!contactForm.querySelector('.is-invalid')) setFormStatus(statusEl, '', null);
+        });
+        input.addEventListener('blur', () => {
+            if (input.value.trim()) markField(input, checkField(input));
+        });
+    });
+
     // Браузер иногда сам заполняет скрытое поле-ловушку, и тогда настоящая
     // заявка молча отбрасывалась как спам. Живой ввод даёт isTrusted: бот
     // так не умеет, поэтому при первом настоящем нажатии поле очищаем.
@@ -1434,9 +1554,7 @@ if (contactForm) {
             setFormStatus(statusEl, dict.contact.form.consentError, 'error');
             return;
         }
-        if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
-            return;
-        }
+        if (!validateFields()) return;
 
         button.disabled = true;
         const originalText = btnText.textContent;

@@ -18,17 +18,14 @@
         "EMAIL_TO": "info.ay.webstudio.de@gmail.com"
     },
 
-    // Отправка писем без стороннего сервиса. Осталось два шага в панели
-    // Cloudflare, их нельзя сделать из кода:
-    //   1. Email → Email Routing → Enable для ay-webstudio.de;
-    //   2. Destination addresses → добавить EMAIL_TO и подтвердить его
-    //      по ссылке из письма.
-    // После этого снять // с трёх строк ниже и задеплоить. Раскомментировать
-    // раньше нельзя: деплой упадёт с «destination address not verified».
-    // Альтернатива без Email Routing — секрет SENDGRID_API_KEY.
-    // "send_email": [
-    //     { "name": "SEND_EMAIL", "destination_address": "info.ay.webstudio.de@gmail.com" }
-    // ],
+    // Отправка писем через Cloudflare Email Routing — без стороннего сервиса
+    // и без ключей. Работает, пока адрес в destination_address подтверждён
+    // в панели (Email → Email Routing → Destination addresses). Если его
+    // отозвать, деплой упадёт с «destination address not verified».
+    // Запасной путь без Email Routing — секрет SENDGRID_API_KEY.
+    "send_email": [
+        { "name": "SEND_EMAIL", "destination_address": "info.ay.webstudio.de@gmail.com" }
+    ],
     "assets": {
         "directory": "./dist",
         "binding": "ASSETS",

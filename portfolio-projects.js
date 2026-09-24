@@ -3,7 +3,7 @@ window.portfolioProjects = [
     {
         id: 'friseursalon',
         preview: 'images/projects/friseursalon.jpg',
-        liveUrl: 'https://friseursalon.vercel.app/',
+        liveUrl: 'https://mira-beauty-lounge.anatoliiyastrebov.workers.dev/',
         techStack: ['HTML5', 'CSS3', 'JavaScript', 'Semantic HTML', 'CSS Grid & Flexbox', 'Mobile-First', 'Vercel'],
         styles: ['Premium-Look', 'CSS Custom Properties', 'Scroll-Animationen', 'Glassmorphism-Akzente', 'Dark/Light-fähiges Layout'],
         title: {

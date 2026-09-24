@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, '..', 'images', 'projects');
 
 const projects = [
-    { slug: 'friseursalon', url: 'https://friseursalon.vercel.app/' },
+    { slug: 'friseursalon', url: 'https://mira-beauty-lounge.anatoliiyastrebov.workers.dev/' },
     { slug: 'doner-hazel', url: 'https://doner-hazel.vercel.app/' },
     { slug: 'barbershop', url: 'https://barbershop-five-sooty.vercel.app/' },
     { slug: 'gebaudereinigung', url: 'https://gebaudereinigung.vercel.app/' },

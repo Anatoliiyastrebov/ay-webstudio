@@ -172,8 +172,23 @@
         }
     }
 
+    // Старые адреса проектов должны продолжать работать: на них могут вести
+    // закладки и ссылки из переписки. Ключ — прежний id, значение — новый.
+    const RENAMED = {
+        friseursalon: 'mira-beauty-lounge'
+    };
+
     function init() {
-        const id = new URLSearchParams(window.location.search).get('id');
+        let id = new URLSearchParams(window.location.search).get('id');
+        if (id && RENAMED[id]) {
+            const target = RENAMED[id];
+            // replaceState, а не переход: страница уже загружена, лишняя
+            // перезагрузка ни к чему, а в адресной строке будет новый id.
+            const url = new URL(window.location.href);
+            url.searchParams.set('id', target);
+            window.history.replaceState({}, '', url);
+            id = target;
+        }
         const lang = getLang();
         const cases = getCases();
         if (!id) {

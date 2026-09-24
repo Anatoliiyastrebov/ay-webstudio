@@ -1,8 +1,8 @@
 // Live portfolio demos — deployed on Vercel (concept / demo sites, not real businesses).
 window.portfolioProjects = [
     {
-        id: 'friseursalon',
-        preview: 'images/projects/friseursalon.jpg',
+        id: 'mira-beauty-lounge',
+        preview: 'images/projects/mira-beauty-lounge.jpg',
         liveUrl: 'https://mira-beauty-lounge.anatoliiyastrebov.workers.dev/',
         techStack: ['HTML5', 'CSS3', 'JavaScript', 'Semantic HTML', 'CSS Grid & Flexbox', 'Mobile-First', 'Vercel'],
         styles: ['Premium-Look', 'CSS Custom Properties', 'Scroll-Animationen', 'Glassmorphism-Akzente', 'Dark/Light-fähiges Layout'],

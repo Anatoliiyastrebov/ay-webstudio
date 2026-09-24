@@ -1,7 +1,7 @@
 // Localized techStack & styles for portfolio projects (loaded after portfolio-projects.js).
 (function () {
     const L = {
-        friseursalon: {
+        'mira-beauty-lounge': {
             techStack: {
                 en: ['HTML5', 'CSS3', 'JavaScript', 'Semantic HTML', 'CSS Grid & Flexbox', 'Mobile-first', 'Vercel'],
                 ru: ['HTML5', 'CSS3', 'JavaScript', 'Семантический HTML', 'CSS Grid и Flexbox', 'Mobile-first', 'Vercel']

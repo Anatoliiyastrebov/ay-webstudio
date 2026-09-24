@@ -18,7 +18,8 @@
     "prerender-blog": "node scripts/prerender-blog.mjs",
     "promo": "node scripts/apply-promo.mjs",
     "photo": "python3 scripts/prepare-photo.py",
-    "test-worker": "node worker/contact-handler.test.mjs"
+    "test-worker": "node worker/contact-handler.test.mjs",
+    "anfragen": "node scripts/anfragen.mjs"
   },
   "repository": {
     "type": "git",

@@ -186,6 +186,27 @@ async function sendMail(env, { name, email, message, projectType }) {
     }
 }
 
+// Заявка сохраняется до отправки письма. Почта — канал доставки, а не
+// хранилище: если письмо потеряется, обращение клиента останется здесь.
+// Смотреть: npm run anfragen
+async function storeSubmission(env, data) {
+    if (!env.ANFRAGEN) return null;
+    const id = `${new Date().toISOString().replace(/[:.]/g, '-')}_${Math.random().toString(16).slice(2, 8)}`;
+    const record = { id, receivedAt: new Date().toISOString(), ...data, mail: 'pending' };
+    // Год хранения: дольше не нужно, срок ответа на запрос давно вышел.
+    await env.ANFRAGEN.put(`anfrage:${id}`, JSON.stringify(record), { expirationTtl: 60 * 60 * 24 * 365 });
+    return { id, record };
+}
+
+async function markSubmission(env, stored, mail) {
+    if (!env.ANFRAGEN || !stored) return;
+    await env.ANFRAGEN.put(
+        `anfrage:${stored.id}`,
+        JSON.stringify({ ...stored.record, mail }),
+        { expirationTtl: 60 * 60 * 24 * 365 }
+    );
+}
+
 export async function handleContact(request, env) {
     const cors = corsHeaders(request);
     if (cors === null) {
@@ -202,7 +223,8 @@ export async function handleContact(request, env) {
 
     const canRoute = Boolean(env.SEND_EMAIL) && env.EMAIL_FROM && env.EMAIL_TO;
     const canSendGrid = Boolean(env.SENDGRID_API_KEY) && env.EMAIL_FROM && env.EMAIL_TO;
-    if (!canRoute && !canSendGrid) {
+    // Без почты, но с хранилищем работать можно: заявка сохранится.
+    if (!canRoute && !canSendGrid && !env.ANFRAGEN) {
         console.error(
             'Kein Versandweg konfiguriert: entweder Bindung SEND_EMAIL (Cloudflare Email ' +
             'Routing) oder SENDGRID_API_KEY — dazu immer EMAIL_FROM und EMAIL_TO.'
@@ -231,16 +253,47 @@ export async function handleContact(request, env) {
         return json({ success: false, message: 'Validation error', errors: result.errors }, 400, cors);
     }
 
+    // Сначала сохраняем — заявка не должна зависеть от того, дойдёт ли письмо.
+    let stored = null;
     try {
-        if (canRoute) await sendViaEmailRouting(env, result.clean);
-        else await sendMail(env, result.clean);
+        stored = await storeSubmission(env, result.clean);
     } catch (err) {
-        console.error('Mail error:', err?.message || err);
-        return json(
-            { success: false, message: 'Email service temporarily unavailable. Please try again later.' },
-            502,
-            cors
-        );
+        console.error('Speichern fehlgeschlagen:', err?.message || err);
+    }
+
+    // Порядок попыток: Email Routing, затем SendGrid. Один путь отказал —
+    // пробуем второй, а не теряем обращение.
+    const attempts = [];
+    if (canRoute) attempts.push(['email-routing', () => sendViaEmailRouting(env, result.clean)]);
+    if (canSendGrid) attempts.push(['sendgrid', () => sendMail(env, result.clean)]);
+
+    let delivered = null;
+    const failures = [];
+    for (const [name, run] of attempts) {
+        try {
+            await run();
+            delivered = name;
+            break;
+        } catch (err) {
+            const reason = err?.message || String(err);
+            failures.push(`${name}: ${reason}`);
+            console.error(`Mailversand über ${name} fehlgeschlagen:`, reason);
+        }
+    }
+
+    await markSubmission(env, stored, delivered ? `sent:${delivered}` : `failed:${failures.join(' | ')}`);
+
+    if (!delivered) {
+        // Заявка сохранена — для посетителя запрос принят. Если ничего не
+        // сохранилось, честно сообщаем об ошибке, чтобы он написал напрямую.
+        if (!stored) {
+            return json(
+                { success: false, message: 'Email service temporarily unavailable. Please try again later.' },
+                502,
+                cors
+            );
+        }
+        console.error('Anfrage gespeichert, aber kein Versandweg hat funktioniert:', stored.id);
     }
 
     return json({ success: true, message: 'Message sent successfully.' }, 200, cors);

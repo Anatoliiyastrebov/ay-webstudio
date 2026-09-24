@@ -26,6 +26,12 @@
     "send_email": [
         { "name": "SEND_EMAIL", "destination_address": "info.ay.webstudio.de@gmail.com" }
     ],
+    // Каждая заявка сначала записывается сюда и только потом уходит письмом.
+    // Если почта подведёт, заявка всё равно на месте: npm run anfragen.
+    "kv_namespaces": [
+        { "binding": "ANFRAGEN", "id": "c7f088487c0740d69870b19029a47ab0" }
+    ],
+
     "assets": {
         "directory": "./dist",
         "binding": "ASSETS",

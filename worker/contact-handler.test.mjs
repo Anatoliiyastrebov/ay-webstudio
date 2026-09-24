@@ -56,6 +56,30 @@ const noSecrets = await handleContact(post(ok, null), {});
 console.log(`${noSecrets.status === 500 ? '✓' : '✗'} ${'нет ключей в окружении'.padEnd(46)} ${noSecrets.status} (ждали 500)`);
 if (noSecrets.status !== 500) fails++;
 
+// --- заявка сохраняется до отправки письма ---
+const kv = new Map();
+const ENV_KV = { ...ENV, ANFRAGEN: {
+    put: async (k, v) => { kv.set(k, v); },
+    get: async (k) => kv.get(k) || null
+} };
+sent = null; sendStatus = 202;
+let res = await handleContact(post(ok, null), ENV_KV);
+let rec = JSON.parse([...kv.values()].pop());
+console.log(`${res.status === 200 && rec.name === ok.name ? '✓' : '✗'} ${'заявка сохранена в хранилище'.padEnd(46)} ${res.status}`);
+if (res.status !== 200 || rec.name !== ok.name) fails++;
+console.log(`${rec.mail.startsWith('sent:') ? '✓' : '✗'} ${'отмечено, что письмо ушло'.padEnd(46)} ${rec.mail}`);
+if (!rec.mail.startsWith('sent:')) fails++;
+
+// письмо падает — заявка всё равно сохранена, посетитель видит успех
+kv.clear(); sendStatus = 500;
+res = await handleContact(post(ok, null), { ...ENV_KV, SEND_EMAIL: undefined });
+rec = JSON.parse([...kv.values()].pop());
+console.log(`${res.status === 200 ? '✓' : '✗'} ${'письмо не ушло — заявка не потеряна'.padEnd(46)} ${res.status}`);
+if (res.status !== 200) fails++;
+console.log(`${rec.mail.startsWith('failed:') ? '✓' : '✗'} ${'причина сбоя записана'.padEnd(46)} ${rec.mail.slice(0, 40)}`);
+if (!rec.mail.startsWith('failed:')) fails++;
+sendStatus = 202;
+
 // --- сборка письма для Cloudflare Email Routing ---
 const mail = buildMail({ name: 'Jürgen Groß', email: 'j@example.de', message: 'Grüße aus Köln', projectType: 'Basis-Website' });
 const mime = buildMime({ from: 'formular@ay-webstudio.de', to: 'info@example.com', replyTo: 'j@example.de', replyName: 'Jürgen Groß', subject: mail.subject, text: mail.text });

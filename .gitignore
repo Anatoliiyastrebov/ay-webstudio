@@ -37,7 +37,7 @@ build/
 # sonst lädt die Seite es wieder von einem fremden CDN.
 !vendor/*.min.js
 
-# Large source photo — deploy WebP only (images/photo.webp, images/photo-og.webp)
+# Large source photo — deploy WebP only (images/photo-hero-*.webp и т. д.)
 images/photo.jpg
 
 # Temporary files
@@ -45,9 +45,6 @@ images/photo.jpg
 *.temp
 .cache/
 
-# Server files
-server/node_modules/
-server/.env
 
 # ------------------------------------------------------------
 # Внутреннее — не для публичного репозитория

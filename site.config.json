@@ -1,7 +1,7 @@
 {
   "_comment": "Единственное место, где задаётся домен и контактные данные. После правки запустите: npm run set-domain",
   "siteUrl": "https://www.ay-webstudio.de",
-  "_apiComment": "Куда форма шлёт заявку. Пусто = тот же домен — так работает обработчик на Cloudflare (worker/contact-handler.mjs). Адрес = внешний бэкенд, сейчас Render. После правки: npm run set-domain",
+  "_apiComment": "Куда форма шлёт заявку. Пусто = тот же домен — так работает обработчик на Cloudflare (worker/contact-handler.mjs). Адрес = внешний бэкенд, если он когда-нибудь появится. После правки: npm run set-domain",
   "apiBaseUrl": "",
   "businessName": "AY Webstudio — Anatolii Yastrebov",
   "ownerName": "Anatolii Yastrebov",

@@ -327,7 +327,6 @@ console.log('✓ sitemap.xml');
 // project.html показывает проект по ?id=… — отдельной индексируемой страницы нет.
 const robots = `User-agent: *
 Allow: /
-Disallow: /server/
 Disallow: /project.html
 Sitemap: ${siteUrl}/sitemap.xml
 `;

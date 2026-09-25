@@ -1,15 +1,11 @@
 /**
  * Обработчик контактной формы для Cloudflare.
  *
- * Логика повторяет server/server.js (Express на Render): honeypot,
- * проверка полей, закрытый список пакетов, письмо через SendGrid.
- * Отличие одно — в Workers нет Node API, поэтому SendGrid вызывается
- * обычным fetch к их HTTP-интерфейсу, а не через пакет @sendgrid/mail.
+ * Honeypot, проверка полей, закрытый список пакетов, письмо. В Workers нет
+ * Node API, поэтому SendGrid вызывается обычным fetch к их HTTP-интерфейсу,
+ * а не через пакет @sendgrid/mail.
  *
- * Используется из двух точек входа, чтобы работало и на Workers,
- * и на Pages:
- *   src/index.js            — Cloudflare Workers (статика + этот обработчик)
- *   functions/api/contact.js — Cloudflare Pages Functions
+ * Точка входа одна: src/index.js — статика плюс этот обработчик.
  *
  * Письмо уходит одним из двух способов — что настроено, то и берётся:
  *

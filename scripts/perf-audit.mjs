@@ -29,7 +29,7 @@ const staticReport = {
     cssResponsive: fileSize('responsive.min.css') || fileSize('responsive.css'),
     jsApp: fileSize('script.js') + fileSize('site-boot.js') + fileSize('assets.js'),
     fonts: sumDir('fonts', '.woff2'),
-    photoWebp: fileSize('images/photo.webp'),
+    photoHeroWebp: fileSize('images/photo-hero-800.webp'),
     photoJpg: fileSize('images/photo.jpg'),
     projectsJpg: sumDir('images/projects', '.jpg'),
     projectsWebp: sumDir('images/projects', '.webp'),

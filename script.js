@@ -313,7 +313,6 @@ const translations = {
                 submit: 'Anfrage senden',
                 submitted: 'Gesendet! ✓',
                 sending: 'Wird gesendet…',
-                sendingLong: 'Server wird gestartet, einen Moment…',
                 error: 'Sendefehler',
                 errorDirect: 'Die Anfrage konnte nicht gesendet werden. Bitte schreiben Sie mir direkt an %s — oder über WhatsApp.',
                 consent: 'Ich stimme der Verarbeitung meiner personenbezogenen Daten gemäß der <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> zu.',
@@ -642,7 +641,6 @@ const translations = {
                 submit: 'Send enquiry',
                 submitted: 'Sent! ✓',
                 sending: 'Sending…',
-                sendingLong: 'Server is starting up, one moment…',
                 error: 'Sending error',
                 errorDirect: 'The enquiry could not be sent. Please email me directly at %s — or write on WhatsApp.',
                 consent: 'I agree to the processing of my personal data in accordance with the <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
@@ -965,7 +963,6 @@ const translations = {
                 submit: 'Отправить запрос',
                 submitted: 'Отправлено! ✓',
                 sending: 'Отправка…',
-                sendingLong: 'Сервер просыпается, секунду…',
                 error: 'Ошибка отправки',
                 errorDirect: 'Заявку отправить не удалось. Напишите мне напрямую на %s — или в WhatsApp.',
                 consent: 'Я согласен на обработку моих персональных данных в соответствии с <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.',
@@ -1388,19 +1385,15 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 const API_BASE_CONFIGURED = "";
 /* set-domain:api-end */
 
-const API_BASE_URL = (() => {
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        return 'http://localhost:3001';
-    }
-    // Пустая строка = запрос уходит на тот же домен: на Cloudflare форму
-    // обслуживает воркер рядом со статикой, отдельный бэкенд не нужен.
-    return API_BASE_CONFIGURED;
-})();
+// Пустая строка = запрос уходит на тот же домен: и на Cloudflare, и локально
+// под `npx wrangler dev` воркер обслуживает форму рядом со статикой, так что
+// отдельный бэкенд не нужен. `npm run dev` раздаёт только файлы — там форма
+// ожидаемо отвечает 404.
+const API_BASE_URL = API_BASE_CONFIGURED;
 
-// Render free tier sleeps after inactivity; first request can take 30+ s.
-// Use a 35 s overall timeout and a "warming up" hint after 15 s.
-const REQUEST_TIMEOUT_MS = 35000;
-const COLD_START_HINT_AFTER_MS = 15000;
+// Воркер отвечает за миллисекунды. Пятнадцати секунд хватает и на медленной
+// мобильной сети, а дальше честнее показать ошибку, чем крутить «отправка…».
+const REQUEST_TIMEOUT_MS = 15000;
 
 async function sendContactForm(payload) {
     const controller = new AbortController();
@@ -1562,11 +1555,6 @@ if (contactForm) {
         btnIcon.textContent = '⏳';
         setFormStatus(statusEl, dict.contact.form.sending, 'info');
 
-        // After 15 s show a "server warming up" hint (Render cold-start).
-        const coldStartTimer = setTimeout(() => {
-            setFormStatus(statusEl, dict.contact.form.sendingLong || dict.contact.form.sending, 'info');
-        }, COLD_START_HINT_AFTER_MS);
-
         // Выбранный пакет дописываем в текст письма: так он дойдёт даже
         // если бэкенд не знает про отдельное поле projectType.
         const typeSelect = contactForm.querySelector('select[name="projectType"]');
@@ -1582,8 +1570,6 @@ if (contactForm) {
             // server quietly returns success without sending email.
             hp_ref: contactForm.querySelector('input[name="hp_ref"]')?.value || ''
         });
-
-        clearTimeout(coldStartTimer);
 
         if (result && result.success) {
             btnText.textContent = dict.contact.form.submitted;

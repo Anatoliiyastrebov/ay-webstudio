@@ -2,16 +2,16 @@
  * Собирает в dist/ только то, что можно публиковать.
  *
  * Зачем: хостинг раздаёт папку целиком. Если раздавать корень проекта,
- * наружу уходят package.json, scripts/, server/, site.config.json и всё,
+ * наружу уходят package.json, scripts/, worker/, site.config.json и всё,
  * что случайно окажется рядом. Поэтому здесь белый список: новый файл
  * попадёт на сайт, только если его явно разрешить.
  *
- * Одна и та же папка годится для Vercel (outputDirectory в vercel.json)
+ * Папка годится и для Cloudflare Workers (assets.directory в wrangler.jsonc),
  * и для заливки по FTP на обычный хостинг вроде ALL-INKL.
  *
  *   node scripts/build-dist.mjs
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,6 +23,14 @@ const ROOT_EXTENSIONS = ['.html', '.js', '.css', '.svg', '.ico', '.webmanifest',
 
 // Файлы с «публичным» расширением, которым на сайте всё равно не место.
 const ROOT_DENY = new Set(['package.json', 'package-lock.json']);
+
+// Исходник стиля рядом с его .min-версией: страницы подключают только
+// минифицированную, так что несжатую копию на сайт не кладём.
+function hasMinifiedTwin(name) {
+    return name.endsWith('.css')
+        && !name.endsWith('.min.css')
+        && existsSync(path.join(root, `${name.slice(0, -4)}.min.css`));
+}
 
 // Папки целиком.
 const DIRS = ['fonts', 'images', 'vendor'];
@@ -45,6 +53,7 @@ for (const name of readdirSync(root)) {
     const full = path.join(root, name);
     if (!statSync(full).isFile()) continue;
     if (ROOT_DENY.has(name)) continue;
+    if (hasMinifiedTwin(name)) continue;
     if (!ROOT_EXTENSIONS.includes(path.extname(name).toLowerCase())) continue;
     cpSync(full, path.join(dist, name));
     files += 1;
@@ -68,31 +77,38 @@ for (const dir of DIRS) {
     });
 }
 
-// ---------- _headers для Cloudflare ----------
-// Cloudflare не читает vercel.json, поэтому переводим его заголовки в
-// формат _headers. Источник правды остаётся один — vercel.json.
-// Переносим только правила вида «/папка/(.*)»: их Cloudflare понимает
-// как «/папка/*». Правила по расширению (/(.*).css) пропускаем — такой
-// шаблон в _headers не поддерживается, а кеш для них Cloudflare и так
-// выставляет сам.
-const vercelPath = path.join(root, 'vercel.json');
-if (existsSync(vercelPath)) {
-    const vercel = JSON.parse(readFileSync(vercelPath, 'utf8'));
-    const blocks = [];
-    const skipped = [];
-    for (const rule of vercel.headers || []) {
-        const m = /^(.*)\(\.\*\)$/.exec(rule.source);
-        if (!m || m[1].includes('(')) {
-            skipped.push(rule.source);
-            continue;
-        }
-        const lines = rule.headers.map((h) => `  ${h.key}: ${h.value}`);
-        blocks.push(`${m[1]}*\n${lines.join('\n')}`);
-    }
-    writeFileSync(path.join(dist, '_headers'), `${blocks.join('\n\n')}\n`);
-    files += 1;
-    console.log(`✓ dist/_headers: ${blocks.length} правил из vercel.json` +
-        (skipped.length ? ` (пропущены по расширению: ${skipped.join(', ')})` : ''));
-}
+// ---------- _headers ----------
+// Заголовки ответа для Cloudflare. Раньше их источником был vercel.json;
+// сайт живёт только на Workers, поэтому правила описаны здесь — сразу в том
+// виде, в каком попадут в файл.
+//
+// Шаблон по расширению («все .css») в _headers не поддерживается: там работает
+// только звёздочка в конце пути. Кеш для стилей и скриптов Cloudflare
+// выставляет сам, а папки с неизменяемым содержимым перечислены ниже.
+const IMMUTABLE = 'public, max-age=31536000, immutable';
+
+const HEADERS = [
+    ['/*', [
+        ['X-Frame-Options', 'DENY'],
+        ['X-Content-Type-Options', 'nosniff'],
+        ['Referrer-Policy', 'strict-origin-when-cross-origin'],
+        ['Permissions-Policy', 'camera=(), microphone=(), geolocation=()'],
+        ['Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload'],
+        // Всё своё: сторонних скриптов, шрифтов и запросов на сайте нет.
+        ['Content-Security-Policy',
+            "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; " +
+            "script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; frame-ancestors 'none';"]
+    ]],
+    ['/fonts/*', [['Cache-Control', IMMUTABLE]]],
+    ['/images/projects/*', [['Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400']]],
+    ['/vendor/*', [['Cache-Control', IMMUTABLE]]]
+];
+
+const headersFile = HEADERS
+    .map(([source, list]) => `${source}\n${list.map(([key, value]) => `  ${key}: ${value}`).join('\n')}`)
+    .join('\n\n');
+writeFileSync(path.join(dist, '_headers'), `${headersFile}\n`);
+files += 1;
+console.log(`✓ dist/_headers: ${HEADERS.length} правил`);
 
 console.log(`✓ dist/: ${files} файлов, ${(bytes / 1024 / 1024).toFixed(1)} МБ`);

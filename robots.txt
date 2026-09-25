@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /server/
 Disallow: /project.html
 Sitemap: https://www.ay-webstudio.de/sitemap.xml

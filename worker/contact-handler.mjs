@@ -7,12 +7,17 @@
  *
  * Точка входа одна: src/index.js — статика плюс этот обработчик.
  *
- * Письмо уходит одним из двух способов — что настроено, то и берётся:
+ * Письмо уходит первым способом, который настроен. Порядок не случаен:
  *
- *   1. Cloudflare Email Routing (рекомендуется): привязка SEND_EMAIL в
- *      wrangler.jsonc. Ключи не нужны, сторонний почтовый сервис не нужен.
- *      Отправлять можно только на адрес, подтверждённый в Email Routing.
- *   2. SendGrid: секреты SENDGRID_API_KEY, EMAIL_FROM, EMAIL_TO.
+ *   1. Resend — секрет RESEND_API_KEY. Настоящий почтовый сервис: подписывает
+ *      письмо DKIM твоего домена и ведёт журнал доставки, поэтому видно, что
+ *      именно случилось с каждым письмом.
+ *   2. SendGrid — секрет SENDGRID_API_KEY. То же самое, другой поставщик.
+ *   3. Cloudflare Email Routing — привязка SEND_EMAIL в wrangler.jsonc.
+ *      Ключи не нужны, но это средство ПЕРЕСЫЛКИ входящей почты, а не
+ *      отправки. Письмо уходит без DKIM-подписи домена, Cloudflare рапортует
+ *      об успехе, а Gmail такое часто выбрасывает молча — ни во «Входящих»,
+ *      ни в «Спаме». Поэтому он последний, только как запасной канал.
  *
  * Общие переменные:
  *   EMAIL_FROM — адрес отправителя на собственном домене
@@ -150,7 +155,35 @@ export function buildMime({ from, to, replyTo, replyName, subject, text, now }) 
     ].join('\r\n');
 }
 
-// Способ 1: Cloudflare Email Routing — без сторонних сервисов и ключей.
+// Resend: обычный почтовый сервис. Письмо подписывается DKIM домена,
+// в панели Resend виден журнал — доставлено, отбито или помечено спамом.
+async function sendViaResend(env, data) {
+    const { subject, text } = buildMail(data);
+    const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            // Пока домен в Resend не подтверждён, отправлять можно только с их
+            // адреса onboarding@resend.dev и только на свою же почту. Для этого
+            // и нужен RESEND_FROM: проверить доставку, не трогая DNS.
+            from: env.RESEND_FROM || env.EMAIL_FROM,
+            to: [env.EMAIL_TO],
+            reply_to: data.email,
+            subject,
+            text
+        })
+    });
+    if (!res.ok) {
+        const detail = await res.text().catch(() => '');
+        throw new Error(`Resend ${res.status}: ${detail.slice(0, 300)}`);
+    }
+}
+
+// Запасной канал: Cloudflare Email Routing — без ключей, но без журнала
+// доставки и без DKIM домена. Подробности в шапке файла.
 async function sendViaEmailRouting(env, data) {
     const { EmailMessage } = await import('cloudflare:email');
     const { subject, text } = buildMail(data);
@@ -165,7 +198,7 @@ async function sendViaEmailRouting(env, data) {
     await env.SEND_EMAIL.send(new EmailMessage(env.EMAIL_FROM, env.EMAIL_TO, raw));
 }
 
-async function sendMail(env, { name, email, message, projectType }) {
+async function sendViaSendGrid(env, { name, email, message, projectType }) {
     const { subject, text } = buildMail({ name, email, message, projectType });
 
     const res = await fetch('https://api.sendgrid.com/v3/mail/send', {
@@ -224,13 +257,15 @@ export async function handleContact(request, env) {
         return json({ success: false, message: 'Method not allowed' }, 405, { ...cors, Allow: 'POST, OPTIONS' });
     }
 
-    const canRoute = Boolean(env.SEND_EMAIL) && env.EMAIL_FROM && env.EMAIL_TO;
-    const canSendGrid = Boolean(env.SENDGRID_API_KEY) && env.EMAIL_FROM && env.EMAIL_TO;
+    const hatAdressen = Boolean(env.EMAIL_FROM && env.EMAIL_TO);
+    const canResend = Boolean(env.RESEND_API_KEY) && hatAdressen;
+    const canSendGrid = Boolean(env.SENDGRID_API_KEY) && hatAdressen;
+    const canRoute = Boolean(env.SEND_EMAIL) && hatAdressen;
     // Без почты, но с хранилищем работать можно: заявка сохранится.
-    if (!canRoute && !canSendGrid && !env.ANFRAGEN) {
+    if (!canResend && !canSendGrid && !canRoute && !env.ANFRAGEN) {
         console.error(
-            'Kein Versandweg konfiguriert: entweder Bindung SEND_EMAIL (Cloudflare Email ' +
-            'Routing) oder SENDGRID_API_KEY — dazu immer EMAIL_FROM und EMAIL_TO.'
+            'Kein Versandweg konfiguriert: RESEND_API_KEY, SENDGRID_API_KEY oder die ' +
+            'Bindung SEND_EMAIL — dazu immer EMAIL_FROM und EMAIL_TO.'
         );
         return json({ success: false, message: 'Email service is not configured.' }, 500, cors);
     }
@@ -264,11 +299,13 @@ export async function handleContact(request, env) {
         console.error('Speichern fehlgeschlagen:', err?.message || err);
     }
 
-    // Порядок попыток: Email Routing, затем SendGrid. Один путь отказал —
-    // пробуем второй, а не теряем обращение.
+    // Сначала настоящие почтовые сервисы — у них DKIM домена и журнал
+    // доставки. Email Routing последний: он рапортует об успехе, даже когда
+    // письмо до ящика не доходит, и тогда следующий путь уже не пробуется.
     const attempts = [];
+    if (canResend) attempts.push(['resend', () => sendViaResend(env, result.clean)]);
+    if (canSendGrid) attempts.push(['sendgrid', () => sendViaSendGrid(env, result.clean)]);
     if (canRoute) attempts.push(['email-routing', () => sendViaEmailRouting(env, result.clean)]);
-    if (canSendGrid) attempts.push(['sendgrid', () => sendMail(env, result.clean)]);
 
     let delivered = null;
     const failures = [];

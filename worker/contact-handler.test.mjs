@@ -7,9 +7,10 @@
 import { handleContact, buildMail, buildMime } from './contact-handler.mjs';
 
 const ENV = { SENDGRID_API_KEY: 'SG.test', EMAIL_FROM: 'from@x.de', EMAIL_TO: 'to@x.de' };
-let sent = null, sendStatus = 202;
+let sent = null, sentUrl = null, sendStatus = 202;
 globalThis.fetch = async (url, init) => {
     sent = JSON.parse(init.body);
+    sentUrl = String(url);
     return new Response(sendStatus === 202 ? '' : 'bad', { status: sendStatus });
 };
 const post = (body, origin, method = 'POST') => new Request('https://ay-webstudio.de/api/contact', {
@@ -52,6 +53,28 @@ await check('чужой домен (CORS)', post(ok, 'https://evil.example'), 40
 await check('свой домен, любой хост', post(ok, 'https://ay-webstudio.de'), 200);
 await check('GET вместо POST', post(null, null, 'GET'), 405);
 await check('OPTIONS (preflight)', post(null, 'https://www.ay-webstudio.de', 'OPTIONS'), 204);
+// Порядок каналов: настоящий почтовый сервис должен идти раньше
+// Email Routing, иначе тот «успешно» проглотит письмо и до ящика
+// ничего не дойдёт.
+sentUrl = null;
+const mitResend = await handleContact(post(ok, null), {
+    ...ENV, RESEND_API_KEY: 're_test', SEND_EMAIL: { send: async () => {} }
+});
+const resendZuerst = mitResend.status === 200 && String(sentUrl).includes('api.resend.com');
+console.log(`${resendZuerst ? '✓' : '✗'} ${'Resend идёт раньше Email Routing'.padEnd(46)} ${sentUrl}`);
+if (!resendZuerst) fails++;
+
+// Без ключей остаётся только Email Routing. Сам его вызов здесь не
+// проверить: модуль cloudflare:email существует лишь внутри Workers.
+// Важно другое — ни один HTTP-сервис при этом не дёргается.
+sentUrl = null;
+await handleContact(post(ok, null), {
+    EMAIL_FROM: ENV.EMAIL_FROM, EMAIL_TO: ENV.EMAIL_TO, SEND_EMAIL: { send: async () => {} }
+});
+const keinFremderDienst = sentUrl === null;
+console.log(`${keinFremderDienst ? '✓' : '✗'} ${'без ключей — только Email Routing'.padEnd(46)} ${sentUrl || 'никого не звали'}`);
+if (!keinFremderDienst) fails++;
+
 sendStatus = 500;
 await check('SendGrid лежит', post(ok, null), 502);
 sendStatus = 202;

@@ -8,8 +8,6 @@
     "optimize-images": "node scripts/optimize-images.mjs",
     "perf": "node scripts/perf-audit.mjs",
     "capture-previews": "node scripts/capture-previews.mjs",
-    "sanity-seed": "node scripts/sanity-seed.mjs",
-    "studio": "npm --prefix studio run dev",
     "test": "node scripts/check-overflow.mjs",
     "set-domain": "node scripts/set-domain.mjs",
     "dev": "node scripts/dev-server.mjs",

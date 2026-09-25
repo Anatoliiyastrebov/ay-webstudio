@@ -27,8 +27,6 @@ npm run dev
 | `npm run perf` | Аудит производительности |
 | `npm run optimize-images` | Пережатие изображений в WebP |
 | `npm run capture-previews` | Скриншоты демо-проектов |
-| `npm run sanity-seed` | Экспорт текущего контента для импорта в Sanity CMS |
-| `npm run studio` | Админка Sanity (см. [SANITY.md](SANITY.md)) |
 
 **После правки CSS или текстов блога обязательно `npm run build`** — иначе изменения не попадут в
 `*.min.css`, которые подключены в HTML.
@@ -145,9 +143,6 @@ Vercel сохраняет путь, так что `/leistungen.html` попад�
 
 Персональные данные обрабатываются только при отправке формы: бэкенд на Render,
 отправка письма через SendGrid. Оба указаны в Datenschutzerklärung.
-
-Если подключите Sanity CMS (см. [SANITY.md](SANITY.md)), появится ещё один
-получатель данных — добавьте его в Datenschutzerklärung.
 
 ## Форма обратной связи
 

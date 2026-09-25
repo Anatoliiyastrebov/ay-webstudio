@@ -49,11 +49,6 @@ images/photo.jpg
 server/node_modules/
 server/.env
 
-# Sanity Studio
-studio/.sanity/
-studio/dist/
-scripts/sanity-seed.ndjson
-
 # ------------------------------------------------------------
 # Внутреннее — не для публичного репозитория
 # ------------------------------------------------------------

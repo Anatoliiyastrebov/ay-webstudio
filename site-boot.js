@@ -87,7 +87,6 @@
         scripts.push('script.js');
         scripts.push('portfolio-projects.js', 'portfolio-i18n.js');
         if (page === 'project') scripts.push('project.js');
-        scripts.push('sanity-config.js', 'sanity-content.js');
         await loadSequential(scripts);
     }
 

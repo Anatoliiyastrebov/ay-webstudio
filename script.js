@@ -1130,8 +1130,8 @@ document.querySelectorAll('.lang-btn').forEach((btn) => {
 // ============================================================
 // Portfolio rendering
 // ============================================================
-// CTA под каждой статьёй блога. Живёт здесь, чтобы оба рендерера
-// (blog-content.js и sanity-content.js) выводили одинаковый блок.
+// CTA под каждой статьёй блога. Живёт здесь, а не в blog-content.js,
+// чтобы блок был одинаковым везде, где выводятся статьи.
 window.getBlogCtaHtml = function (lang) {
     const dict = translations[lang] || translations.de;
     const c = (dict.blog && dict.blog.cta) || {};
@@ -1624,10 +1624,8 @@ applyTranslations(currentLanguage);
 document.documentElement.classList.remove('i18n-pending');
 document.documentElement.style.visibility = '';
 
-// Сетку примеров раньше заполнял только sanity-content.js, а он молча
-// выходит, когда CMS не настроена, — страница «Alle Beispiele» оставалась
-// пустой. Рисуем из встроенных данных сразу, а Sanity, если он появится,
-// просто перерисует поверх. Данные грузятся после script.js, поэтому ждём.
+// Сетка примеров на blog.html. Данные лежат в portfolio-projects.js и
+// грузятся после script.js, поэтому коротко ждём их появления.
 function renderCasesWhenReady(attempts = 40) {
     const target = document.getElementById('cases-container')
         || document.getElementById('blog-projects-container');

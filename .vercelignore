@@ -12,7 +12,6 @@ rechnungen/
 *.md
 Claude outputs/
 .claude/
-studio/
 
 # Мастер портрета (PNG без потерь, 2 МБ) нужен только для scripts/prepare-photo.py
 images/photo.jpg

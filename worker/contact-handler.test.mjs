@@ -47,6 +47,9 @@ await check('короткое сообщение', post({ ...ok, message: 'пр�
 await check('кривая почта', post({ ...ok, email: 'не-почта' }, null), 400);
 await check('пустое имя', post({ ...ok, name: '' }, null), 400);
 await check('чужой домен (CORS)', post(ok, 'https://evil.example'), 403);
+// Свой адрес разрешён всегда, каким бы он ни был: браузер шлёт Origin
+// и при запросе на собственный домен, если метод POST.
+await check('свой домен, любой хост', post(ok, 'https://ay-webstudio.de'), 200);
 await check('GET вместо POST', post(null, null, 'GET'), 405);
 await check('OPTIONS (preflight)', post(null, 'https://www.ay-webstudio.de', 'OPTIONS'), 204);
 sendStatus = 500;

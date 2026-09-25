@@ -31,6 +31,9 @@ const ALLOWED_TYPES = [
     'Hosting und Domain'
 ];
 
+// Адреса, с которых можно слать форму помимо собственного: второй вариант
+// того же сайта (www и без www — формально разные origin), старый домен и
+// локальная разработка.
 const CORS_ORIGINS = [
     'https://ay-webstudio.de',
     'https://www.ay-webstudio.de',
@@ -45,7 +48,11 @@ function corsHeaders(request) {
     const origin = request.headers.get('Origin');
     // Запрос с той же страницы приходит без Origin — это норма.
     if (!origin) return {};
-    if (!CORS_ORIGINS.includes(origin)) return null;
+    // При POST браузер шлёт Origin даже на собственный домен. Поэтому свой
+    // адрес разрешаем всегда: иначе форма замолкает с 403 при каждой смене
+    // адреса сайта — так и случилось на ay-webstudio.anatoliiyastrebov.workers.dev.
+    const eigene = new URL(request.url).origin;
+    if (origin !== eigene && !CORS_ORIGINS.includes(origin)) return null;
     return {
         'Access-Control-Allow-Origin': origin,
         'Access-Control-Allow-Methods': 'POST, OPTIONS',

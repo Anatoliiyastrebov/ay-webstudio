@@ -1623,5 +1623,26 @@ applyTranslations(currentLanguage);
 // Перевод применён — показываем страницу (класс ставит скрипт в <head>).
 document.documentElement.classList.remove('i18n-pending');
 document.documentElement.style.visibility = '';
+
+// Сетку примеров раньше заполнял только sanity-content.js, а он молча
+// выходит, когда CMS не настроена, — страница «Alle Beispiele» оставалась
+// пустой. Рисуем из встроенных данных сразу, а Sanity, если он появится,
+// просто перерисует поверх. Данные грузятся после script.js, поэтому ждём.
+function renderCasesWhenReady(attempts = 40) {
+    const target = document.getElementById('cases-container')
+        || document.getElementById('blog-projects-container');
+    if (!target) return;
+    if (Array.isArray(window.portfolioProjects) && window.portfolioProjects.length) {
+        renderCases();
+        return;
+    }
+    if (attempts <= 0) {
+        console.warn('portfolio-projects.js не загрузился — примеры не отрисованы.');
+        return;
+    }
+    setTimeout(() => renderCasesWhenReady(attempts - 1), 50);
+}
+renderCasesWhenReady();
+
 initCaseStudyToggles();
 initPackagePreselect();
